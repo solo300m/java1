@@ -10,10 +10,10 @@ public class AccuracyDoubleFloat {
         System.out.println("Разница между функцией double и float = "+calculateAccuracy(R_EARTH_D));
     }
     public static double volumeBallDouble(double radius){
-        return (double) (4/3)*PI*Math.pow(radius,3);
+        return (4.0/3.0)*PI*(Math.pow(radius,3));
     }
     public static float volumeBallFloat(float radius){
-        return (float) ((4/3)*PI*Math.pow(radius,3));
+        return (4.0f/3.0f)*(float)PI*(float) (Math.pow(radius,3));
     }
     public static double calculateAccuracy(double radius){
         return volumeBallDouble(radius)-volumeBallFloat((float) radius);
