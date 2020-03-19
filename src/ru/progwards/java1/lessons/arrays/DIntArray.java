@@ -46,31 +46,27 @@ class Pro{
 
 public class DIntArray {
     private int [] arr;
-    private int k = 0;
+
     public DIntArray(){
-        arr = new int[1];
-        k = 1;
+        arr = new int[0];
+
     }
     public DIntArray(int[]a){
         arr = Arrays.copyOf(a,a.length);
-        k = 0;
+
     }
 
     public int length(){
         return arr.length;
     }
     public void add(int num){
-        if(arr.length == 1 && k == 1){
-            arr[0] = num;
-            k = 0;
-        }
-        else {
+
             int[] arr2 = new int[arr.length + 1];
             for (int i = 0; i < arr.length; i++)
                 arr2[i] = arr[i];
             arr2[arr2.length - 1] = num;
             arr = arr2;
-        }
+      
     }
     public void atInsert(int pos, int num){
         int [] arr3 = new int [arr.length+1];
