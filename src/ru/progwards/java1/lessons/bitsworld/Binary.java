@@ -17,7 +17,7 @@ public class Binary {
         if (num < 0) {
             String s1 = Integer.toBinaryString(num);
             String subS = s1.substring(24);
-            return num + ": " + subS ;
+            return subS;
         }
         else if (num >= 0) {
             String s = Integer.toBinaryString(num);
@@ -28,7 +28,7 @@ public class Binary {
                 }
                 s = tayl + s;
             }
-            return num + ": " + s ;
+            return s;
         }
         return "";
     }
