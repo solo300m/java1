@@ -1,7 +1,7 @@
 package ru.progwards.java1.lessons.bitsworld;
 class Programm1{
     public static void main(String[] args) {
-        Binary b = new Binary((byte) -125);
+        Binary b = new Binary((byte) 0);
         System.out.println(b);
     }
 }
@@ -17,7 +17,7 @@ public class Binary {
         if (num < 0) {
             String s1 = Integer.toBinaryString(num);
             String subS = s1.substring(24);
-            return num + ": \"" + subS + "\"";
+            return num + ": " + subS ;
         }
         else if (num >= 0) {
             String s = Integer.toBinaryString(num);
@@ -28,7 +28,7 @@ public class Binary {
                 }
                 s = tayl + s;
             }
-            return num + ": \"" + s + "\"";
+            return num + ": " + s ;
         }
         return "";
     }

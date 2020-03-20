@@ -2,12 +2,12 @@ package ru.progwards.java1.lessons.bitsworld;
 
 class Pr{
     public static void main(String[] args) {
-        System.out.println(SumBits.sumBits((byte) 0b01110101));
+        System.out.println(SumBits.sumBits(0b11111111));
     }
 }
 
 public class SumBits {
-    public static int sumBits(byte value){
+    public static int sumBits(int value){
         int sum = 0;
         while(value!=0){
             int s = value & 1;
