@@ -1,43 +1,35 @@
 package ru.progwards.java1.lessons.arrays;
 
 import java.util.Arrays;
-class Programm{
+class Progr{
     public static void main(String[] args) {
-        Eratosthenes er = new Eratosthenes(20);
-        boolean[] s = er.getArr();
-        for(int i = 0; i < s.length;i++)
-            System.out.print(s[i]+" ");
-        System.out.println(" ");
-        for(int i = 0; i < s.length; i++){
-            if(er.isSimple(i)==true)
-                System.out.println("простое число - "+i);
+        Eratosthenes d = new Eratosthenes(45);
+        for(int i = 0; i<=45;i++){
+            if(d.isSimple(i))
+                System.out.print(i+" ");
         }
+        System.out.println();
     }
 }
 public class Eratosthenes {
-    private boolean [] sieve;
+    private boolean[] sieve;
     public Eratosthenes(int N){
-        sieve = new boolean[N];
+        sieve = new boolean[N+1];
         Arrays.fill(sieve,true);
         sift();
     }
-    public boolean[] getArr(){
-        return sieve;
-    }
-    private void sift() {
-        boolean[] s = getArr();
-        for(int i = 2; i < s.length; i++){
-            for(int j = i+1; j < s.length; j++){
-                if(s[j] != false) {
-                    if (j % i == 0) {
-                        s[j] = false;
-                    }
-                }
+    // да я действительно изначально не понял суть алгоритма Эратосфена
+    // пришлось покопать теоретическую базу:)
+    // спасибо, что заметили ошибку
+    private void sift(){
+        for(int i = 2; i < sieve.length; i++){
+            if(sieve[i]){
+                for(int j = 2; i*j < sieve.length; j++)
+                    sieve[i*j] = false;
             }
         }
     }
     public boolean isSimple(int n){
-        boolean[] s = getArr();
-        return s[n];
+        return sieve[n];
     }
 }

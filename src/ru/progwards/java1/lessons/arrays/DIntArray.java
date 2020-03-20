@@ -66,7 +66,7 @@ public class DIntArray {
                 arr2[i] = arr[i];
             arr2[arr2.length - 1] = num;
             arr = arr2;
-      
+
     }
     public void atInsert(int pos, int num){
         int [] arr3 = new int [arr.length+1];
