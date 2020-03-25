@@ -13,7 +13,7 @@ class Programms{
 
 public class CalculateFibonacci {
 
-    private static CacheInfo lastFibo;
+    private static CacheInfo lastFibo = null;
 
     public static int fiboNumber(int n){
         if(lastFibo == null) lastFibo = new CalculateFibonacci.CacheInfo();
@@ -44,8 +44,7 @@ public class CalculateFibonacci {
     }
 
     public static void clearLastFibo(){
-        lastFibo.n = 0;
-        lastFibo.fibo = 0;
+        lastFibo = null;
     }
 
     public static class CacheInfo{
