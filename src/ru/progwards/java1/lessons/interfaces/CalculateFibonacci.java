@@ -7,7 +7,7 @@ class Programms{
         System.out.println(CalculateFibonacci.fiboNumber(16));
         System.out.println(CalculateFibonacci.getLastFibo().fibo);
         CalculateFibonacci.clearLastFibo();
-        System.out.println(CalculateFibonacci.getLastFibo().fibo);
+        System.out.println(CalculateFibonacci.getLastFibo());
     }
 }
 
@@ -18,6 +18,7 @@ public class CalculateFibonacci {
     public static int fiboNumber(int n){
         if(lastFibo == null) lastFibo = new CalculateFibonacci.CacheInfo();
         else if(lastFibo!=null && lastFibo.n == n) return lastFibo.fibo;
+        //lastFibo = new CalculateFibonacci.CacheInfo();
         if (n == 1 || n == 2){
             lastFibo.n = n;
             lastFibo.fibo = 1;
@@ -39,8 +40,8 @@ public class CalculateFibonacci {
     }
 
     public static CacheInfo getLastFibo(){
-        if(lastFibo == null) return lastFibo = new CalculateFibonacci.CacheInfo();
-        else return lastFibo;
+        //if(lastFibo == null) return null;
+        /*else*/ return lastFibo;
     }
 
     public static void clearLastFibo(){
@@ -50,6 +51,10 @@ public class CalculateFibonacci {
     public static class CacheInfo{
         public int n;
         public int fibo;
+        public CacheInfo(){
+            this.n = 0;
+            this.fibo = 0;
+        }
 
     }
 }

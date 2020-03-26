@@ -2,7 +2,7 @@ package ru.progwards.java1.lessons.bitsworld;
 
 class Pr{
     public static void main(String[] args) {
-        System.out.println(SumBits.sumBits((byte)0b11111111));
+        System.out.println(SumBits.sumBits((byte)0b1011));
     }
 }
 
