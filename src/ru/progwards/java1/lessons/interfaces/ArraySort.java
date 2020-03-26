@@ -1,4 +1,5 @@
 package ru.progwards.java1.lessons.interfaces;
+
 class Prog{
     public static void main(String[] args) {
         int[]a = {12,3,-4,17,-33,245,0,55,-166,-44,99};
@@ -14,7 +15,7 @@ class Prog{
             System.out.print(el.getElem()+" ");
         System.out.println();
 
-        CompareWeight.sort(elem);
+        new ArraySort().sort(elem);
         for(ArraySort el: elem)
             System.out.print(el.getElem()+" ");
         System.out.println();
@@ -40,6 +41,18 @@ public class ArraySort implements CompareWeight{
         else if(Double.compare(this.getElem(), ani.getElem())==0)
             return CompareResult.EQUAL;
         else return CompareResult.GREATER;
+    }
+    @Override
+    public void sort(CompareWeight[] a) {
+        for(int i=0; i < a.length; i++){
+            for(int j=i+1; j < a.length; j++){
+                if (a[i].compareWeight(a[j]) == CompareResult.GREATER) {
+                    CompareWeight ref = a[j];
+                    a[j] = a[i];
+                    a[i] = ref;
+                }
+            }
+        }
     }
 
 }
