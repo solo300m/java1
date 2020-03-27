@@ -15,7 +15,7 @@ class Prog{
             System.out.print(el.getElem()+" ");
         System.out.println();
 
-        new ArraySort().sort(elem);
+        ArraySort.sort(elem);
         for(ArraySort el: elem)
             System.out.print(el.getElem()+" ");
         System.out.println();
@@ -42,8 +42,8 @@ public class ArraySort implements CompareWeight{
             return CompareResult.EQUAL;
         else return CompareResult.GREATER;
     }
-    @Override
-    public void sort(CompareWeight[] a) {
+
+    static public void sort(CompareWeight[] a) {
         for(int i=0; i < a.length; i++){
             for(int j=i+1; j < a.length; j++){
                 if (a[i].compareWeight(a[j]) == CompareResult.GREATER) {
