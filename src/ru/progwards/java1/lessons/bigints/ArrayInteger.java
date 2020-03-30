@@ -3,6 +3,22 @@ package ru.progwards.java1.lessons.bigints;
 
 import java.math.BigInteger;
 
+class Pr{
+    public static void main(String[] args) {
+        ArrayInteger ai1 = new ArrayInteger(7);
+        ai1.fromInt(new BigInteger("3049766"));
+        System.out.println(ai1.toString(ai1));
+        ArrayInteger ai2 = new ArrayInteger(5);
+        ai2.fromInt(new BigInteger("33083"));
+        System.out.println(ai2.toString(ai2));
+        ai1.add(ai2);
+        System.out.println(ai1.toInt());
+        ArrayInteger ai3 = new ArrayInteger(8);
+        ai3.fromInt(new BigInteger("30497665"));
+        System.out.println(ai3.toInt());
+    }
+}
+
 public class ArrayInteger {
     private byte[]digits;
     BigInteger value1;
@@ -39,10 +55,15 @@ public class ArrayInteger {
         for(int i = this.digits.length-1; i>=0; i--){
             thisObj += this.digits[i];
         }
+        System.out.println(thisObj);
         for(int j = num.digits.length-1; j>=0; j--){
             otherObj += num.digits[j];
         }
+        System.out.println(otherObj);
         int sum = Integer.parseInt(thisObj) + Integer.parseInt(otherObj);
+        System.out.println(sum);
+        System.out.println(Integer.toString(sum).length());
+        System.out.println(this.digits.length);
         if(Integer.toString(sum).length() > this.digits.length){
             for(int i = 0; i < this.digits.length; i++){
                 this.digits[i] = 0;
@@ -54,10 +75,18 @@ public class ArrayInteger {
                 this.digits[i] = 0;
             }
             for(int i = 0; i < this.digits.length; i++){
-                int step = sum % 10;
+                this.digits[i] = (byte) (sum % 10);
                 sum = sum / 10;
             }
             return true;
         }
+    }
+
+    String toString(ArrayInteger a){
+        String rez = "";
+        for(byte str: a.digits){
+            rez = rez + ","+str;
+        }
+        return rez;
     }
 }
