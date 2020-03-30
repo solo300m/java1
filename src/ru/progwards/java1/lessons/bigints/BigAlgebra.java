@@ -13,7 +13,7 @@ class Prog11{
 }
 
 public class BigAlgebra {
-    BigDecimal fastPow(BigDecimal num, int pow) {
+    public static BigDecimal fastPow(BigDecimal num, int pow) {
         BigDecimal rez = new BigDecimal("1");
         for (int i = 0; i < pow; i++) {
             rez = rez.multiply(num);
@@ -21,7 +21,7 @@ public class BigAlgebra {
         return rez;
     }
 
-    BigInteger fibonacci(int n) {
+    public static BigInteger fibonacci(int n) {
         if (n == 1 || n == 2) return new BigInteger("1");
         else {
             BigInteger start = new BigInteger("1");
