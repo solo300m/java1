@@ -26,6 +26,7 @@ public class LineCount {
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            return -1;
         }
         return count;
     }
