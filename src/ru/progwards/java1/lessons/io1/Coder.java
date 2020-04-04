@@ -8,10 +8,10 @@ import java.util.Scanner;
 class pro{
     public static void main(String[] args) {
         Coder a = new Coder();
-        char[] m = {'a','A','б','Б','в','В','г','Г','д','Д','е','Е','ё','Ё',
+        char[] m = {'а','A','б','Б','в','В','г','Г','д','Д','е','Е','ё','Ё',
                 'ж','Ж','з','З','и','И','к','К','л','Л','м','М','н','Н','о','О','п',
                 'П','р','Р','с','С','т','Т','у','У','ф','Ф','х','Х','ц','Ц','ч','Ч',
-                'ш','Ш','щ','Щ','ы','Ы','ь','ъ','э','Э','ю','Ю','я','Я'};
+                'ш','Ш','щ','Щ','ы','Ы','ь','ъ','э','Э','ю','Ю','я','Я','й','Й'};
         for(char s:m){
             System.out.print(s+" ");
         }
@@ -34,7 +34,6 @@ public class Coder {
 
             try {
                 Scanner scann = new Scanner(reader);
-                int arrPosition = 0;
                 String strOut = "";
                 String strIn = "";
                 while (scann.hasNextLine()) {
@@ -50,10 +49,8 @@ public class Coder {
                         }
                         if(temp[i] != '0')
                             str_temp[i] = String.valueOf(temp[i]);
-                        strIn += str_temp[i];
+                        strIn += str_temp[i]+" ";
                     }
-                        //strIn = strIn + code[arrPosition];
-                    //arrPosition++;
                 }
                 strOut = strIn;
                 writer.write(strOut);
