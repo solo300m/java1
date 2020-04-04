@@ -8,7 +8,10 @@ import java.util.Scanner;
 class pro{
     public static void main(String[] args) {
         Coder a = new Coder();
-        char[] m = a.getCharArr("file_out.log");
+        char[] m = {'a','A','б','Б','в','В','г','Г','д','Д','е','Е','ё','Ё',
+                'ж','Ж','з','З','и','И','к','К','л','Л','м','М','н','Н','о','О','п',
+                'П','р','Р','с','С','т','Т','у','У','ф','Ф','х','Х','ц','Ц','ч','Ч',
+                'ш','Ш','щ','Щ','ы','Ы','ь','ъ','э','Э','ю','Ю','я','Я'};
         for(char s:m){
             System.out.print(s+" ");
         }
@@ -37,12 +40,22 @@ public class Coder {
                 while (scann.hasNextLine()) {
                     String str = scann.nextLine();
                     char[]temp = str.toCharArray();
-                    for (int i = 0; i < str.length(); i++) {
-                        //strIn += temp[i];
-                        strOut = strOut + code[arrPosition];
-                        arrPosition++;
+                    String[]str_temp = new String[temp.length];
+                    for (int i = 0; i < temp.length; i++) {
+                        for(int j = 0; j<code.length; j++){
+                            if(code[j] == temp[i]) {
+                                temp[i] = '0';
+                                str_temp[i] = String.valueOf(j);
+                            }
+                        }
+                        if(temp[i] != '0')
+                            str_temp[i] = String.valueOf(temp[i]);
+                        strIn += str_temp[i];
                     }
+                        //strIn = strIn + code[arrPosition];
+                    //arrPosition++;
                 }
+                strOut = strIn;
                 writer.write(strOut);
             } finally {
                 reader.close();
@@ -76,7 +89,7 @@ public class Coder {
         }
     }
 
-    public char[] getCharArr(String inFileName) {
+    /*public char[] getCharArr(String inFileName) {
         //char key = 0b01001011_10001011;
         char key = 8;
         char[] arr = new char[0];
@@ -126,5 +139,5 @@ public class Coder {
             System.out.println(e.getMessage());
         }
         return arr;
-    }
+    }*/
 }
