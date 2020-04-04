@@ -10,7 +10,7 @@ class Pr{
         try {
             CharFilter.filterFile("file_out.log",
                     "file_in2.txt",
-                    " _.");
+                    "_.");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -26,7 +26,7 @@ public class CharFilter {
         FileWriter writer = new FileWriter(outFileName);
         Scanner scann = new Scanner(reader);
         while(scann.hasNextLine()){
-            String temp = scann.nextLine()+"\n";
+            String temp = scann.nextLine();
             inStr += temp;
         }
         //System.out.println(inStr);
