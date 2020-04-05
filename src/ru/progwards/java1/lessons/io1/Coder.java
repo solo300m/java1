@@ -1,10 +1,6 @@
 package ru.progwards.java1.lessons.io1;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
+import java.io.*;
 class pro{
     public static void main(String[] args) {
         Coder a = new Coder();
@@ -33,14 +29,36 @@ public class Coder {
             FileWriter writer = new FileWriter(outFileName);
 
             try {
-                Scanner scann = new Scanner(reader);
+                //Scanner scann = new Scanner(reader);
                 String strOut = "";
                 String strIn = "";
-                while (scann.hasNextLine()) {
-                    String str = scann.nextLine();
-                    char[]temp = str.toCharArray();
-                    String[]str_temp = new String[temp.length];
-                    for (int i = 0; i < temp.length; i++) {
+                char ch;
+
+                int rang = 0;
+                BufferedReader br = new BufferedReader(reader);
+                int simbol = br.read();
+                char[]temp = new char[100];
+                while (simbol != -1) {
+                    ch = (char) simbol;
+                    if (rang < temp.length) {
+                        temp[rang] = ch;
+                        rang++;
+                        simbol = br.read();
+                    } else {
+                        char[]temp2 = new char[temp.length + 100];
+                        for(int i = 0; i<temp.length;i++)
+                            temp2[i] = temp[i];
+                        temp = temp2;
+                        temp[rang] = ch;
+                        rang++;
+                        simbol = br.read();
+                    }
+                }
+                for(char s:temp)
+                    System.out.print(s);
+
+                String[]str_temp = new String[rang+1];
+                    for (int i = 0; i < str_temp.length; i++) {
                         for(int j = 0; j<code.length; j++){
                             if(code[j] == temp[i]) {
                                 temp[i] = '0';
@@ -49,9 +67,9 @@ public class Coder {
                         }
                         if(temp[i] != '0')
                             str_temp[i] = String.valueOf(temp[i]);
-                        strIn += str_temp[i]+" ";
+                        strIn += str_temp[i]/*+" "*/;
                     }
-                }
+
                 strOut = strIn;
                 writer.write(strOut);
             } finally {
