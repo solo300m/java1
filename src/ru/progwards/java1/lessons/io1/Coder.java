@@ -67,7 +67,7 @@ public class Coder {
                         }
                         if(temp[i] != '0')
                             str_temp[i] = String.valueOf(temp[i]);
-                        strIn += str_temp[i]/*+" "*/;
+                        strIn += str_temp[i]+" ";
                     }
 
                 strOut = strIn;
