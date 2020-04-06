@@ -24,99 +24,44 @@ public class Coder {
                                 char[] code,
                                 String logName) {
         try {
-            FileReader reader = new FileReader(inFileName);
-            FileWriter writer = new FileWriter(outFileName);
+            FileWriter logFile = new FileWriter(logName, true);
+            try {
+                FileReader reader = new FileReader(inFileName);
+                FileWriter writer = new FileWriter(outFileName);
 
-            try {
-                BufferedReader br = new BufferedReader(reader);
-                int simbol = br.read();
-                while (simbol != -1) {
-                    simbol = code[simbol];
-                    writer.write(simbol);
-                    simbol = br.read();
-                    }
-                } finally {
-                    reader.close();
-                    writer.close();
-                }
-        } catch (FileNotFoundException e) {
-            String msg = e.getMessage();
-            try {
-                FileWriter logFile = new FileWriter(logName, true);
                 try {
-                    logFile.write(msg + "\n");
-                } finally {
-                    logFile.close();
-
+                    BufferedReader br = new BufferedReader(reader);
+                    int simbol = br.read();
+                    while (simbol != -1) {
+                        try {
+                            simbol = code[simbol];
+                            writer.write(simbol);
+                            simbol = br.read();
+                        } catch (Exception ex) {
+                            String str = ex.getMessage();
+                            logFile.write(str);
+                        } finally {
+                            reader.close();
+                            writer.close();
+                            logFile.close();
+                        }
+                    }
+                } catch (FileNotFoundException e) {
+                    String str2 = e.getMessage();
+                    logFile.write(str2);
+                } catch (IOException e2) {
+                    String str2 = e2.getMessage();
+                    logFile.write(str2);
                 }
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            } catch (FileNotFoundException e) {
+                String str2 = e.getMessage();
+                logFile.write(str2);
+            } catch (IOException e) {
+                String str2 = e.getMessage();
+                logFile.write(str2);
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            String msg = e.getMessage();
-            try {
-                FileWriter logFile = new FileWriter(logName,true);
-                try{
-                    logFile.write(msg +"\n");
-                } finally {
-                    logFile.close();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
         }
     }
-
-    /*public char[] getCharArr(String inFileName) {
-        //char key = 0b01001011_10001011;
-        char key = 8;
-        char[] arr = new char[0];
-        try {
-            FileReader reader = new FileReader(inFileName);
-            try {
-                Scanner scann = new Scanner(reader);
-                int arrLength = 0;
-                int arrPosition = 0;
-                while (scann.hasNextLine()) {
-                    String str = scann.nextLine();
-                    char[] temp = str.toCharArray();
-                    arrLength = arrLength + temp.length+1;
-                    char[] buff = new char[arrLength];
-                    if (arr.length != 0) {
-                        for (int i = 0; i < arr.length; i++) {
-                            buff[arrPosition] = arr[i];
-                            arrPosition++;
-                        }
-                        for (int i = 0; i < temp.length; i++) {
-                            char coding = (char) (temp[i]^key);
-                            buff[arrPosition] = coding;
-                            arrPosition++;
-                        }
-                        buff[buff.length-1] = (char)('\n'^key);
-                        arr = buff;
-                        arrPosition = 0;
-                    } else {
-                        for (int i = 0; i < temp.length; i++) {
-                            char coding = (char) (temp[i]^key);
-                            buff[arrPosition] = coding;
-                            arrPosition++;
-                        }
-                        buff[buff.length-1] = (char)('\n'^key);
-                        arr = buff;
-                        arrPosition = 0;
-                    }
-                }
-            } finally {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        return arr;
-    }*/
 }
