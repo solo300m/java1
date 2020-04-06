@@ -23,67 +23,31 @@ public class Coder {
                                 String outFileName,
                                 char[] code,
                                 String logName) {
-
         try {
             FileReader reader = new FileReader(inFileName);
             FileWriter writer = new FileWriter(outFileName);
 
             try {
-                //Scanner scann = new Scanner(reader);
-                String strOut = "";
-                String strIn = "";
-                char ch;
-
-                int rang = 0;
                 BufferedReader br = new BufferedReader(reader);
                 int simbol = br.read();
-                char[]temp = new char[100];
                 while (simbol != -1) {
-                    ch = (char) simbol;
-                    if (rang < temp.length) {
-                        temp[rang] = ch;
-                        rang++;
-                        simbol = br.read();
-                    } else {
-                        char[]temp2 = new char[temp.length + 100];
-                        for(int i = 0; i<temp.length;i++)
-                            temp2[i] = temp[i];
-                        temp = temp2;
-                        temp[rang] = ch;
-                        rang++;
-                        simbol = br.read();
+                    simbol = code[simbol];
+                    writer.write(simbol);
+                    simbol = br.read();
                     }
+                } finally {
+                    reader.close();
+                    writer.close();
                 }
-                for(char s:temp)
-                    System.out.print(s);
-
-                String[]str_temp = new String[rang+1];
-                    for (int i = 0; i < str_temp.length; i++) {
-                        for(int j = 0; j<code.length; j++){
-                            if(code[j] == temp[i]) {
-                                temp[i] = '0';
-                                str_temp[i] = String.valueOf(j);
-                            }
-                        }
-                        if(temp[i] != '0')
-                            str_temp[i] = String.valueOf(temp[i]);
-                        strIn += str_temp[i];
-                    }
-
-                strOut = strIn;
-                writer.write(strOut);
-            } finally {
-                reader.close();
-                writer.close();
-            }
         } catch (FileNotFoundException e) {
             String msg = e.getMessage();
             try {
-                FileWriter logFile = new FileWriter(logName,true);
-                try{
-                    logFile.write(msg +"\n");
+                FileWriter logFile = new FileWriter(logName, true);
+                try {
+                    logFile.write(msg + "\n");
                 } finally {
                     logFile.close();
+
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
