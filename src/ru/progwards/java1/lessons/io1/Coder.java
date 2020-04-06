@@ -27,15 +27,14 @@ public class Coder {
             FileWriter logFile = new FileWriter(logName, true);
             try {
                 FileReader reader = new FileReader(inFileName);
-                FileWriter writer = new FileWriter(outFileName);
+                FileWriter writer = new FileWriter(outFileName,true);
 
                 try {
                     BufferedReader br = new BufferedReader(reader);
                     int simbol = br.read();
                     while (simbol != -1) {
                         try {
-                            simbol = code[simbol];
-                            writer.write(simbol);
+                            writer.write(code[simbol]);
                             simbol = br.read();
                         } catch (Exception ex) {
                             String str = ex.getMessage();
