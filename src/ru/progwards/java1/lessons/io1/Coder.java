@@ -1,6 +1,5 @@
 package ru.progwards.java1.lessons.io1;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,10 +25,11 @@ class pro{
 }
 
 public class Coder {
-    public static void codeFile (String inFileName,
+    /*public static void codeFile (String inFileName,
                                 String outFileName,
                                 char[] code,
-                                String logName) throws IOException{
+                                String logName) {
+
         try {
             FileWriter logFile = new FileWriter(logName, true);
             try {
@@ -54,8 +54,39 @@ public class Coder {
                 String str = e.getMessage();
                 logFile.write(str);
             }
-        }catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+        }catch (IOException ex) {
+            String str = ex.getMessage();
+
+        }
+
+    }*/
+
+    public static void codeFile(String inFileName, String outFileName, char[] code, String logName) {
+        try {
+            FileWriter logFile = new FileWriter(logName, true);
+            try {
+                FileReader reader = new FileReader(inFileName);
+                FileWriter writer = new FileWriter(outFileName, true);
+
+
+                try {
+                    int symbol = reader.read();
+                    while (symbol != -1) {
+                        writer.write(code[symbol]);
+                        symbol = reader.read();
+                    }
+
+                } finally {
+                    reader.close();
+                    writer.close();
+                }
+            } catch (Exception e) {
+                logFile.write(e.getMessage() + "\n");
+            } finally {
+                logFile.close();
+            }
+        } catch (IOException e) {
+            //
         }
     }
 }
