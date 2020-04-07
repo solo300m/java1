@@ -35,7 +35,7 @@ public class Coder {
                         writer.write(code[simbol]);
                         simbol = reader.read();
                     }
-                } catch (Exception e) {
+                } catch (FileNotFoundException e) {
                     String str = e.getMessage();
                     logFile.write(str);
                 } finally {
