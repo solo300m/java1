@@ -30,34 +30,22 @@ public class Coder {
                 FileWriter writer = new FileWriter(outFileName,true);
 
                 try {
-                    BufferedReader br = new BufferedReader(reader);
-                    int simbol = br.read();
+                    int simbol = reader.read();
                     while (simbol != -1) {
-                        try {
-                            writer.write(code[simbol]);
-                            simbol = br.read();
-                        } catch (Exception ex) {
-                            String str = ex.getMessage();
-                            logFile.write(str);
-                        } finally {
-                            reader.close();
-                            writer.close();
-                            logFile.close();
-                        }
+                        writer.write(code[simbol]);
+                        simbol = reader.read();
                     }
-                } catch (FileNotFoundException e) {
-                    String str2 = e.getMessage();
-                    logFile.write(str2);
-                } catch (IOException e2) {
-                    String str2 = e2.getMessage();
-                    logFile.write(str2);
+                } catch (Exception e) {
+                    String str = e.getMessage();
+                    logFile.write(str);
+                } finally {
+                    reader.close();
+                    writer.close();
+                    logFile.close();
                 }
             } catch (FileNotFoundException e) {
-                String str2 = e.getMessage();
-                logFile.write(str2);
-            } catch (IOException e) {
-                String str2 = e.getMessage();
-                logFile.write(str2);
+                String str = e.getMessage();
+                logFile.write(str);
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
