@@ -1,6 +1,10 @@
 package ru.progwards.java1.lessons.io1;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 class pro{
     public static void main(String[] args) {
         Coder a = new Coder();
@@ -12,22 +16,25 @@ class pro{
             System.out.print(s+" ");
         }
         System.out.println();
-        Coder.codeFile("file_out.log",
-                "file_in.txt",
-                m,"log.txt");
+
+
+           /* Coder.codeFile("file_out.log",
+                    "file_in2.txt",
+                    m,"log.txt");*/
+
     }
 }
 
 public class Coder {
-    public static void codeFile(String inFileName,
+    public static void codeFile (String inFileName,
                                 String outFileName,
                                 char[] code,
-                                String logName) {
+                                String logName) throws IOException{
         try {
             FileWriter logFile = new FileWriter(logName, true);
             try {
                 FileReader reader = new FileReader(inFileName);
-                FileWriter writer = new FileWriter(outFileName,true);
+                FileWriter writer = new FileWriter(outFileName, true);
 
                 try {
                     int simbol = reader.read();
@@ -35,7 +42,7 @@ public class Coder {
                         writer.write(code[simbol]);
                         simbol = reader.read();
                     }
-                } catch (FileNotFoundException e) {
+                } catch (RuntimeException e) {
                     String str = e.getMessage();
                     logFile.write(str);
                 } finally {
@@ -47,8 +54,8 @@ public class Coder {
                 String str = e.getMessage();
                 logFile.write(str);
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        }catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 }
