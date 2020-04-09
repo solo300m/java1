@@ -1,7 +1,7 @@
 package ru.progwards.java1.lessons.io2;
 class Pr{
     public static void main(String[] args) {
-        System.out.println(PhoneNumber.format("8(244)6079317"));
+        System.out.println(PhoneNumber.format("7(775)192871311"));
     }
 }
 public class PhoneNumber {
@@ -41,7 +41,7 @@ public class PhoneNumber {
             }
             fonNumber = sB.toString();
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
 
         }
         return fonNumber;

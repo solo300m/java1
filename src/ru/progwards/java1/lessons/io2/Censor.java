@@ -26,7 +26,7 @@ public class Censor {
                 String[]strArr = str.split(" ");
 
                 for(String s:obscene){
-                    System.out.print(s);
+                    //System.out.print(s);
                     for(int i=0; i<strArr.length; i++){
                         if(strArr[i].equals(s)){
                             char[] chArr = strArr[i].toCharArray();
@@ -43,7 +43,7 @@ public class Censor {
             }
             reader.close();
             try(FileWriter writer = new FileWriter(inoutFileName)){
-                writer.write(str1);
+                writer.write(str1.trim());
                 writer.close();
             }
 
