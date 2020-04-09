@@ -1,7 +1,7 @@
 package ru.progwards.java1.lessons.io2;
 class Pr{
     public static void main(String[] args) {
-        System.out.println(PhoneNumber.format("+7.912.873-87-04"));
+        System.out.println(PhoneNumber.format("8(244)6079317"));
     }
 }
 public class PhoneNumber {
@@ -20,7 +20,7 @@ public class PhoneNumber {
             }
             sB.append('+');
             for(int j = 0; j < fonNum.length; j++) {
-                if(fonNum[0] != '7') {
+                if(fonNum[0] != '7' && j==0) {
                     sB.append('7');
                     sB.append('(');
                 }

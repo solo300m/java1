@@ -1,12 +1,13 @@
 package ru.progwards.java1.lessons.io2;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
 class Prog{
     public static void main(String[] args) {
-        String[] obscene = {"Java", "Oracle", "Sun", "Microsystems"};
+        String[] obscene = {"write", "count", "day", "storey", "two"};
         try {
             Censor.censorFile("file1.bin", obscene);
         } catch (Censor.CensorException e) {
@@ -19,9 +20,10 @@ public class Censor {
         try(FileReader reader = new FileReader(inoutFileName)){
             Scanner scann = new Scanner(reader);
             StringBuilder sB = new StringBuilder();
+            String str1 = "";
             while(scann.hasNextLine()){
                 String str = scann.nextLine();
-                String[]strArr = str.split("\\s* |\\)");
+                String[]strArr = str.split(" ");
 
                 for(String s:obscene){
                     System.out.print(s);
@@ -36,8 +38,13 @@ public class Censor {
                 }
                 for(String s:strArr)
                     sB.append(s+" ");
-                String str1 = sB.toString();
-                System.out.println(str1);
+                str1 = sB.toString();
+                //System.out.println(str1);
+            }
+            reader.close();
+            try(FileWriter writer = new FileWriter(inoutFileName)){
+                writer.write(str1);
+                writer.close();
             }
 
         } catch (IOException e) {
