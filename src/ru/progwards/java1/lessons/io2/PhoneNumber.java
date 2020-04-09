@@ -5,12 +5,12 @@ class Pr{
     }
 }
 public class PhoneNumber {
-    public static String format(String phone){
+    public static String format(String phone) throws ArrayIndexOutOfBoundsException{
         String fonNumber = "";
         char[]fonNum = new char[11];
         String temp = "";
         StringBuffer sB = new StringBuffer();
-        try{
+
             int i = 0;
             for(char c:phone.toCharArray()){
                 if(Character.isDigit(c)) {
@@ -40,10 +40,7 @@ public class PhoneNumber {
                     sB.append(fonNum[j]);
             }
             fonNumber = sB.toString();
-        } catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
 
-        }
         return fonNumber;
     }
 }
