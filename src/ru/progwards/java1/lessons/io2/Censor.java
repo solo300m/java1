@@ -8,10 +8,11 @@ import java.util.Scanner;
 class Prog{
     public static void main(String[] args) {
         String[] obscene = {"write", "count", "day", "storey", "two"};
+        Censor Cs = new Censor();
         try {
-            Censor.censorFile("file1.bin", obscene);
+            Censor.censorFile(null, obscene);
         } catch (Censor.CensorException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
     }
 }
@@ -21,23 +22,24 @@ public class Censor {
             Scanner scann = new Scanner(reader);
             StringBuilder sB = new StringBuilder();
             String str1 = "";
-            while(scann.hasNextLine()){
+            while (scann.hasNextLine()) {
                 String str = scann.nextLine();
-                String[]strArr = str.split(" ");
+                String[] strArr = str.split(" ");
 
-                for(String s:obscene){
-                    //System.out.print(s);
-                    for(int i=0; i<strArr.length; i++){
-                        if(strArr[i].equals(s)){
+                for (String s : obscene) {
+                    //
+                    for (int i = 0; i < strArr.length; i++) {
+                        //System.out.print(strArr[i]);
+                        if (strArr[i].equals(s)) {
                             char[] chArr = strArr[i].toCharArray();
-                            for(int f = 0;f<chArr.length;f++)
-                                chArr[f]='*';
+                            for (int f = 0; f < chArr.length; f++)
+                                chArr[f] = '*';
                             strArr[i] = String.valueOf(chArr);
                         }
                     }
                 }
-                for(String s:strArr)
-                    sB.append(s+" ");
+                for (String s : strArr)
+                    sB.append(s + " ");
                 str1 = sB.toString();
                 //System.out.println(str1);
             }
@@ -47,14 +49,17 @@ public class Censor {
                 writer.close();
             }
 
-        } catch (IOException e) {
-            throw new CensorException(inoutFileName,"Не найден файл");
+        }catch(IOException e) {
+            throw new CensorException(inoutFileName, "Не найден файл");
+        }catch (NullPointerException ex){
+            throw new CensorException(inoutFileName, "Не найден файл");
         }
-
     }
-    public static class CensorException extends Exception{
+
+    public static class CensorException extends IOException {
         private String fileName;
         private String message;
+        public CensorException(){}
         public CensorException(String fileName, String message){
             super(message);
             this.fileName = fileName;
