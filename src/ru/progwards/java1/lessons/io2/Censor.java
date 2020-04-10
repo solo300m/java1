@@ -68,7 +68,7 @@ public class Censor {
 
         @Override
         public String toString(){
-            return "<"+fileName+">:<"+ message +">";
+            return fileName+":"+ message;
         }
     }
 }
