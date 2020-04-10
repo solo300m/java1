@@ -50,9 +50,9 @@ public class Censor {
             }
 
         }catch(IOException e) {
-            throw new CensorException(inoutFileName, "Не найден файл");
+            throw new CensorException();
         }catch (NullPointerException ex){
-            throw new CensorException(inoutFileName, "Не найден файл");
+            throw new CensorException();
         }
     }
 
@@ -60,15 +60,15 @@ public class Censor {
         private String fileName;
         private String message;
         public CensorException(){}
-        public CensorException(String fileName, String message){
-            super(message);
+        public CensorException(String fileName){
+            super();
             this.fileName = fileName;
-            this.message = message;
+            this.message = super.getMessage();
         }
 
         @Override
         public String toString(){
-            return "<"+fileName+">:<"+super.getMessage() +">";
+            return "<"+fileName+">:<"+ message +">";
         }
     }
 }
