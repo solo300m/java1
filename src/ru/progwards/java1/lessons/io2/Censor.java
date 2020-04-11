@@ -25,6 +25,7 @@ public class Censor {
             while (scann.hasNextLine()) {
                 String str = scann.nextLine();
                 String[] strArr = str.split(" ");
+                //System.out.println(Arrays.toString(strArr));
 
                 char[] simbols = new char[strArr.length*3];
                 int startPos = 0;
@@ -41,7 +42,7 @@ public class Censor {
                         }
                         if(j != 0 && j != word.length-1)
                             local.append(word[j]);
-                        if(j == word.length - 1) {
+                        if(j == word.length - 1 && word.length-1 != 0) {
                             if (Character.isLetter(word[word.length - 1]) == false) {
                                 simbols[endPos] = word[word.length - 1];
                             } else if (Character.isLetter(word[word.length - 1]) == true) {
@@ -52,6 +53,7 @@ public class Censor {
                     startPos = (i + 1) * 3;
                     endPos = startPos + 2;
                     strArr[i] = local.toString();
+                    //System.out.println(strArr[i]);
                 }
 
                 for (int i = 0; i < strArr.length; i++) {
