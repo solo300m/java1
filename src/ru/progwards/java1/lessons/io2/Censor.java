@@ -25,41 +25,34 @@ public class Censor {
             while (scann.hasNextLine()) {
                 String str = scann.nextLine();
                 String[] strArr = str.split(" ");
-                //System.out.println(Arrays.toString(strArr));
 
                 char[] simbols = new char[strArr.length*3];
                 int startPos = 0;
                 int endPos = 2;
                 for(int i = 0; i<strArr.length; i++){
                     char[] word = strArr[i].toCharArray();
-                    if(Character.isAlphabetic(word[0]) == false /*|| */){
-                        //System.out.println(word[0]);
-                        simbols[startPos] = word[0];
-                        word[0] = ' ';
+                    StringBuilder local = new StringBuilder();
+                    for(int j = 0; j<word.length; j++) {
+                        if(j == 0) {
+                            if (Character.isLetter(word[j]) == false) {
+                                simbols[startPos] = word[j];
+                            } else if (Character.isLetter(word[j]) == true)
+                                local.append(word[j]);
+                        }
+                        if(j != 0 && j != word.length-1)
+                            local.append(word[j]);
+                        if(j == word.length - 1) {
+                            if (Character.isLetter(word[word.length - 1]) == false) {
+                                simbols[endPos] = word[word.length - 1];
+                            } else if (Character.isLetter(word[word.length - 1]) == true) {
+                                local.append(word[j]);
+                            }
+                        }
                     }
-                    /*else if(Character.isDigit(word[0]) == false){
-                        simbols[startPos] = word[0];
-                        word[0] = ' ';
-                    }*/
-                    if(Character.isAlphabetic(word[word.length-1]) == false /*||*/) {
-
-                        //System.out.println(word[word.length - 1]);
-                        simbols[endPos] = word[word.length - 1];
-                        word[word.length - 1] = ' ';
-                    }
-                    /*else if( Character.isDigit(word[word.length-1]) == false){
-                        simbols[startPos] = word[word.length-1];
-                        word[word.length-1] = ' ';
-                    }*/
-                    startPos = (i+1)*3;
-                    endPos = startPos+2;
-                    strArr[i] = String.valueOf(word);
-                    strArr[i] = strArr[i].trim();
+                    startPos = (i + 1) * 3;
+                    endPos = startPos + 2;
+                    strArr[i] = local.toString();
                 }
-                /*for(String s: strArr)
-                    System.out.print(s+" ");
-                for(char d: simbols)
-                    System.out.print(d+" ");*/
 
                 for (int i = 0; i < strArr.length; i++) {
                     for (String s : obscene) {
@@ -70,15 +63,19 @@ public class Censor {
                             strArr[i] = String.valueOf(chArr);
                         }
                     }
+
                 }
                 startPos = 0;
                 endPos = 2;
                 for (int i = 0; i<strArr.length; i++){
-                    if(simbols[startPos] != ' ') {
+                    if(simbols[startPos] == 0) {
+                        sB.append(strArr[i]);
+                    }
+                    else {
                         sB.append(simbols[startPos]);
                         sB.append(strArr[i]);
                     }
-                    if(simbols[endPos] != ' '){
+                    if(simbols[endPos] != 0){
                         sB.append(simbols[endPos]);
                         sB.append(" ");
                     }else
@@ -87,7 +84,7 @@ public class Censor {
                     endPos = startPos+2;
                 }
                 str1 = sB.toString();
-               // System.out.println(str1);
+
             }
             reader.close();
             try(FileWriter writer = new FileWriter(inoutFileName)){
