@@ -24,11 +24,23 @@ public class Censor {
             String str1 = "";
             while (scann.hasNextLine()) {
                 String str = scann.nextLine();
+                int[] tire = new int[str.length()];
+                int x = 0;
+                int y = 0;
+                while(y < str.length()){
+                    x = str.indexOf('-', x);
+                    str = str.replace('-',' ');
+                    tire[y] = x;
+                    y++;
+                }
+                //System.out.println(Arrays.toString(tire));
+
                 String[] strArr = str.split(" ");
                 //System.out.println(Arrays.toString(strArr));
 
                 char[] simbols = new char[strArr.length*3];
                 int startPos = 0;
+                //int midlePos = 1;
                 int endPos = 2;
                 for(int i = 0; i<strArr.length; i++){
                     char[] word = strArr[i].toCharArray();
@@ -42,6 +54,7 @@ public class Censor {
                         }
                         if(j != 0 && j != word.length-1)
                             local.append(word[j]);
+
                         if(j == word.length - 1 && word.length-1 != 0) {
                             if (Character.isLetter(word[word.length - 1]) == false) {
                                 simbols[endPos] = word[word.length - 1];
@@ -51,6 +64,7 @@ public class Censor {
                         }
                     }
                     startPos = (i + 1) * 3;
+                    //midlePos = startPos + 1;
                     endPos = startPos + 2;
                     strArr[i] = local.toString();
                     //System.out.println(strArr[i]);
@@ -84,6 +98,11 @@ public class Censor {
                         sB.append(" ");
                     startPos = (i+1)*3;
                     endPos = startPos+2;
+                }
+                //sB.append("-",tire[0],tire[0]+1);
+                for(int i = 0; i<tire.length; i++) {
+                    if(tire[i] != -1 && tire[i] != 0)
+                        sB.replace(tire[i], tire[i] + 1, "-");
                 }
                 str1 = sB.toString();
 
