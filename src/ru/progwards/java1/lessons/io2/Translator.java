@@ -1,11 +1,13 @@
 package ru.progwards.java1.lessons.io2;
 
+import java.util.Arrays;
+
 class Programs{
     public static void main(String[] args) {
         String[] rus = {"привет", "мир", "меня зовут","сергей"};
         String[] engl = {"hello","world","my name is","sergey"};
         Translator tR = new Translator(new String[]{"make", "love", "not", "war"},new String[]{"твори", "любовь", "не", "войну"});
-        System.out.println(tR.translate("Make Love, not war, i am Sergey."));
+        System.out.println(tR.translate("Not war - love make!"));
     }
 }
 
@@ -26,14 +28,18 @@ public class Translator<pivate> {
         int[] tire = new int[sentence.length()];
         int x = 0;
         int y = 0;
-        while(y < sentence.length()){
-            x = sentence.indexOf('-', x);
-            sentence = sentence.replace('-',' ');
+
+        /*while(y < sentence.length()){
+            x = sentence.indexOf(" - ");
+            x = sentence.indexOf('-', x+2);
+            sentence = sentence.replace('-', ' ');
             tire[y] = x;
+
             y++;
-        }
+        }*/
 
         String[] strArr = sentence.split(" ");
+        System.out.println(Arrays.toString(strArr));
 
         //Массив strArr освобожден от тире следующий этап вычистить и запомнить знаки препинания
         //Очистка от знаков препинания и запоминание их позиций в строке
@@ -50,6 +56,7 @@ public class Translator<pivate> {
                     } else if (Character.isLetter(word[j]) == true)
                         local.append(word[j]);
                 }
+
                 if(j != 0 && j != word.length-1)
                     local.append(word[j]);
 
@@ -101,8 +108,15 @@ public class Translator<pivate> {
                 buffer.append(strArr[i]);
             }
             if(simbols[endPos] != 0){
-                buffer.append(simbols[endPos]);
-                buffer.append(" ");
+                if(simbols[endPos] != '-') {
+                    buffer.append(simbols[endPos]);
+                    buffer.append(" ");
+                }
+                else{
+                    buffer.append(" ");
+                    buffer.append(simbols[endPos]);
+                    buffer.append(" ");
+                }
             }else
                 buffer.append(" ");
             startPos = (i+1)*3;
