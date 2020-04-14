@@ -2,17 +2,19 @@ package ru.progwards.java1.lessons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 class MyProg{
     public static void main(String[] args) {
-        Collection<Integer> fff = Creator.fillEven(15);
+        Collection<Integer> fff = Creator.fillEven(12);
         for(Integer s: fff)
             System.out.print(s+" ");
         System.out.println();
-        Collection<Integer> ff2 = Creator.fillOdd(15);
+        Collection<Integer> ff2 = Creator.fillOdd(19);
         for(Integer s: ff2)
             System.out.print(s+" ");
         System.out.println();
-        Collection<Integer> ff3 = Creator.fill3(3);
+        Collection<Integer> ff3 = Creator.fill3(4);
         for(Integer s: ff3)
             System.out.print(s+" ");
         System.out.println();
@@ -22,43 +24,38 @@ class MyProg{
 public class Creator {
     public static Collection<Integer> fillEven(int n){
         Collection<Integer> coll = new ArrayList<>();
-        for(int i = 2; i < n; i+=2){
-            coll.add(i);
+        int j = 2;
+        for(int i = 0; i < n; i++){
+            coll.add(j);
+            j+=2;
         }
         return coll;
     }
 
     public static Collection<Integer> fillOdd(int n){
-        Collection<Integer> coll = new ArrayList<>();
-        for (int i = n*3*2; i >= 1; i--) {
-            if(i % 2 != 0)
-                coll.add(i);
+        List<Integer> coll = new ArrayList<>();
+        for(int i = 1; i<n*2; i++) {
+            int j = i;
+            if(j % 2 != 0)
+               coll.add(i);
         }
-        return coll;
+        Collection<Integer> rez = new ArrayList<>();
+        for(int i = coll.size()-1; i>= 0; i--) {
+            rez.add(coll.get(i));
+        }
+        return rez;
     }
 
     public static Collection<Integer> fill3(int n){
         Collection<Integer> coll = new ArrayList<>();
-        for(int i = 0; i <= n; i++){
-            if(i == 0){
-                coll.add(0);
-                coll.add(0);
-                coll.add(0);
-            }
-            else if(i == 1){
-                coll.add(1);
-                coll.add(1);
-                coll.add(1);
-            }
-            else {
-                for (int j = 0; j < 3; j++ ) {
-                    if(j == 0)
-                        coll.add(i);
-                    else if(j == 1)
-                        coll.add(i*i);
-                    else if(j == 2)
-                        coll.add(i*i*i);
-                }
+        for(int index = 0; index < n*3; index += 3){
+            for(int i = 0; i < 3; i++){
+                if(i == 0)
+                    coll.add(index);
+                else if(i == 1)
+                    coll.add(index*index);
+                else if(i == 2)
+                    coll.add(index*index*index);
             }
         }
         return coll;

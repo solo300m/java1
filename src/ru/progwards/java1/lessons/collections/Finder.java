@@ -15,9 +15,18 @@ class p{
         names.add("Ольга");
         System.out.println(Finder.findSimilar(names));*/
        Collection<Integer> numbers = new ArrayList<>();
-       for(int i = 1; i < 20; i++){
+       /*for(int i = 1; i < 20; i++){
            numbers.add(i);
-       }
+       }*/
+        numbers.add(3);
+        numbers.add(1);
+        numbers.add(7);
+        numbers.add(2);
+        numbers.add(3);
+        numbers.add(5);
+        numbers.add(6);
+        numbers.add(5);
+
         System.out.println(Finder.findSequence(numbers));
     }
 }
@@ -57,12 +66,17 @@ public class Finder {
         List<Integer> temp = new ArrayList<>();
         for(int i = 1; i <= numbers.size(); i++)
             temp.add(i);
-        /*for(Integer s: temp)
-            System.out.print(s+" ");*/
+        for(Integer s: numbers)
+            System.out.print(s+" ");
+        System.out.println();
+        for(Integer s: temp)
+            System.out.print(s+" ");
+        System.out.println();
+
         boolean rez = true;
-        for(int i = 0; i < numbers.size(); i++){
-            for(int j = 0; j < temp.size(); j++){
-                if(((List<Integer>) numbers).get(i).equals(temp.get(j)) == true) {
+        for(int i = 0; i < temp.size(); i++){
+            for(int j = 0; j < numbers.size(); j++){
+                if(((List<Integer>) numbers).get(j).equals(temp.get(i)) == true) {
                     rez = true;
                     break;
                 }

@@ -2,6 +2,34 @@ package ru.progwards.java1.lessons.collections;
 
 import java.util.Iterator;
 
+class pro{
+    public static void main(String[] args) {
+        Integer [][] arr = new Integer[3][4];
+        arr[0][0] = 1;
+        arr[0][1] = 2;
+        arr[0][2] = 3;
+        arr[0][3] = 4;
+        arr[1][0] = 5;
+        arr[1][1] = 6;
+        arr[1][2] = 7;
+        arr[1][3] = 8;
+        arr[2][0] = 9;
+        arr[2][1] = 10;
+        arr[2][2] = 11;
+        arr[2][3] = 12;
+        for(int i = 0; i<3; i++){
+            for (int j = 0; j < 4; j++){
+                System.out.print(arr[i][j]+" ");
+            }
+            System.out.println();
+        }
+        MatrixIterator<Integer> iter = new MatrixIterator<Integer>(arr);
+        while (iter.hasNext()){
+            Integer intObj = iter.next();
+        }
+    }
+}
+
 public class MatrixIterator<T> implements Iterator<T> {
 
     private T[][] array;
@@ -56,12 +84,12 @@ public class MatrixIterator<T> implements Iterator<T> {
     public T next() {
         if(row.hasNext()){
             if(coll.hasNext()){
-                return array[getIndexX()][indexY++];
+                return array[indexX++][getIndexY()];
             }
             else
             {
                 indexY = 0;
-                return array[indexX++][getIndexY()];
+                return array[getIndexX()][indexY++];
             }
         }
         else
