@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 class p{
     public static void main(String[] args) {
-        Collection<String> names = new ArrayList<>();
+       /* Collection<String> names = new ArrayList<>();
         names.add("Виктор");
         names.add("Ольга");
         names.add("Виктор");
@@ -13,7 +13,12 @@ class p{
         names.add("Виктор");
         names.add("Ольга");
         names.add("Ольга");
-        System.out.println(Finder.findSimilar(names));
+        System.out.println(Finder.findSimilar(names));*/
+       Collection<Integer> numbers = new ArrayList<>();
+       for(int i = 1; i < 20; i++){
+           numbers.add(i);
+       }
+        System.out.println(Finder.findSequence(numbers));
     }
 }
 
@@ -52,11 +57,16 @@ public class Finder {
         List<Integer> temp = new ArrayList<>();
         for(int i = 1; i <= numbers.size(); i++)
             temp.add(i);
+        /*for(Integer s: temp)
+            System.out.print(s+" ");*/
         boolean rez = true;
         for(int i = 0; i < numbers.size(); i++){
-
             for(int j = 0; j < temp.size(); j++){
-                if(((List<Integer>) numbers).get(i).equals(temp.get(j)) == false) {
+                if(((List<Integer>) numbers).get(i).equals(temp.get(j)) == true) {
+                    rez = true;
+                    break;
+                }
+                else{
                     rez = false;
                 }
             }
