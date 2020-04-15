@@ -17,15 +17,16 @@ class pro{
         arr[2][1] = 10;
         arr[2][2] = 11;
         arr[2][3] = 12;
-        for(int i = 0; i<3; i++){
+        /*for(int i = 0; i<3; i++){
             for (int j = 0; j < 4; j++){
                 System.out.print(arr[i][j]+" ");
             }
             System.out.println();
-        }
+        }*/
         MatrixIterator<Integer> iter = new MatrixIterator<Integer>(arr);
         while (iter.hasNext()){
             Integer intObj = iter.next();
+            System.out.print(intObj+" ");
         }
     }
 }
@@ -45,7 +46,7 @@ public class MatrixIterator<T> implements Iterator<T> {
         this.row = new Iterator<T>() {
             @Override
             public boolean hasNext() {
-                if(getIndexX()>array.length)
+                if(indexX >= array.length)
                     return false;
                 else
                     return true;
@@ -53,13 +54,14 @@ public class MatrixIterator<T> implements Iterator<T> {
 
             @Override
             public T next() {
-                return array[indexX++][getIndexY()];
+                //indexX++;
+                return array[indexX++][indexY];
             }
         };
         this.coll = new Iterator<T>() {
             @Override
             public boolean hasNext() {
-                if(getIndexY() > array[getIndexX()].length)
+                if(indexY >= array[indexX].length)
                     return false;
                 else
                     return true;
@@ -67,7 +69,8 @@ public class MatrixIterator<T> implements Iterator<T> {
 
             @Override
             public T next() {
-                return array[getIndexX()][indexY++];
+                //indexY++;
+                return array[indexX][indexY++];
             }
         };
     }
@@ -75,6 +78,7 @@ public class MatrixIterator<T> implements Iterator<T> {
     @Override
     public boolean hasNext() {
         if(row.hasNext() == true && coll.hasNext() == true)
+            //if(indexY*indexX <= array.length)
             return true;
         else
             return false;
@@ -82,23 +86,29 @@ public class MatrixIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
+
         if(row.hasNext()){
+
             if(coll.hasNext()){
-                return array[indexX++][getIndexY()];
+                T ff = array[indexX][indexY];
+                indexY++;
+                if(coll.hasNext() == false) {
+                    indexY = 0;
+                    indexX++;
+                }
+                return ff;
             }
             else
             {
                 indexY = 0;
-                return array[getIndexX()][indexY++];
+                indexX++;
+                T ff = array[indexX][indexY];
+                return ff;
             }
         }
-        else
+        else{
             return null;
+        }
     }
-    public int getIndexX(){
-        return indexX;
-    }
-    public  int getIndexY(){
-        return indexY;
-    }
+   
 }
