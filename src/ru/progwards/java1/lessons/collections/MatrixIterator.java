@@ -110,5 +110,5 @@ public class MatrixIterator<T> implements Iterator<T> {
             return null;
         }
     }
-   
+
 }

@@ -1,5 +1,6 @@
 package Sergey.Ekkel;
 
+import java.math.BigDecimal;
 import java.util.Random;
 
 public class Ekkel1 {
@@ -12,7 +13,55 @@ public class Ekkel1 {
         //System.out.println(test(10,2,6));
         //foreach_2();
         //test_ob();
-        System.out.println(fractional(11111.53));
+        //System.out.println(fractional(11111.53));
+        //System.out.println(addAsStrings(2,1));
+        //System.out.println(factorial(5));
+        //System.out.println(true&&false||true);
+        //array();
+       // int [] a = {12,23,34,45};
+        //System.out.println(sumArrayItems(a));
+        /*int[] a1 = {12, 5, 0, 58, 36};
+        int[] a2 = Arrays.copyOf(a1, a1.length);
+        Arrays.sort(a2);
+        System.out.println(Arrays.equals(a1, a2));*/
+        //System.out.println(intToGrade(1));
+        /*byte s = 111;
+        System.out.println(Integer.toBinaryString(s));
+        //s&=1;
+        s>>=1;
+        System.out.println(Integer.toBinaryString(s));
+        s>>=1;
+        System.out.println(Integer.toBinaryString(s));*/
+        class Rectangle {
+            Rectangle(BigDecimal a, BigDecimal b) {
+                this.aa = a;
+                this.bb = b;
+            }
+            public BigDecimal aa;
+            public BigDecimal bb;
+            BigDecimal getAa(){
+                return aa;
+            }
+            BigDecimal getBb(){
+                return bb;
+            }
+        }
+        BigDecimal a = new BigDecimal("3");
+        BigDecimal b = new BigDecimal("2");
+        BigDecimal a1 = new BigDecimal("2");
+        BigDecimal b1 = new BigDecimal("3");
+
+        Rectangle p1 = new Rectangle(a, b);
+        Rectangle p2 = new Rectangle(a1,b1);
+        BigDecimal area1;
+        area1 = p1.getAa().multiply(p1.getBb());
+        BigDecimal area2;
+        area2 = p2.getAa().multiply(p2.getBb());
+        int rez = (area1.compareTo(area2));
+        System.out.println(area1+" "+area2);
+        System.out.println(rez);
+
+
     }
     public static void ArrayPrint(int count){
         for(int i=1; i< count+1; i++) {
@@ -109,4 +158,53 @@ public class Ekkel1 {
         double res = (Math.round((num % 1)*100))/100.0;
         return res;
     }
+    public static int addAsStrings(int n1, int n2){
+        Integer n11 = n1;
+        Integer n21 = n2;
+        String str1 = n11.toString();
+        String str2 = n21.toString();
+        str1 = str1 + str2;
+        return Integer.parseInt(str1);
+    }
+    public static long factorial(long n) {
+        if (n == 0L) return 1L;
+        else {
+            long rez = 1L;
+            for (int i = 2; i <= n; i++)
+                rez = rez * i;
+            return rez;
+        }
+    }
+    public static void array(){
+        int[][] a = new int[3][3];
+        int item = a[1][2];
+        System.out.println(item);
+        //int a1[],b[],c[];
+        //int aa[][] = {a1,b,c}; нельзя вставлять в двумерный массив неинициализированные одномерные
+        int[] b = new int[10];
+        int a3[][][];
+        a3 = new int[2][2][2];
+
+
+
+    }
+    public static int sumArrayItems(int[] a){
+        int summ = 0;
+        for(int i=0; i<a.length;i++)
+            summ += a[i];
+        return summ;
+    }
+    enum Grade{VERYBAD,BAD,SATISFACTORILY,GOOD,EXCELLENT,NOTDEFINED}
+    static Grade intToGrade(int grade){
+        switch(grade){
+            case 1:return Grade.VERYBAD;
+            case 2:return Grade.BAD;
+            case 3:return Grade.SATISFACTORILY;
+            case 4:return Grade.GOOD;
+            case 5:return Grade.EXCELLENT;
+            default: return Grade.NOTDEFINED;
+        }
+    }
+
+
 }

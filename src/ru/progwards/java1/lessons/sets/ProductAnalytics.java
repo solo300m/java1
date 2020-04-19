@@ -5,26 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class productAnalytics {
-    class Product{
-        private String code = "";
-        public Product(String code){
-            this.code = code;
-        }
-        public String getCode(){
-            return this.code;
-        }
-    }
-    class Shop{
-        private List<Product> products = new ArrayList<>();
-        public Shop(List<Product> products){
-            this.products.addAll(products);
-        }
-        public List<Product> getProducts(){
-            return this.products;
-        }
-    }
-    class ProductAnalytics{
+public class ProductAnalytics {
         private List<Shop> shops = new ArrayList<>();
         private List<Product> products = new ArrayList<>();
         public ProductAnalytics(List<Product> products, List<Shop> shops){
@@ -64,6 +45,6 @@ public class productAnalytics {
             }
             return goods;
         }
-    }
-
 }
+
+
