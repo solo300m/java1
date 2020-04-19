@@ -59,18 +59,17 @@ public class ProductAnalytics {
         }
         public Set<Product> existOnlyInOne(){
             Set<Product> goods = new HashSet<>();
-            Set<Product> del = new HashSet<>();
-            for(int i = 0; i < shops.get(i).getProducts().size(); i++) {
-                Product a = shops.get(i).getProducts().get(i);
-                for(int j = 1; j< shops.get(j).getProducts().size(); j++){
-                    Product b = shops.get(j).getProducts().get(j);
-                    if(a.equals(b))
-                        del.add(a);
-               }
-            }
-                //goods.addAll(shops.get(j).getProducts());
 
-            return del;
+            for(int i = 0; i < shops.size(); i++) {
+                Set<Product> del = new HashSet<>(shops.get(i).getProducts());
+                for(int j = 0; j< shops.size(); j++){
+                    if(j == i) continue;
+                    del.removeAll(shops.get(j).getProducts());
+                }
+                //System.out.println(del);
+                goods.addAll(del);
+            }
+            return goods;
         }
 }
 
