@@ -21,7 +21,7 @@ class Prog1{
     }
 }
 public class CollectionsSort {
-    public Collection<Integer> data;
+    public static Collection<Integer> data;
     public CollectionsSort(List<Integer> a){
         data = new ArrayList<>();
         this.data.addAll(a);
@@ -63,7 +63,7 @@ public class CollectionsSort {
         }
         //System.out.println(rez);
     }
-    public Collection<String> compareSort(){
+    public static Collection<String> compareSort(){
         List<String> rez = new ArrayList<>();
         List<AnalisSpeed> array = new ArrayList<>();
         AnalisSpeed mySort = new AnalisSpeed("mySort");
@@ -74,19 +74,19 @@ public class CollectionsSort {
         array.add(collSort);
 
         long start = System.currentTimeMillis();
-        CollectionsSort.collSort(this.getData());
+        CollectionsSort.collSort(CollectionsSort.data);
         long timeProces = System.currentTimeMillis() - start;
         array.get(array.indexOf(collSort)).setSpeed(timeProces);
-        Collections.shuffle((List<?>) this.data);
+        Collections.shuffle((List<?>) CollectionsSort.data);
 
         start = System.currentTimeMillis();
-        CollectionsSort.mySort(this.getData());
+        CollectionsSort.mySort(CollectionsSort.data);
         timeProces = System.currentTimeMillis() - start;
         array.get(array.indexOf(mySort)).setSpeed(timeProces);
-        Collections.shuffle((List<?>) this.data);
+        Collections.shuffle((List<?>) CollectionsSort.data);
 
         start = System.currentTimeMillis();
-        CollectionsSort.minSort(this.getData());
+        CollectionsSort.minSort(CollectionsSort.data);
         timeProces = System.currentTimeMillis() - start;
         array.get(array.indexOf(minSort)).setSpeed(timeProces);
 
@@ -109,31 +109,6 @@ public class CollectionsSort {
         for(AnalisSpeed s:array)
             rez.add(s.getNameMetod());
         return rez;
-    }
-    class AnalisSpeed{
-        private String nameMetod;
-        public long speed;
-        public AnalisSpeed(String name){
-            this.nameMetod = name;
-            this.speed = 0L;
-        }
-
-        public String getNameMetod() {
-            return nameMetod;
-        }
-
-        public long getSpeed() {
-            return speed;
-        }
-
-        public void setSpeed(long speed) {
-            this.speed = speed;
-        }
-
-        @Override
-        public String toString() {
-            return  "nameMetod= " + nameMetod + ", speed= " + speed;
-        }
     }
 
 }
