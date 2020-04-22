@@ -4,18 +4,19 @@ import java.util.*;
 
 class Prog1{
     public static void main(String[] args) {
-        List<Integer> data = new ArrayList<>();
-        for(int i = 0; i < 100000; i++)
-            data.add(i);
-        Collections.shuffle(data);
-        /*System.out.println(data);
-        CollectionsSort.minSort(data);
-        List<Integer> data1 = new ArrayList<>(List.of(1,2,3,4,5,6,7,8));
-        Collections.shuffle(data1);
-        CollectionsSort.collSort(data1);
-        Collections.shuffle(data1);
-        System.out.println(data1);
-        CollectionsSort.mySort(data1);*/
+        //List<Integer> data = new ArrayList<>();
+        //for(int i = 0; i < 100000; i++)
+        //    data.add(i);
+        List<Integer> data = new ArrayList<>(List.of(7,66,41,41,58));
+        //Collections.shuffle(data);
+        //System.out.println(data);
+        //CollectionsSort.minSort(data);
+        //Collections.shuffle(data);
+        //CollectionsSort.collSort(data);
+        //Collections.shuffle(data);
+        //System.out.println(data);
+        //CollectionsSort.mySort(data);
+        //System.out.println(data);
         CollectionsSort a = new CollectionsSort(data);
         System.out.println(a.compareSort());
     }
@@ -33,8 +34,8 @@ public class CollectionsSort {
     public static void mySort(Collection<Integer> data){
         List<Integer> rez = new ArrayList<>();
         rez.addAll(data);
-        for(int i=0; i < rez.size(); i++){
-            for(int j=i+1; j < rez.size(); j++){
+        for(int i = 0; i < rez.size(); i++){
+            for(int j = i+1; j < rez.size(); j++){
                 if(rez.get(j) < rez.get(i)){
                     Integer ref = rez.get(j);
                     rez.set(j, rez.get(i));
@@ -42,7 +43,8 @@ public class CollectionsSort {
                 }
             }
         }
-        data = rez;
+        data.clear();
+        data.addAll(rez);
         //System.out.println(data);
     }
     public static void minSort(Collection<Integer> data){
@@ -61,6 +63,8 @@ public class CollectionsSort {
             rez.addAll(data);
             Collections.sort(rez);
         }
+        data.clear();
+        data.addAll(rez);
         //System.out.println(rez);
     }
     public static Collection<String> compareSort(){
