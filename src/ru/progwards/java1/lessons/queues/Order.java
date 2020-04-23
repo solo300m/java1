@@ -14,6 +14,7 @@ public class Order {
     private static int coun;
     private int num;
     private int priority;
+    public Order(){}
     public Order(double sum){
         this.sum = sum;
         coun++;
@@ -33,5 +34,9 @@ public class Order {
     }
     public int getPriority(){
         return priority;
+    }
+    @Override
+    public String toString() {
+        return "Order :" + this.getSum()+" num :"+this.getNum()+" priority :"+this.getPriority();
     }
 }
