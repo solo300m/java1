@@ -7,7 +7,9 @@ class Prog1{
         //List<Integer> data = new ArrayList<>();
         //for(int i = 0; i < 100000; i++)
         //    data.add(i);
-        List<Integer> data = new ArrayList<>(List.of(7,66,41,41,58));
+        //List<Integer> data = new ArrayList<>(List.of(7,66,41,41,58,55,56,89,59,45,53,
+        //        789,56,159,5,-66,8,-999));
+        List<Integer> data = null;
         //Collections.shuffle(data);
         //System.out.println(data);
         //CollectionsSort.minSort(data);
@@ -24,8 +26,13 @@ class Prog1{
 public class CollectionsSort {
     public static Collection<Integer> data;
     public CollectionsSort(List<Integer> a){
-        data = new ArrayList<>();
-        this.data.addAll(a);
+        if(a!= null) {
+            data = new ArrayList<>();
+            this.data.addAll(a);
+        }
+        else{
+            data = new ArrayList<>();
+        }
     }
     public Collection<Integer> getData(){
         return data;
