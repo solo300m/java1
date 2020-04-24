@@ -5,27 +5,28 @@ import java.util.*;
 class Prog1{
     public static void main(String[] args) {
         //List<Integer> data = new ArrayList<>();
-        //for(int i = 0; i < 100000; i++)
+        //for(int i = 0; i < 10000; i++)
         //    data.add(i);
+        //Collections.shuffle(data);
         //List<Integer> data = new ArrayList<>(List.of(7,66,41,41,58,55,56,89,59,45,53,
         //        789,56,159,5,-66,8,-999));
-        List<Integer> data = null;
+        //List<Integer> data = null;
         //Collections.shuffle(data);
         //System.out.println(data);
         //CollectionsSort.minSort(data);
         //Collections.shuffle(data);
         //CollectionsSort.collSort(data);
-        //Collections.shuffle(data);
+
         //System.out.println(data);
         //CollectionsSort.mySort(data);
         //System.out.println(data);
-        CollectionsSort a = new CollectionsSort(data);
-        System.out.println(a.compareSort());
+        //CollectionsSort a = new CollectionsSort(data);
+        System.out.println(CollectionsSort.compareSort());
     }
 }
 public class CollectionsSort {
-    public static Collection<Integer> data;
-    public CollectionsSort(List<Integer> a){
+    public Collection<Integer> data;
+    /*public CollectionsSort(List<Integer> a){
         if(a!= null) {
             data = new ArrayList<>();
             this.data.addAll(a);
@@ -33,7 +34,7 @@ public class CollectionsSort {
         else{
             data = new ArrayList<>();
         }
-    }
+    }*/
     public Collection<Integer> getData(){
         return data;
     }
@@ -75,6 +76,12 @@ public class CollectionsSort {
         //System.out.println(rez);
     }
     public static Collection<String> compareSort(){
+        List<Integer> data = new ArrayList<>();
+        for(int i = 0; i < 10000; i++)
+            data.add(i);
+        Collections.shuffle(data);
+        //Collection<Integer> a = new CollectionsSort(data);
+
         List<String> rez = new ArrayList<>();
         List<AnalisSpeed> array = new ArrayList<>();
         AnalisSpeed mySort = new AnalisSpeed("mySort");
@@ -85,19 +92,19 @@ public class CollectionsSort {
         array.add(collSort);
 
         long start = System.currentTimeMillis();
-        CollectionsSort.collSort(CollectionsSort.data);
+        CollectionsSort.collSort(data);
         long timeProces = System.currentTimeMillis() - start;
         array.get(array.indexOf(collSort)).setSpeed(timeProces);
-        Collections.shuffle((List<?>) CollectionsSort.data);
+        Collections.shuffle(data);
 
         start = System.currentTimeMillis();
-        CollectionsSort.mySort(CollectionsSort.data);
+        CollectionsSort.mySort(data);
         timeProces = System.currentTimeMillis() - start;
         array.get(array.indexOf(mySort)).setSpeed(timeProces);
-        Collections.shuffle((List<?>) CollectionsSort.data);
+        Collections.shuffle(data);
 
         start = System.currentTimeMillis();
-        CollectionsSort.minSort(CollectionsSort.data);
+        CollectionsSort.minSort(data);
         timeProces = System.currentTimeMillis() - start;
         array.get(array.indexOf(minSort)).setSpeed(timeProces);
 
