@@ -22,16 +22,18 @@ public class UsageFrequency {
         try(FileReader reader = new FileReader(fileName)) {
             Scanner scann = new Scanner(reader);
             while(scann.hasNext()){
-                list.add(scann.nextLine().split("[\\s.,?\"';:\\-=@><_()/&$%!]"));//
+                list.add(scann.nextLine().split("[^A-Za-zА-Яа-я0-9]"));//"[\\s.,?\"';:\\-=@><_()/&$%!]"
             }
             //List<String>list1 = new ArrayList<>();
             for(String[] s:list){
                 for (int i = 0; i < s.length; i++) {
                     if(!s[i].isEmpty()) {
+                        //s[i].replaceAll("[^A-Za-zА-Яа-я0-9]","");
                         list1.add(s[i]);
                     }
                 }
             }
+
 
             /*for(String s: list1){
                 System.out.print(s+" ");
