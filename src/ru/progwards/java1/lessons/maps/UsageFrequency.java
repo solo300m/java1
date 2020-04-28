@@ -28,7 +28,7 @@ public class UsageFrequency {
             for(String[] s:list){
                 for (int i = 0; i < s.length; i++) {
                     if(!s[i].isEmpty()) {
-                        list1.add(s[i].toLowerCase());
+                        list1.add(s[i]);
                     }
                 }
             }
@@ -48,7 +48,7 @@ public class UsageFrequency {
         HashMap<Character, Integer> mapChar = new HashMap<>();
         for(String s: list1 ){
             char[] arrCh = new char[s.length()];
-            arrCh = s.toLowerCase().toCharArray();
+            arrCh = s.toCharArray();
             for(int j = 0; j < arrCh.length; j++){
                 if(/*Character.isLetter(arrCh[j])||*/Character.isLetterOrDigit(arrCh[j]) && mapChar.containsKey(arrCh[j])){
                     Integer count = mapChar.get(arrCh[j]);
@@ -65,7 +65,7 @@ public class UsageFrequency {
     public Map<String, Integer> getWords(){
         Map<String, Integer> mapString = new HashMap<>();
         for(String s: list1 ) {
-            String tmp = s.toLowerCase().toString();
+            String tmp = s.toString();
             if (tmp!=" " && mapString.containsKey(tmp)) {
                 Integer count = mapString.get(tmp);
                 count++;

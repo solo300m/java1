@@ -102,11 +102,11 @@ public class SalesInfo {
                 saleName.put(s.getName(),s.getSumSale());
             }
             if(countName.containsKey(s.getName())){
-                int count = countName.get(s.getName()) + 1;
+                int count = countName.get(s.getName()) + s.getCount();
                 countName.put(s.getName(),count);
             }
             else{
-                countName.put(s.getName(),1);
+                countName.put(s.getName(),s.getCount());
             }
         }
         //System.out.println(saleName);
