@@ -1,10 +1,11 @@
 package ru.progwards.java1.lessons.maps;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 class myClass{
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
         UsageFrequency a = new UsageFrequency();
         a.processFile("wiki.test.tokens");//"wiki.test.tokens" "file_out.log"
         System.out.println(a.getLetters());
@@ -17,7 +18,7 @@ class myClass{
 public class UsageFrequency {
     List<String[]> list = new ArrayList<>();
     List<String> list1 = new ArrayList<>();
-    public void processFile(String fileName) throws IOException {
+    public void processFile(String fileName)  {
         try(FileReader reader = new FileReader(fileName)) {
             Scanner scann = new Scanner(reader);
             while(scann.hasNext()){
@@ -37,8 +38,10 @@ public class UsageFrequency {
             }
             System.out.println();*/
 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
-            throw new IOException(e.getMessage());
+            e.printStackTrace();
         }
     }
     public Map<Character, Integer> getLetters(){

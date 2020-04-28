@@ -1,10 +1,11 @@
 package ru.progwards.java1.lessons.maps;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 class Program{
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         SalesInfo s1 = new SalesInfo();
         int r;
         r = s1.loadOrders("Data.csv");
@@ -19,7 +20,7 @@ class Program{
 public class SalesInfo {
     private List<dataSale> listCSV = new ArrayList<>();
 
-    public int loadOrders(String fileName) throws IOException{
+    public int loadOrders(String fileName) {
         int rez = 0;
         try(FileReader reader = new FileReader(fileName)){
             Scanner scann = new Scanner(reader);
@@ -62,9 +63,12 @@ public class SalesInfo {
                     }
                 }
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
-            throw new IOException("Файл не найден"+e.getMessage());
+            e.printStackTrace();
         }
+
         for(dataSale s: listCSV)
             System.out.println(s);
         return rez;
