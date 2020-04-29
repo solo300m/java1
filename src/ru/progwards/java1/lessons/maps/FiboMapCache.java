@@ -6,31 +6,7 @@ import java.util.Map;
 
 class P{
     public static void main(String[] args) {
-        /*FiboMapCache a = new FiboMapCache(true);
-        BigDecimal rez = new BigDecimal(0);
-        rez = a.fiboNumber(4);
-        System.out.println(rez);
-        System.out.println(a.getFiboCache());
-        rez = a.fiboNumber(5);
-        System.out.println(rez);
-        System.out.println(a.getFiboCache());
-        rez = a.fiboNumber(6);
-        System.out.println(rez);
-        System.out.println(a.getFiboCache());
-        rez = a.fiboNumber(7);
-        System.out.println(rez);
-        System.out.println(a.getFiboCache());
-        rez = a.fiboNumber(8);
-        System.out.println(rez);
-        System.out.println(a.getFiboCache());
-        rez = a.fiboNumber(4);
-        System.out.println(rez);
-        System.out.println(a.getFiboCache());
-        rez = a.fiboNumber(6);
-        System.out.println(rez);
-        System.out.println(a.getFiboCache());
-        a.clearCahe();
-        System.out.println(a.getFiboCache());*/
+
         FiboMapCache.test();
     }
 }
@@ -41,17 +17,20 @@ public class FiboMapCache {
         this.cacheOn = cacheOn;
     }
     public BigDecimal fiboNumber(int n){
+        BigDecimal tmp = new BigDecimal(1);
+        BigDecimal tmp2 = new BigDecimal(1);
+        if(fiboCache == null)
+            fiboCache = new HashMap<>();
         if(cacheOn == true) {
             if (fiboCache.containsKey(n))
                 return fiboCache.get(n);
             else if (n >= 3 && fiboCache.containsKey(n - 1) && fiboCache.containsKey(n - 2)) {
-                BigDecimal tmp = fiboCache.get(n - 2);
-                BigDecimal tmp2 = fiboCache.get(n - 1);
+                tmp = fiboCache.get(n - 2);
+                tmp2 = fiboCache.get(n - 1);
                 tmp = tmp.add(tmp2);
                 fiboCache.put(n, tmp);
                 return tmp;
             } else if (n < 3) {
-                BigDecimal tmp = new BigDecimal(1);
                 return tmp;
             } else if (n >= 3 && (!fiboCache.containsKey(n - 1) || !fiboCache.containsKey(n - 2))) {
                 BigDecimal start = new BigDecimal(1);
@@ -62,14 +41,14 @@ public class FiboMapCache {
                     start = end;
                     end = fibo;
                 }
-                BigDecimal tmp = fibo;
+                tmp = fibo;
                 fiboCache.put(n, tmp);
                 return tmp;
             }
         }
         else{
             if (n < 3) {
-                BigDecimal tmp = new BigDecimal(1);
+
                 return tmp;
             }
             else {
@@ -81,11 +60,11 @@ public class FiboMapCache {
                     start = end;
                     end = fibo;
                 }
-                BigDecimal tmp = fibo;
+                tmp = fibo;
                 return tmp;
             }
         }
-        return null;
+        return tmp;
     }
     public void clearCahe(){
         fiboCache = null;
@@ -99,6 +78,7 @@ public class FiboMapCache {
         for(int i = 1; i <=1000; i++){
 
             a.fiboNumber(i);
+
         }
         System.out.println("fiboNumber cacheOn= "+a.cacheOn+" время выполнения "
                 +(System.currentTimeMillis() - start));
@@ -107,6 +87,7 @@ public class FiboMapCache {
         for(int i = 1; i <=1000; i++){
 
             b.fiboNumber(i);
+
         }
         System.out.println("fiboNumber cacheOn= "+b.cacheOn+" время выполнения "
                 +(System.currentTimeMillis() - start2));
