@@ -7,18 +7,13 @@ import java.util.List;
 class Statistica{
     public static void main(String[] args) {
         Profiler a = new Profiler();
-        a.addSI(new StatisticInfo("S1",1,0,0));
-        a.addSI(new StatisticInfo("S2",2,1,3));
-        a.addSI(new StatisticInfo("S3",3,2,0));
-        a.addSI(new StatisticInfo("S4",4,1,0));
-
         Profiler.enterSection("S1");
         try{
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        for(int i=0; i < 100; i++){
+        for(int i=0; i < 2; i++){
             Profiler.enterSection("S2");
             try{
                 Thread.sleep(100);
@@ -54,16 +49,49 @@ public class Profiler {
     public Profiler(){
         startStop = new ArrayList<StatisticInfo>();
     }
-    public void addSI(StatisticInfo o1){
+    public static void addSI(StatisticInfo o1){
         startStop.add(o1);
     }
     public static void enterSection(String name){
-        for(int i = 0; i < startStop.size(); i++){
-            if(startStop.get(i).sectionName == name){
-                startStop.get(i).addStart(LocalDateTime.now());
+        if(startStop.size()!=0) {
+            boolean find = false;
+            for (int i = 0; i < startStop.size(); i++) {
+                if (startStop.get(i).sectionName == name) {
+                    find = true;
+                }
+            }
+            if (find == true) {
+                for (int i = 0; i < startStop.size(); i++) {
+                    if (startStop.get(i).sectionName == name) {
+                        startStop.get(i).addStart(LocalDateTime.now());
+                    }
+                }
+            }
+            else {
+                for(int i = startStop.size() - 1; i>=0; i--) {
+                    if (startStop.get(i).getStart().size() > startStop.get(i).getFinish().size()) {
+                        System.out.println(startStop.get(i).getStart().size()+" "+startStop.get(i).getFinish().size());
+                        String masterID = startStop.get(i).getSectionID();
+                        System.out.println(masterID);
+                        addSI(new StatisticInfo(name, masterID));
+                        break;
+                    }
+                }
+                for (int i = 0; i < startStop.size(); i++) {
+                    if (startStop.get(i).sectionName == name) {
+                        startStop.get(i).addStart(LocalDateTime.now());
+                    }
+                }
             }
         }
-
+        else{
+            addSI(new StatisticInfo(name));
+            for (int i = 0; i < startStop.size(); i++) {
+                if (startStop.get(i).sectionName == name) {
+                    startStop.get(i).addStart(LocalDateTime.now());
+                }
+            }
+        }
     }
     public static void exitSection(String name){
         for(int i = 0; i < startStop.size(); i++){
@@ -86,9 +114,9 @@ public class Profiler {
         }
         for(int i = 0; i < startStop.size(); i++){
             int sTime = startStop.get(i).fullTime;
-            int id = startStop.get(i).getSectionID();
+            String id = startStop.get(i).getSectionID();
             for(int j = 0; j < startStop.size(); j++){
-                if(startStop.get(j).getMasterID() == id){
+                if(startStop.get(j).getMasterID().equals(id)){
                     sTime -= startStop.get(j).fullTime;
                 }
             }

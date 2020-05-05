@@ -9,18 +9,25 @@ public class StatisticInfo {
     public int fullTime;
     public int selfTime;
     public int count;
-    private int sectionID;
+    private String sectionID;
     private List<LocalDateTime> start;
     private List<LocalDateTime> finish;
-    private int masterID;
-    private int slaveID;
+    private String masterID;
+    private String slaveID;
 
-    public StatisticInfo(String sectionName, int sectionID,
-                         int masterID, int slaveID){
+    public StatisticInfo(String sectionName){
         this.sectionName = sectionName;
-        this.sectionID = sectionID;
+        this.sectionID = sectionName;
+        this.masterID = "";
+        this.slaveID = "";
+        start = new ArrayList<>();
+        finish = new ArrayList<>();
+    }
+    public StatisticInfo(String sectionName,String masterID){
+        this.sectionName = sectionName;
+        this.sectionID = sectionName;
         this.masterID = masterID;
-        this.slaveID = slaveID;
+        this.slaveID = "";
         start = new ArrayList<>();
         finish = new ArrayList<>();
     }
@@ -39,15 +46,15 @@ public class StatisticInfo {
         return finish;
     }
 
-    public int getMasterID() {
+    public String getMasterID() {
         return masterID;
     }
 
-    public int getSectionID() {
+    public String getSectionID() {
         return sectionID;
     }
 
-    public int getSlaveID() {
+    public String getSlaveID() {
         return slaveID;
     }
 
