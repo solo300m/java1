@@ -6,14 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 class Statistica{
     public static void main(String[] args) {
-        Profiler a = new Profiler();
+        //Profiler a = new Profiler();
         Profiler.enterSection("S1");
         try{
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        for(int i=0; i < 5; i++){
+        Profiler.exitSection("S1");
+        /*for(int i=0; i < 5; i++){
             Profiler.enterSection("S2");
             try{
                 Thread.sleep(100);
@@ -36,7 +37,7 @@ class Statistica{
             e.printStackTrace();
         }
         Profiler.exitSection("S4");
-        Profiler.exitSection("S1");
+
         Profiler.enterSection("S5");
         try{
             Thread.sleep(500);
@@ -64,7 +65,7 @@ class Statistica{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Profiler.exitSection("S5");
+        Profiler.exitSection("S5");*/
 
         for(StatisticInfo s: Profiler.getStatisticInfo()){
             System.out.println(s.sectionName+" "+s.fullTime+" "+s.selfTime+" "+s.count);
@@ -81,6 +82,9 @@ public class Profiler {
         startStop.add(o1);
     }
     public static void enterSection(String name){
+        if(startStop == null){
+            startStop = new ArrayList<StatisticInfo>();
+        }
         if(startStop.size()!=0) {
             boolean find = false;
             for (int i = 0; i < startStop.size(); i++) {
