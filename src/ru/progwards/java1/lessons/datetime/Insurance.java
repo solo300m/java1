@@ -1,15 +1,18 @@
 package ru.progwards.java1.lessons.datetime;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
 class Proverca{
     public static void main(String[] args) {
-        ZonedDateTime a = ZonedDateTime.now() ;
-        Insurance doc = new Insurance(ZonedDateTime.now());
-        System.out.println(doc);
+        /*ZonedDateTime a = ZonedDateTime.now() ;
+        Insurance doc = new Insurance(ZonedDateTime.now());*/
+        String pattern = "yyyy-MM-dd";
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
+        DateTimeFormatter df1 = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        LocalDate ff = LocalDate.parse("2020-05-05",df);
+        System.out.println(ff);
     }
 }
 public class Insurance {

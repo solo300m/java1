@@ -6,10 +6,11 @@ import java.util.ArrayList;
 
 class Prog{
     public static void main(String[] args) {
-        SessionManager session = new SessionManager(30);
-        session.add(new UserSession("Sergey"));
+        SessionManager session = new SessionManager(1);
+        session.add(new UserSession("User1"));
+        System.out.println(session.get(-1155869325));
         try {
-            Thread.sleep(1);
+            Thread.sleep(900);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -36,8 +37,10 @@ class Prog{
 
         for(int i = 0; i < session.getSessions().size(); i++)
             System.out.println(session.getSessions().get(i).toString());*/
-        for(int i = 0; i < session.getSessions().size(); i++)
+        /*for(int i = 0; i < session.getSessions().size(); i++){
             System.out.println(session.getSessions().get(i).toString());
+            System.out.println(session.getSessions().get(i).getSessionHandle());
+        }*/
         System.out.println(session.get(-1155869325));
     }
 }
@@ -79,7 +82,7 @@ public class SessionManager {
                 LocalDateTime t_Session = this.sessions.get(i).getLastAccess();
                 LocalDateTime t_Now = LocalDateTime.now();
                 Duration t_Different = Duration.between(t_Session,t_Now);
-                if(t_Different.toMillis() < this.sessionValid) {
+                if(t_Different.toSeconds() < this.sessionValid) {
                     this.sessions.get(i).updateLastAccess();
                     return this.sessions.get(i);
                 }
