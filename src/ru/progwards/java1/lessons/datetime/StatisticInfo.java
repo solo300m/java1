@@ -12,6 +12,7 @@ public class StatisticInfo {
     private String sectionID;
     private List<LocalDateTime> start;
     private List<LocalDateTime> finish;
+    private List<Long> milis;
     private String masterID;
     private String slaveID;
 
@@ -22,6 +23,7 @@ public class StatisticInfo {
         this.slaveID = "";
         start = new ArrayList<>();
         finish = new ArrayList<>();
+        milis = new ArrayList<>();
     }
     public StatisticInfo(String sectionName,String masterID){
         this.sectionName = sectionName;
@@ -30,12 +32,16 @@ public class StatisticInfo {
         this.slaveID = "";
         start = new ArrayList<>();
         finish = new ArrayList<>();
+        milis = new ArrayList<>();
     }
     public void addStart(LocalDateTime st1){
         start.add(st1);
     }
     public void addFinish(LocalDateTime fn1){
         finish.add(fn1);
+    }
+    public void addMilis(Long durMil){
+        milis.add(durMil);
     }
 
     public List<LocalDateTime> getStart() {
@@ -44,6 +50,10 @@ public class StatisticInfo {
 
     public List<LocalDateTime> getFinish() {
         return finish;
+    }
+
+    public List<Long> getMilis() {
+        return milis;
     }
 
     public String getMasterID() {

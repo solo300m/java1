@@ -13,7 +13,7 @@ class Statistica{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        for(int i=0; i < 2; i++){
+        for(int i=0; i < 5; i++){
             Profiler.enterSection("S2");
             try{
                 Thread.sleep(100);
@@ -37,6 +37,34 @@ class Statistica{
         }
         Profiler.exitSection("S4");
         Profiler.exitSection("S1");
+        Profiler.enterSection("S5");
+        try{
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Profiler.exitSection("S5");
+        Profiler.enterSection("S6");
+        try{
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Profiler.exitSection("S6");
+        Profiler.enterSection("S1");
+        try{
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Profiler.exitSection("S1");
+        Profiler.enterSection("S5");
+        try{
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Profiler.exitSection("S5");
 
         for(StatisticInfo s: Profiler.getStatisticInfo()){
             System.out.println(s.sectionName+" "+s.fullTime+" "+s.selfTime+" "+s.count);
@@ -68,18 +96,28 @@ public class Profiler {
                 }
             }
             else {
+                boolean find2 = false;
                 for(int i = startStop.size() - 1; i>=0; i--) {
                     if (startStop.get(i).getStart().size() > startStop.get(i).getFinish().size()) {
-                        System.out.println(startStop.get(i).getStart().size()+" "+startStop.get(i).getFinish().size());
+                        //System.out.println(startStop.get(i).getStart().size()+" "+startStop.get(i).getFinish().size());
                         String masterID = startStop.get(i).getSectionID();
-                        System.out.println(masterID);
+                        //System.out.println(masterID);
                         addSI(new StatisticInfo(name, masterID));
+                        find2 = true;
                         break;
                     }
                 }
                 for (int i = 0; i < startStop.size(); i++) {
                     if (startStop.get(i).sectionName == name) {
                         startStop.get(i).addStart(LocalDateTime.now());
+                    }
+                }
+                if(find2 == false){
+                    addSI(new StatisticInfo(name));
+                    for (int i = 0; i < startStop.size(); i++) {
+                        if (startStop.get(i).sectionName == name) {
+                            startStop.get(i).addStart(LocalDateTime.now());
+                        }
                     }
                 }
             }
@@ -97,20 +135,24 @@ public class Profiler {
         for(int i = 0; i < startStop.size(); i++){
             if(startStop.get(i).sectionName == name){
                 startStop.get(i).addFinish(LocalDateTime.now());
+                Duration a = Duration.between(startStop.get(i).getStart().get(startStop.get(i).getStart().size()-1),
+                        startStop.get(i).getFinish().get(startStop.get(i).getStart().size()-1));
+                startStop.get(i).addMilis(a.toMillis());
+                //System.out.println(a.toMillis());
             }
         }
     }
     public static List<StatisticInfo> getStatisticInfo(){
         for(StatisticInfo s: Profiler.startStop){
-            Duration a = Duration.between(s.getStart().get(0),s.getFinish().get(0));
-            if(s.getStart().size()>1) {
-                for (int i = 1; i < s.getStart().size(); i++) {
-                    Duration b = Duration.between(s.getStart().get(i), s.getFinish().get(i));
-                    a.plus(b);
+            Long a = s.getMilis().get(0);//Duration.between(s.getStart().get(0),s.getFinish().get(0));
+            if(s.getMilis().size()>1) {
+                for (int i = 1; i < s.getMilis().size(); i++) {
+                    Long b = s.getMilis().get(i);//Duration.between(s.getStart().get(i), s.getFinish().get(i));
+                    a += b;
                 }
             }
             s.count = s.getStart().size();
-            s.fullTime = (int) a.toMillis();
+            s.fullTime =  a.intValue();
         }
         for(int i = 0; i < startStop.size(); i++){
             int sTime = startStop.get(i).fullTime;
@@ -124,7 +166,4 @@ public class Profiler {
         }
         return startStop;
     }
-
-
-
 }

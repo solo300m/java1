@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 class Prog{
     public static void main(String[] args) {
-        SessionManager session = new SessionManager(1);
+        SessionManager session = new SessionManager(30);
         session.add(new UserSession("Sergey"));
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class SessionManager {
                 }
                 else
                     this.sessions.remove(i);
-                    return null;
+                return null;
             }
         }
         return null;
@@ -79,13 +79,13 @@ public class SessionManager {
                 LocalDateTime t_Session = this.sessions.get(i).getLastAccess();
                 LocalDateTime t_Now = LocalDateTime.now();
                 Duration t_Different = Duration.between(t_Session,t_Now);
-                if(t_Different.toMillis() <= this.sessionValid*1000) {
+                if(t_Different.toMillis() < this.sessionValid) {
                     this.sessions.get(i).updateLastAccess();
                     return this.sessions.get(i);
                 }
                 else
                     this.sessions.remove(i);
-                    return null;
+                return null;
             }
         }
         return null;
