@@ -2,17 +2,37 @@ package ru.progwards.java1.lessons.datetime;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 
 class Proverca{
     public static void main(String[] args) {
         /*ZonedDateTime a = ZonedDateTime.now() ;
         Insurance doc = new Insurance(ZonedDateTime.now());*/
-        String pattern = "yyyy-MM-dd";
+        /*String pattern = "yyyy-MM-dd";
         DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
-        DateTimeFormatter df1 = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        LocalDate ff = LocalDate.parse("2020-05-05",df);
-        System.out.println(ff);
+        DateTimeFormatter df1 = DateTimeFormatter.ISO_LOCAL_DATE;
+        LocalDate ff = LocalDate.parse("2020-05-05",df1);
+        System.out.println(ff);*/
+        /*DateTimeFormatter f_SHORT = DateTimeFormatter.ISO_LOCAL_DATE;
+        LocalDate tmp = LocalDate.parse("2020-05-05",f_SHORT);
+        LocalDateTime tmp2 = tmp.atTime(LocalTime.now());
+        ZonedDateTime start = tmp2.atZone(ZoneId.systemDefault());
+        ZonedDateTime endDefault = start.plusYears(1);
+        Duration d = Duration.between(start,endDefault);
+        System.out.println(start +"\n"+endDefault);
+        System.out.println(d.toDays());*/
+
+        /*DateTimeFormatter f_LONG = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime tmp = LocalDateTime.parse("2020-05-05T23:59:59",f_LONG);
+        ZonedDateTime start = tmp.atZone(ZoneId.systemDefault());
+        ZonedDateTime endDefault = start.plusYears(1);
+        Duration d = Duration.between(start,endDefault);*/
+
+        DateTimeFormatter f_FULL = DateTimeFormatter.ISO_ZONED_DATE_TIME;
+        ZonedDateTime start = ZonedDateTime.parse("2020-05-05T23:59:59+04:00[Europe/Samara]", f_FULL);
+        ZonedDateTime endDefault = start.plusYears(1);
+        Duration d = Duration.between(start,endDefault);
+        System.out.println(start+"\n"+endDefault);
+        System.out.println(d.toDays());
     }
 }
 public class Insurance {
@@ -41,25 +61,29 @@ public class Insurance {
             switch (style) {
                 case SHORT: {
                     DateTimeFormatter f_SHORT = DateTimeFormatter.ISO_LOCAL_DATE;
-                    this.start = ZonedDateTime.parse(strStart, f_SHORT);
-                    this.start.withZoneSameInstant(ZoneId.systemDefault());
+                    LocalDate tmp = LocalDate.parse(strStart,f_SHORT);
+                    LocalDateTime tmp2 = tmp.atTime(LocalTime.now());
+                    this.start = tmp2.atZone(ZoneId.systemDefault());
                     ZonedDateTime endDefault = this.start.plusYears(1);
-                    setDuration(endDefault);
+                    Duration d = Duration.between(start,endDefault);
+                    setDuration(d);
                     break;
                 }
                 case LONG: {
                     DateTimeFormatter f_LONG = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-                    this.start = ZonedDateTime.parse(strStart, f_LONG);
-                    this.start.withZoneSameInstant(ZoneId.systemDefault());
+                    LocalDateTime tmp = LocalDateTime.parse(strStart,f_LONG);
+                    this.start = tmp.atZone(ZoneId.systemDefault());
                     ZonedDateTime endDefault = this.start.plusYears(1);
-                    setDuration(endDefault);
+                    Duration d = Duration.between(start,endDefault);
+                    setDuration(d);
                     break;
                 }
                 case FULL: {
                     DateTimeFormatter f_FULL = DateTimeFormatter.ISO_ZONED_DATE_TIME;
                     this.start = ZonedDateTime.parse(strStart, f_FULL);
                     ZonedDateTime endDefault = this.start.plusYears(1);
-                    setDuration(endDefault);
+                    Duration d = Duration.between(start,endDefault);
+                    setDuration(d);
                     break;
                 }
                 default:{
@@ -85,7 +109,7 @@ public class Insurance {
         ZonedDateTime end = this.start.withMonth(months).
                 withDayOfMonth(days).withHour(hours);
         this.duration = Duration.between(this.start,end);
-        System.out.println(end);
+        //System.out.println(end);
     }
     public void setDuration(String strDuration, FormatStyle style){
         switch (style){
