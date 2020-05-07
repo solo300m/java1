@@ -14,7 +14,7 @@ class Proverca{
         System.out.println(ff);*/
         /*DateTimeFormatter f_SHORT = DateTimeFormatter.ISO_LOCAL_DATE;
         LocalDate tmp = LocalDate.parse("2020-05-05",f_SHORT);
-        LocalDateTime tmp2 = tmp.atTime(LocalTime.now());
+        LocalDateTime tmp2 = tmp.atTime(00,00,00);
         ZonedDateTime start = tmp2.atZone(ZoneId.systemDefault());
         ZonedDateTime endDefault = start.plusYears(1);
         Duration d = Duration.between(start,endDefault);
@@ -28,16 +28,20 @@ class Proverca{
         Duration d = Duration.between(start,endDefault);*/
 
         DateTimeFormatter f_FULL = DateTimeFormatter.ISO_ZONED_DATE_TIME;
-        ZonedDateTime start = ZonedDateTime.parse("2020-05-05T23:59:59+04:00[Europe/Samara]", f_FULL);
+        ZonedDateTime start = ZonedDateTime.parse("2020-04-07T12:32:13.306112+03:00[Europe/Moscow]", f_FULL);
+        System.out.println(start);
         ZonedDateTime endDefault = start.plusYears(1);
-        Duration d = Duration.between(start,endDefault);
-        System.out.println(start+"\n"+endDefault);
-        System.out.println(d.toDays());
+        //Duration d = Duration.between(start,endDefault);
+
+        Insurance a = new Insurance(LocalDateTime.of(2017,8,11,12,32,3,337399).atZone(ZoneId.of("Europe/Moscow")));
+        System.out.println(a);
+
     }
 }
 public class Insurance {
     public static enum FormatStyle {SHORT, LONG, FULL}
     private ZonedDateTime start;
+    //public ZonedDateTime validDateTime;
     private Duration duration;
     public Insurance(){
         this.start = ZonedDateTime.now();
@@ -62,7 +66,7 @@ public class Insurance {
                 case SHORT: {
                     DateTimeFormatter f_SHORT = DateTimeFormatter.ISO_LOCAL_DATE;
                     LocalDate tmp = LocalDate.parse(strStart,f_SHORT);
-                    LocalDateTime tmp2 = tmp.atTime(LocalTime.now());
+                    LocalDateTime tmp2 = tmp.atTime(00,00,00);
                     this.start = tmp2.atZone(ZoneId.systemDefault());
                     ZonedDateTime endDefault = this.start.plusYears(1);
                     Duration d = Duration.between(start,endDefault);
@@ -121,10 +125,12 @@ public class Insurance {
             }
             case LONG:{
                 DateTimeFormatter form = DateTimeFormatter.ISO_LOCAL_DATE_TIME;//2020-05-04T13:19:53.255727600+04:00[Asia/Dubai] test
-                ZonedDateTime loc = LocalDateTime.parse(strDuration,form).
-                        atZone(ZoneId.systemDefault());
-                this.duration = Duration.between(start,loc);
-                //System.out.println(duration);
+                LocalDateTime end = LocalDateTime.parse(strDuration,form);
+                LocalDateTime start11 = LocalDateTime.now()/*.minusYears(end.getYear()).minusMonths(end.getMonth().getValue()).minusDays(end.getDayOfMonth())*/;
+                LocalDateTime tmp = start11.minusYears(end.getYear()).minusMonths(end.getMonth().getValue()).minusDays(end.getDayOfMonth());
+                Duration loc = Duration.between(tmp,start11);
+                this.duration = loc;
+                System.out.println(loc);
                 break;
             }
             case FULL:{
