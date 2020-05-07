@@ -5,8 +5,10 @@ import java.time.format.DateTimeFormatter;
 
 class Proverca{
     public static void main(String[] args) {
-        /*ZonedDateTime a = ZonedDateTime.now() ;
-        Insurance doc = new Insurance(ZonedDateTime.now());*/
+        //ZonedDateTime a = ZonedDateTime.now() ;
+        Insurance doc = new Insurance(LocalDateTime.of(2020,5,
+                9,19,12,13,
+                320495).atZone(ZoneId.of("Europe/Moscow")));
         /*String pattern = "yyyy-MM-dd";
         DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
         DateTimeFormatter df1 = DateTimeFormatter.ISO_LOCAL_DATE;
@@ -27,14 +29,14 @@ class Proverca{
         ZonedDateTime endDefault = start.plusYears(1);
         Duration d = Duration.between(start,endDefault);*/
 
-        DateTimeFormatter f_FULL = DateTimeFormatter.ISO_ZONED_DATE_TIME;
+        /*DateTimeFormatter f_FULL = DateTimeFormatter.ISO_ZONED_DATE_TIME;
         ZonedDateTime start = ZonedDateTime.parse("2020-04-07T12:32:13.306112+03:00[Europe/Moscow]", f_FULL);
         System.out.println(start);
         ZonedDateTime endDefault = start.plusYears(1);
-        //Duration d = Duration.between(start,endDefault);
+        //Duration d = Duration.between(start,endDefault);*/
 
-        Insurance a = new Insurance(LocalDateTime.of(2017,8,11,12,32,3,337399).atZone(ZoneId.of("Europe/Moscow")));
-        System.out.println(a);
+        //Insurance a = new Insurance(LocalDateTime.of(2017,8,11,12,32,3,337399).atZone(ZoneId.of("Europe/Moscow")));
+        System.out.println(doc);
 
     }
 }
@@ -43,20 +45,16 @@ public class Insurance {
     private ZonedDateTime start;
     //public ZonedDateTime validDateTime;
     private Duration duration;
-    public Insurance(){
-        this.start = ZonedDateTime.now();
-        ZonedDateTime endDefault = this.start.plusYears(1);
-        setDuration(endDefault);
-    }
+
     public Insurance(ZonedDateTime start){
         if(start != null) {
             this.start = start;
-            ZonedDateTime endDefault = this.start.plusYears(1);
+            ZonedDateTime endDefault = this.start.plusYears(100); //ZonedDateTime.now();//
             setDuration(endDefault);
         }
         else {
             this.start = ZonedDateTime.now();
-            ZonedDateTime endDefault = this.start.plusYears(1);
+            ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
             setDuration(endDefault);
         }
     }
@@ -68,7 +66,7 @@ public class Insurance {
                     LocalDate tmp = LocalDate.parse(strStart,f_SHORT);
                     LocalDateTime tmp2 = tmp.atTime(00,00,00);
                     this.start = tmp2.atZone(ZoneId.systemDefault());
-                    ZonedDateTime endDefault = this.start.plusYears(1);
+                    ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
                     Duration d = Duration.between(start,endDefault);
                     setDuration(d);
                     break;
@@ -77,7 +75,7 @@ public class Insurance {
                     DateTimeFormatter f_LONG = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
                     LocalDateTime tmp = LocalDateTime.parse(strStart,f_LONG);
                     this.start = tmp.atZone(ZoneId.systemDefault());
-                    ZonedDateTime endDefault = this.start.plusYears(1);
+                    ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
                     Duration d = Duration.between(start,endDefault);
                     setDuration(d);
                     break;
@@ -85,21 +83,21 @@ public class Insurance {
                 case FULL: {
                     DateTimeFormatter f_FULL = DateTimeFormatter.ISO_ZONED_DATE_TIME;
                     this.start = ZonedDateTime.parse(strStart, f_FULL);
-                    ZonedDateTime endDefault = this.start.plusYears(1);
+                    ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
                     Duration d = Duration.between(start,endDefault);
                     setDuration(d);
                     break;
                 }
                 default:{
                     this.start = ZonedDateTime.now();
-                    ZonedDateTime endDefault = this.start.plusYears(1);
+                    ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
                     setDuration(endDefault);
                 }
             }
         }
         else{
             this.start = ZonedDateTime.now();
-            ZonedDateTime endDefault = this.start.plusYears(1);
+            ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
             setDuration(endDefault);
         }
     }
@@ -140,12 +138,17 @@ public class Insurance {
         }
     }
     public boolean checkValid(ZonedDateTime dateTime){
-        Duration calc = Duration.between(this.getStart(),dateTime);
-        if(this.duration.toMillis() < calc.toMillis()){
+        if(start.compareTo(ZonedDateTime.now())>0){
             return false;
         }
-        else
-            return true;
+        else {
+            Duration calc = Duration.between(this.getStart(), dateTime);
+            //System.out.println(calc.toMillis()+" "+duration.toMillis());
+            if (duration.toMillis() < calc.toMillis()) {
+                return false;
+            } else
+                return true;
+        }
     }
     public String toString(){
         ZonedDateTime now1 = ZonedDateTime.now();
