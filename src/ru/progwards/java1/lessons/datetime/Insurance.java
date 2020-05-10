@@ -49,13 +49,13 @@ public class Insurance {
     public Insurance(ZonedDateTime start){
         if(start != null) {
             this.start = start;
-            ZonedDateTime endDefault = this.start.plusYears(100); //ZonedDateTime.now();//
-            setDuration(endDefault);
+            //ZonedDateTime endDefault = this.start.plusYears(100); //ZonedDateTime.now();//
+           // setDuration(endDefault);
         }
         else {
             this.start = ZonedDateTime.now();
-            ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
-            setDuration(endDefault);
+            //ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
+            //setDuration(endDefault);
         }
     }
     public Insurance(String strStart, FormatStyle style){
@@ -125,7 +125,9 @@ public class Insurance {
                 DateTimeFormatter form = DateTimeFormatter.ISO_LOCAL_DATE_TIME;//2020-05-04T13:19:53.255727600+04:00[Asia/Dubai] test
                 LocalDateTime end = LocalDateTime.parse(strDuration,form);
                 LocalDateTime start11 = LocalDateTime.now()/*.minusYears(end.getYear()).minusMonths(end.getMonth().getValue()).minusDays(end.getDayOfMonth())*/;
-                LocalDateTime tmp = start11.minusYears(end.getYear()).minusMonths(end.getMonth().getValue()).minusDays(end.getDayOfMonth());
+                LocalDateTime tmp = start11.minusYears(end.getYear()).
+                        minusMonths(end.getMonth().getValue()).
+                        minusDays(end.getDayOfMonth());
                 Duration loc = Duration.between(tmp,start11);
                 this.duration = loc;
                 System.out.println(loc);
