@@ -49,13 +49,13 @@ public class Insurance {
     public Insurance(ZonedDateTime start){
         if(start != null) {
             this.start = start;
-            //ZonedDateTime endDefault = this.start.plusYears(100); //ZonedDateTime.now();//
-           // setDuration(endDefault);
+            ZonedDateTime endDefault = this.start.plusYears(100); //ZonedDateTime.now();//
+            setDuration(endDefault);
         }
         else {
             this.start = ZonedDateTime.now();
-            //ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
-            //setDuration(endDefault);
+            ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
+            setDuration(endDefault);
         }
     }
     public Insurance(String strStart, FormatStyle style){
@@ -66,39 +66,39 @@ public class Insurance {
                     LocalDate tmp = LocalDate.parse(strStart,f_SHORT);
                     LocalDateTime tmp2 = tmp.atTime(00,00,00);
                     this.start = tmp2.atZone(ZoneId.systemDefault());
-                    /*ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
+                    ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
                     Duration d = Duration.between(start,endDefault);
-                    setDuration(d);*/
+                    setDuration(d);
                     break;
                 }
                 case LONG: {
                     DateTimeFormatter f_LONG = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
                     LocalDateTime tmp = LocalDateTime.parse(strStart,f_LONG);
                     this.start = tmp.atZone(ZoneId.systemDefault());
-                    /*ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
+                    ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
                     Duration d = Duration.between(start,endDefault);
-                    setDuration(d);*/
+                    setDuration(d);
                     break;
                 }
                 case FULL: {
                     DateTimeFormatter f_FULL = DateTimeFormatter.ISO_ZONED_DATE_TIME;
                     this.start = ZonedDateTime.parse(strStart, f_FULL);
-                    /*ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
+                    ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
                     Duration d = Duration.between(start,endDefault);
-                    setDuration(d);*/
+                    setDuration(d);
                     break;
                 }
                 default:{
                     this.start = ZonedDateTime.now();
-                   /* ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
-                    setDuration(endDefault);*/
+                    ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
+                    setDuration(endDefault);
                 }
             }
         }
         else{
             this.start = ZonedDateTime.now();
-            /*ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
-            setDuration(endDefault);*/
+            ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
+            setDuration(endDefault);
         }
     }
     public void setDuration(Duration duration){
