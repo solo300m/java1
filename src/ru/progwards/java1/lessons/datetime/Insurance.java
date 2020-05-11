@@ -9,7 +9,7 @@ class Proverca{
         Insurance doc = new Insurance(LocalDateTime.of(2020,5,
                 9,19,12,13,
                 320495).atZone(ZoneId.of("Europe/Moscow")));
-        doc.setDuration("0000-00-01T00:00:00", Insurance.FormatStyle.LONG);
+        doc.setDuration("0000-05-00T00:00:00", Insurance.FormatStyle.LONG);
         /*String pattern = "yyyy-MM-dd";
         DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
         DateTimeFormatter df1 = DateTimeFormatter.ISO_LOCAL_DATE;
@@ -124,9 +124,6 @@ public class Insurance {
             }
             case LONG:{
                 String[] proverka = strDuration.split("[-,T,:]");
-                for(String s: proverka)
-                    System.out.println(s.toString());
-
                 //DateTimeFormatter form = DateTimeFormatter.ISO_LOCAL_DATE_TIME;//2020-05-04T13:19:53.255727600+04:00[Asia/Dubai] test
                // LocalDateTime end = LocalDateTime.parse(strDuration, form);
                 LocalDateTime start11 = LocalDateTime.now()/*.minusYears(end.getYear()).minusMonths(end.getMonth().getValue()).minusDays(end.getDayOfMonth())*/;
@@ -138,8 +135,7 @@ public class Insurance {
                         minusSeconds(Integer.parseInt(proverka[5]));
                 Duration loc = Duration.between(tmp, start11);
                 this.duration = loc;
-                System.out.println(loc);
-
+                //System.out.println(loc);
                 break;
             }
             case FULL:{
