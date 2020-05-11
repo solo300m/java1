@@ -9,6 +9,7 @@ class Proverca{
         Insurance doc = new Insurance(LocalDateTime.of(2020,5,
                 9,19,12,13,
                 320495).atZone(ZoneId.of("Europe/Moscow")));
+        doc.setDuration("0000-00-01T00:00:00", Insurance.FormatStyle.LONG);
         /*String pattern = "yyyy-MM-dd";
         DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
         DateTimeFormatter df1 = DateTimeFormatter.ISO_LOCAL_DATE;
@@ -122,15 +123,23 @@ public class Insurance {
                 break;
             }
             case LONG:{
-                DateTimeFormatter form = DateTimeFormatter.ISO_LOCAL_DATE_TIME;//2020-05-04T13:19:53.255727600+04:00[Asia/Dubai] test
-                LocalDateTime end = LocalDateTime.parse(strDuration,form);
+                String[] proverka = strDuration.split("[-,T,:]");
+                for(String s: proverka)
+                    System.out.println(s.toString());
+
+                //DateTimeFormatter form = DateTimeFormatter.ISO_LOCAL_DATE_TIME;//2020-05-04T13:19:53.255727600+04:00[Asia/Dubai] test
+               // LocalDateTime end = LocalDateTime.parse(strDuration, form);
                 LocalDateTime start11 = LocalDateTime.now()/*.minusYears(end.getYear()).minusMonths(end.getMonth().getValue()).minusDays(end.getDayOfMonth())*/;
-                LocalDateTime tmp = start11.minusYears(end.getYear()).
-                        minusMonths(end.getMonth().getValue()).
-                        minusDays(end.getDayOfMonth());
-                Duration loc = Duration.between(tmp,start11);
+                LocalDateTime tmp = start11.minusYears(Integer.parseInt(proverka[0])).
+                        minusMonths(Integer.parseInt(proverka[1])).
+                        minusDays(Integer.parseInt(proverka[2])).
+                        minusHours(Integer.parseInt(proverka[3])).
+                        minusMinutes(Integer.parseInt(proverka[4])).
+                        minusSeconds(Integer.parseInt(proverka[5]));
+                Duration loc = Duration.between(tmp, start11);
                 this.duration = loc;
                 System.out.println(loc);
+
                 break;
             }
             case FULL:{
