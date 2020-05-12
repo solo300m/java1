@@ -6,10 +6,11 @@ import java.time.format.DateTimeFormatter;
 class Proverca{
     public static void main(String[] args) {
         //ZonedDateTime a = ZonedDateTime.now() ;
-        Insurance doc = new Insurance(LocalDateTime.of(2020,5,
+        /*Insurance doc = new Insurance(LocalDateTime.of(2020,5,
                 9,19,12,13,
-                320495).atZone(ZoneId.of("Europe/Moscow")));
-        doc.setDuration("0000-05-00T00:00:00", Insurance.FormatStyle.LONG);
+                320495).atZone(ZoneId.of("Europe/Moscow")));*/
+        Insurance doc = new Insurance("2020-01-01T00:00:00", Insurance.FormatStyle.LONG);
+        doc.setDuration("0000-15-00T00:00:00", Insurance.FormatStyle.LONG);
         /*String pattern = "yyyy-MM-dd";
         DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
         DateTimeFormatter df1 = DateTimeFormatter.ISO_LOCAL_DATE;
@@ -63,30 +64,57 @@ public class Insurance {
         if(!strStart.isEmpty() && style != null) {
             switch (style) {
                 case SHORT: {
-                    DateTimeFormatter f_SHORT = DateTimeFormatter.ISO_LOCAL_DATE;
-                    LocalDate tmp = LocalDate.parse(strStart,f_SHORT);
-                    LocalDateTime tmp2 = tmp.atTime(00,00,00);
-                    this.start = tmp2.atZone(ZoneId.systemDefault());
-                    ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
-                    Duration d = Duration.between(start,endDefault);
-                    setDuration(d);
+                    String[] proverca = strStart.split("[-,T,:]");
+                    if(Integer.parseInt(proverca[1])==0 || Integer.parseInt(proverca[2])==0){
+                        this.start = ZonedDateTime.now();
+                        ZonedDateTime endDefault = this.start.plusYears(100);
+                        Duration d = Duration.between(start,endDefault);
+                        setDuration(d);
+                    }
+                    else {
+                        DateTimeFormatter f_SHORT = DateTimeFormatter.ISO_LOCAL_DATE;
+                        LocalDate tmp = LocalDate.parse(strStart, f_SHORT);
+                        LocalDateTime tmp2 = tmp.atTime(00, 00, 00);
+                        this.start = tmp2.atZone(ZoneId.systemDefault());
+                        ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
+                        Duration d = Duration.between(start, endDefault);
+                        setDuration(d);
+                    }
                     break;
                 }
                 case LONG: {
-                    DateTimeFormatter f_LONG = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-                    LocalDateTime tmp = LocalDateTime.parse(strStart,f_LONG);
-                    this.start = tmp.atZone(ZoneId.systemDefault());
-                    ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
-                    Duration d = Duration.between(start,endDefault);
-                    setDuration(d);
+                    String[] proverca = strStart.split("[-,T,:]");
+                    if(Integer.parseInt(proverca[1])==0 || Integer.parseInt(proverca[2])==0){
+                        this.start = ZonedDateTime.now();
+                        ZonedDateTime endDefault = this.start.plusYears(100);
+                        Duration d = Duration.between(start,endDefault);
+                        setDuration(d);
+                    }
+                    else {
+                        DateTimeFormatter f_LONG = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+                        LocalDateTime tmp = LocalDateTime.parse(strStart, f_LONG);
+                        this.start = tmp.atZone(ZoneId.systemDefault());
+                        ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
+                        Duration d = Duration.between(start, endDefault);
+                        setDuration(d);
+                    }
                     break;
                 }
                 case FULL: {
-                    DateTimeFormatter f_FULL = DateTimeFormatter.ISO_ZONED_DATE_TIME;
-                    this.start = ZonedDateTime.parse(strStart, f_FULL);
-                    ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
-                    Duration d = Duration.between(start,endDefault);
-                    setDuration(d);
+                    String[] proverca = strStart.split("[-,T,:]");
+                    if(Integer.parseInt(proverca[1])==0 || Integer.parseInt(proverca[2])==0){
+                        this.start = ZonedDateTime.now();
+                        ZonedDateTime endDefault = this.start.plusYears(100);
+                        Duration d = Duration.between(start,endDefault);
+                        setDuration(d);
+                    }
+                    else {
+                        DateTimeFormatter f_FULL = DateTimeFormatter.ISO_ZONED_DATE_TIME;
+                        this.start = ZonedDateTime.parse(strStart, f_FULL);
+                        ZonedDateTime endDefault = this.start.plusYears(100);//ZonedDateTime.now();//this.start.plusYears(1);
+                        Duration d = Duration.between(start, endDefault);
+                        setDuration(d);
+                    }
                     break;
                 }
                 default:{
@@ -125,7 +153,7 @@ public class Insurance {
             case LONG:{
                 String[] proverka = strDuration.split("[-,T,:]");
                 //DateTimeFormatter form = DateTimeFormatter.ISO_LOCAL_DATE_TIME;//2020-05-04T13:19:53.255727600+04:00[Asia/Dubai] test
-               // LocalDateTime end = LocalDateTime.parse(strDuration, form);
+                // LocalDateTime end = LocalDateTime.parse(strDuration, form);
                 LocalDateTime start11 = LocalDateTime.now()/*.minusYears(end.getYear()).minusMonths(end.getMonth().getValue()).minusDays(end.getDayOfMonth())*/;
                 LocalDateTime tmp = start11.minusYears(Integer.parseInt(proverka[0])).
                         minusMonths(Integer.parseInt(proverka[1])).
