@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 class Test{
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
         String dir = "C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir"; //C:\Users\Сергей\IdeaProjects\Ekkel_Home_1\tmp_dir
         FindDuplicates f = new FindDuplicates();
         List<List<String>> find;
@@ -26,23 +26,27 @@ public class FindDuplicates {
     public static String[] atribName = {"lastModifiedTime",
             /*"lastAccessTime","creationTime",*/"size","isRegularFile",
             "isDirectory","isSymbolicLink","isOther"};
-    public List<List<String>> findDuplicates(String startPath) throws IOException {
+    public List<List<String>> findDuplicates(String startPath)  {
         Path dir = Paths.get(startPath);
         List<String> allPath = new ArrayList<String>();
-        Files.walkFileTree(dir, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
-                String a = path.toString();
-                allPath.add(a);
-                return FileVisitResult.CONTINUE;
-            }
+        try {
+            Files.walkFileTree(dir, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
+                    String a = path.toString();
+                    allPath.add(a);
+                    return FileVisitResult.CONTINUE;
+                }
 
-            @Override
-            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-                //System.out.println(file);
-                return FileVisitResult.CONTINUE;
-            }
-        });
+                @Override
+                public FileVisitResult visitFileFailed(Path file, IOException exc) {
+                    //System.out.println(file);
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        } catch (IOException e) {
+            e.getMessage();
+        }
         /*for(String s: allPath)
             System.out.println(s);*/
         List<List<String>> duplex = new ArrayList<List<String>>();
@@ -54,7 +58,11 @@ public class FindDuplicates {
             atr.name = masterPath.getFileName();
             List<String> dupl = new ArrayList<>();
             for(int h = 0; h < atribName.length; h++) {
-                atr.atrib.add(Files.getAttribute(masterPath, atribName[h]));
+                try {
+                    atr.atrib.add(Files.getAttribute(masterPath, atribName[h]));
+                } catch (IOException e) {
+                    e.getMessage();
+                }
                 //System.out.println(atr.name+" "+atr.atrib.get(h));
             }
             for(int j = i + 1; j < allPath.size(); j++){
@@ -62,7 +70,11 @@ public class FindDuplicates {
                 fileAtributs atrSl = new fileAtributs();
                 atrSl.name = masterPath.getFileName();
                 for(int h = 0; h < atribName.length; h++) {
-                    atrSl.atrib.add(Files.getAttribute(slavePath, atribName[h]));
+                    try {
+                        atrSl.atrib.add(Files.getAttribute(slavePath, atribName[h]));
+                    } catch (IOException e) {
+                        e.getMessage();
+                    }
                     //System.out.println(atr.name+" "+atr.atrib.get(h));
                 }
                 if(atr.equals(atrSl)){
@@ -82,7 +94,11 @@ public class FindDuplicates {
             String [] strArr = new String [s.size()];
             for(int i = 0; i < s.size(); i++){
                 Path tmp1 = Paths.get(s.get(i));
-                strArr[i] = Files.readString(tmp1);
+                try {
+                    strArr[i] = Files.readString(tmp1);
+                } catch (IOException e) {
+                    e.getMessage();
+                }
             }
 
             for(int i = 1; i < strArr.length; i++){
