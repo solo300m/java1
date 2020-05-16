@@ -26,19 +26,19 @@ public class FindDuplicates {
     public static String[] atribName = {"lastModifiedTime",
             /*"lastAccessTime","creationTime",*/"size","isRegularFile",
             "isDirectory","isSymbolicLink","isOther"};
-    public List<List<String>> findDuplicates(String startPath) throws IOException{
+    public List<List<String>> findDuplicates(String startPath) throws IOException {
         Path dir = Paths.get(startPath);
         List<String> allPath = new ArrayList<String>();
         Files.walkFileTree(dir, new SimpleFileVisitor<Path>() {
             @Override
-            public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
+            public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
                 String a = path.toString();
                 allPath.add(a);
                 return FileVisitResult.CONTINUE;
             }
 
             @Override
-            public FileVisitResult visitFileFailed(Path file, IOException exc) {
+            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
                 //System.out.println(file);
                 return FileVisitResult.CONTINUE;
             }
