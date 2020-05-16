@@ -55,17 +55,27 @@ public class OrderProcessor {
         try {
             Files.walkFileTree(baza,new SimpleFileVisitor<Path>(){
                 @Override
-                public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
+                public FileVisitResult visitFile(Path path, BasicFileAttributes attrs)  {
 
                     boolean border = borderFunc(path);
                     if(border) {
-                        LocalDateTime date = (LocalDateTime) Files.getAttribute(path, "lastModifiedTime");
+                        LocalDateTime date = null;
+                        try {
+                            date = (LocalDateTime) Files.getAttribute(path, "lastModifiedTime");
+                        } catch (IOException e) {
+                            e.getMessage();
+                        }
                         if (start != null && finish != null) {
                             if (date.compareTo(start.atTime(00, 00, 00)) >= 0 && date.compareTo(finish.atTime(23, 59, 59)) <= 0) {
                                 String[] file = path.getFileName().toString().split("[-,\\.]");
                                 if (shopId != null) {
                                     if (file[0] == shopId) {
-                                        List<String> listStrFile = Files.readAllLines(path);
+                                        List<String> listStrFile = null;
+                                        try {
+                                            listStrFile = Files.readAllLines(path);
+                                        } catch (IOException e) {
+                                            e.getMessage();
+                                        }
                                         List<String[]> listArrFile = new ArrayList<>();
                                         for (String s : listStrFile) {
                                             String[] tmp = s.split(",");
@@ -88,7 +98,12 @@ public class OrderProcessor {
                                         listSale.add(order);
                                     }
                                 } else {
-                                    List<String> listStrFile = Files.readAllLines(path);
+                                    List<String> listStrFile = null;
+                                    try {
+                                        listStrFile = Files.readAllLines(path);
+                                    } catch (IOException e) {
+                                        e.getMessage();
+                                    }
                                     List<String[]> listArrFile = new ArrayList<>();
                                     for (String s : listStrFile) {
                                         String[] tmp = s.split(",");
@@ -117,7 +132,12 @@ public class OrderProcessor {
                                 String[] file = path.getFileName().toString().split("[-,\\.]");
                                 if (shopId != null) {
                                     if (file[0] == shopId) {
-                                        List<String> listStrFile = Files.readAllLines(path);
+                                        List<String> listStrFile = null;
+                                        try {
+                                            listStrFile = Files.readAllLines(path);
+                                        } catch (IOException e) {
+                                            e.getMessage();
+                                        }
                                         List<String[]> listArrFile = new ArrayList<>();
                                         for (String s : listStrFile) {
                                             String[] tmp = s.split(",");
@@ -140,7 +160,12 @@ public class OrderProcessor {
                                         listSale.add(order);
                                     }
                                 } else {
-                                    List<String> listStrFile = Files.readAllLines(path);
+                                    List<String> listStrFile = null;
+                                    try {
+                                        listStrFile = Files.readAllLines(path);
+                                    } catch (IOException e) {
+                                        e.getMessage();
+                                    }
                                     List<String[]> listArrFile = new ArrayList<>();
                                     for (String s : listStrFile) {
                                         String[] tmp = s.split(",");
@@ -168,7 +193,12 @@ public class OrderProcessor {
                                 String[] file = path.getFileName().toString().split("[-,\\.]");
                                 if (shopId != null) {
                                     if (file[0] == shopId) {
-                                        List<String> listStrFile = Files.readAllLines(path);
+                                        List<String> listStrFile = null;
+                                        try {
+                                            listStrFile = Files.readAllLines(path);
+                                        } catch (IOException e) {
+                                            e.getMessage();
+                                        }
                                         List<String[]> listArrFile = new ArrayList<>();
                                         for (String s : listStrFile) {
                                             String[] tmp = s.split(",");
@@ -191,7 +221,12 @@ public class OrderProcessor {
                                         listSale.add(order);
                                     }
                                 } else {
-                                    List<String> listStrFile = Files.readAllLines(path);
+                                    List<String> listStrFile = null;
+                                    try {
+                                        listStrFile = Files.readAllLines(path);
+                                    } catch (IOException e) {
+                                        e.getMessage();
+                                    }
                                     List<String[]> listArrFile = new ArrayList<>();
                                     for (String s : listStrFile) {
                                         String[] tmp = s.split(",");
@@ -218,7 +253,12 @@ public class OrderProcessor {
                             String[] file = path.getFileName().toString().split("[-,\\.]");
                             if (shopId != null) {
                                 if (file[0] == shopId) {
-                                    List<String> listStrFile = Files.readAllLines(path);
+                                    List<String> listStrFile = null;
+                                    try {
+                                        listStrFile = Files.readAllLines(path);
+                                    } catch (IOException e) {
+                                        e.getMessage();
+                                    }
                                     List<String[]> listArrFile = new ArrayList<>();
                                     for (String s : listStrFile) {
                                         String[] tmp = s.split(",");
@@ -241,7 +281,12 @@ public class OrderProcessor {
                                     listSale.add(order);
                                 }
                             } else {
-                                List<String> listStrFile = Files.readAllLines(path);
+                                List<String> listStrFile = null;
+                                try {
+                                    listStrFile = Files.readAllLines(path);
+                                } catch (IOException e) {
+                                    e.getMessage();
+                                }
                                 List<String[]> listArrFile = new ArrayList<>();
                                 for (String s : listStrFile) {
                                     String[] tmp = s.split(",");
@@ -273,7 +318,7 @@ public class OrderProcessor {
                 }
 
                 @Override
-                public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                public FileVisitResult visitFileFailed(Path file, IOException exc) {
                     return FileVisitResult.CONTINUE;
                 }
 
@@ -285,7 +330,7 @@ public class OrderProcessor {
         return r;
     }
 
-    public List<Order> process(String shopId) throws IOException {
+    public List<Order> process(String shopId) {
         List<Order> shops = new ArrayList<>();
         if(shopId != null) {
             for (Order or : listSale) {
