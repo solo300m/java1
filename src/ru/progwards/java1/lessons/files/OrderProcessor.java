@@ -7,6 +7,32 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
+class Baza{
+    public static void main(String[] args) {
+        //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza"  "C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza"
+        OrderProcessor cool = new OrderProcessor("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza");
+
+        int badFiles = cool.loadOrders(null ,null,null);
+        System.out.println(badFiles);
+        for(Order s: cool.listSale){
+            System.out.println(s.shopId+" "+s.customerId+" "+s.orderId+" "+s.datetime+" "+s.sum);
+            for(int i = 0; i < s.items.size(); i++){
+                System.out.println(s.items.get(i).googsName+" "+s.items.get(i).count+" "+s.items.get(i).price);
+            }
+        }
+        List<Order> shops = cool.process("S03");
+        for(int i = 0; i < shops.size(); i++){
+            System.out.println(shops.get(i).orderId+" "+shops.get(i).sum);
+        }
+        Map<String,Double>shopsStat = cool.statisticsByShop();
+        System.out.println(shopsStat);
+        Map<String,Double>goodsStat = cool.statisticsByGoods();
+        System.out.println(goodsStat);
+        Map<LocalDate,Double> dateStat = cool.statisticsByDay();
+        System.out.println(dateStat);
+    }
+}
+
 public class OrderProcessor {
     public List<Order> listSale;
     public Path baza;
@@ -38,6 +64,70 @@ public class OrderProcessor {
         }
         return true;
     }
+    private void operation(LocalDateTime date, Path path, String shopId){
+        String[] file = path.getFileName().toString().split("[-,\\.]");
+        if (shopId != null) {
+            if (file[0].compareTo(shopId)==0) {
+                List<String> listStrFile = null;
+                try {
+                    listStrFile = Files.readAllLines(path);
+                } catch (IOException e) {
+                    e.getMessage();
+                }
+                List<String[]> listArrFile = new ArrayList<>();
+                for (String s : listStrFile) {
+                    String[] tmp = s.split(",");
+                    listArrFile.add(tmp);
+                }
+                Order order = new Order();
+                order.datetime = date;
+                order.customerId = file[2];
+                order.orderId = file[1];
+                order.shopId = file[0];
+
+                for (String[] f : listArrFile) {
+                    if(f.length == 3) {
+                        OrderItem item = new OrderItem();
+                        item.googsName = f[0];
+                        item.count = Integer.parseInt(f[1].trim());
+                        item.price = Double.parseDouble(f[2].trim());
+                        order.sum += item.price;
+                        order.items.add(item);
+                    }
+                }
+                listSale.add(order);
+            }
+        } else {
+            List<String> listStrFile = null;
+            try {
+                listStrFile = Files.readAllLines(path);
+            } catch (IOException e) {
+                e.getMessage();
+            }
+            List<String[]> listArrFile = new ArrayList<>();
+            for (String s : listStrFile) {
+                String[] tmp = s.split(",");
+                listArrFile.add(tmp);
+            }
+            Order order = new Order();
+            order.datetime = date;
+            order.customerId = file[2];
+            order.orderId = file[1];
+            order.shopId = file[0];
+
+            for (String[] f : listArrFile) {
+                if(f.length == 3) {
+                    OrderItem item = new OrderItem();
+                    item.googsName = f[0];
+                    item.count = Integer.parseInt(f[1].trim());
+                    item.price = Double.parseDouble(f[2].trim());
+                    order.sum += item.price;
+                    order.items.add(item);
+                }
+            }
+            listSale.add(order);
+        }
+    }
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
         class rezClass {
             private int rez;
@@ -61,253 +151,28 @@ public class OrderProcessor {
                     if(border) {
                         LocalDateTime date = null;
                         try {
-                            date = (LocalDateTime) Files.getAttribute(path, "lastModifiedTime");
+                            String[] date1 = Files.getAttribute(path, "lastModifiedTime").toString().split("[-,T,:,\\.]");
+                            date = LocalDateTime.of(Integer.parseInt(date1[0]),Integer.parseInt(date1[1]),
+                                    Integer.parseInt(date1[2]),Integer.parseInt(date1[3]),Integer.parseInt(date1[4]),
+                                    Integer.parseInt(date1[5]));
+                            //date = (LocalDateTime) Files.getAttribute(path, "lastModifiedTime");
                         } catch (IOException e) {
                             e.getMessage();
                         }
                         if (start != null && finish != null) {
                             if (date.compareTo(start.atTime(00, 00, 00)) >= 0 && date.compareTo(finish.atTime(23, 59, 59)) <= 0) {
-                                String[] file = path.getFileName().toString().split("[-,\\.]");
-                                if (shopId != null) {
-                                    if (file[0] == shopId) {
-                                        List<String> listStrFile = null;
-                                        try {
-                                            listStrFile = Files.readAllLines(path);
-                                        } catch (IOException e) {
-                                            e.getMessage();
-                                        }
-                                        List<String[]> listArrFile = new ArrayList<>();
-                                        for (String s : listStrFile) {
-                                            String[] tmp = s.split(",");
-                                            listArrFile.add(tmp);
-                                        }
-                                        Order order = new Order();
-                                        order.datetime = date;
-                                        order.customerId = file[2];
-                                        order.orderId = file[1];
-                                        order.shopId = file[0];
-
-                                        for (String[] f : listArrFile) {
-                                            OrderItem item = new OrderItem();
-                                            item.googsName = f[0];
-                                            item.count = Integer.parseInt(f[1]);
-                                            item.price = Double.parseDouble(f[2]);
-                                            order.sum += item.price;
-                                            order.items.add(item);
-                                        }
-                                        listSale.add(order);
-                                    }
-                                } else {
-                                    List<String> listStrFile = null;
-                                    try {
-                                        listStrFile = Files.readAllLines(path);
-                                    } catch (IOException e) {
-                                        e.getMessage();
-                                    }
-                                    List<String[]> listArrFile = new ArrayList<>();
-                                    for (String s : listStrFile) {
-                                        String[] tmp = s.split(",");
-                                        listArrFile.add(tmp);
-                                    }
-                                    Order order = new Order();
-                                    order.datetime = date;
-                                    order.customerId = file[2];
-                                    order.orderId = file[1];
-                                    order.shopId = file[0];
-
-                                    for (String[] f : listArrFile) {
-                                        OrderItem item = new OrderItem();
-                                        item.googsName = f[0];
-                                        item.count = Integer.parseInt(f[1]);
-                                        item.price = Double.parseDouble(f[2]);
-                                        order.sum += item.price;
-                                        order.items.add(item);
-                                    }
-                                    listSale.add(order);
-                                }
+                                operation(date,path,shopId);
                             }
-
                         } else if (start == null && finish != null) {
                             if (date.compareTo(finish.atTime(23, 59, 59)) <= 0) {
-                                String[] file = path.getFileName().toString().split("[-,\\.]");
-                                if (shopId != null) {
-                                    if (file[0] == shopId) {
-                                        List<String> listStrFile = null;
-                                        try {
-                                            listStrFile = Files.readAllLines(path);
-                                        } catch (IOException e) {
-                                            e.getMessage();
-                                        }
-                                        List<String[]> listArrFile = new ArrayList<>();
-                                        for (String s : listStrFile) {
-                                            String[] tmp = s.split(",");
-                                            listArrFile.add(tmp);
-                                        }
-                                        Order order = new Order();
-                                        order.datetime = date;
-                                        order.customerId = file[2];
-                                        order.orderId = file[1];
-                                        order.shopId = file[0];
-
-                                        for (String[] f : listArrFile) {
-                                            OrderItem item = new OrderItem();
-                                            item.googsName = f[0];
-                                            item.count = Integer.parseInt(f[1]);
-                                            item.price = Double.parseDouble(f[2]);
-                                            order.sum += item.price;
-                                            order.items.add(item);
-                                        }
-                                        listSale.add(order);
-                                    }
-                                } else {
-                                    List<String> listStrFile = null;
-                                    try {
-                                        listStrFile = Files.readAllLines(path);
-                                    } catch (IOException e) {
-                                        e.getMessage();
-                                    }
-                                    List<String[]> listArrFile = new ArrayList<>();
-                                    for (String s : listStrFile) {
-                                        String[] tmp = s.split(",");
-                                        listArrFile.add(tmp);
-                                    }
-                                    Order order = new Order();
-                                    order.datetime = date;
-                                    order.customerId = file[2];
-                                    order.orderId = file[1];
-                                    order.shopId = file[0];
-
-                                    for (String[] f : listArrFile) {
-                                        OrderItem item = new OrderItem();
-                                        item.googsName = f[0];
-                                        item.count = Integer.parseInt(f[1]);
-                                        item.price = Double.parseDouble(f[2]);
-                                        order.sum += item.price;
-                                        order.items.add(item);
-                                    }
-                                    listSale.add(order);
-                                }
+                                operation(date,path,shopId);
                             }
                         } else if (start != null && finish == null) {
                             if (date.compareTo(start.atTime(00, 00, 00)) >= 0) {
-                                String[] file = path.getFileName().toString().split("[-,\\.]");
-                                if (shopId != null) {
-                                    if (file[0] == shopId) {
-                                        List<String> listStrFile = null;
-                                        try {
-                                            listStrFile = Files.readAllLines(path);
-                                        } catch (IOException e) {
-                                            e.getMessage();
-                                        }
-                                        List<String[]> listArrFile = new ArrayList<>();
-                                        for (String s : listStrFile) {
-                                            String[] tmp = s.split(",");
-                                            listArrFile.add(tmp);
-                                        }
-                                        Order order = new Order();
-                                        order.datetime = date;
-                                        order.customerId = file[2];
-                                        order.orderId = file[1];
-                                        order.shopId = file[0];
-
-                                        for (String[] f : listArrFile) {
-                                            OrderItem item = new OrderItem();
-                                            item.googsName = f[0];
-                                            item.count = Integer.parseInt(f[1]);
-                                            item.price = Double.parseDouble(f[2]);
-                                            order.sum += item.price;
-                                            order.items.add(item);
-                                        }
-                                        listSale.add(order);
-                                    }
-                                } else {
-                                    List<String> listStrFile = null;
-                                    try {
-                                        listStrFile = Files.readAllLines(path);
-                                    } catch (IOException e) {
-                                        e.getMessage();
-                                    }
-                                    List<String[]> listArrFile = new ArrayList<>();
-                                    for (String s : listStrFile) {
-                                        String[] tmp = s.split(",");
-                                        listArrFile.add(tmp);
-                                    }
-                                    Order order = new Order();
-                                    order.datetime = date;
-                                    order.customerId = file[2];
-                                    order.orderId = file[1];
-                                    order.shopId = file[0];
-
-                                    for (String[] f : listArrFile) {
-                                        OrderItem item = new OrderItem();
-                                        item.googsName = f[0];
-                                        item.count = Integer.parseInt(f[1]);
-                                        item.price = Double.parseDouble(f[2]);
-                                        order.sum += item.price;
-                                        order.items.add(item);
-                                    }
-                                    listSale.add(order);
-                                }
+                                operation(date,path,shopId);
                             }
                         } else if (start == null && finish == null) {
-                            String[] file = path.getFileName().toString().split("[-,\\.]");
-                            if (shopId != null) {
-                                if (file[0] == shopId) {
-                                    List<String> listStrFile = null;
-                                    try {
-                                        listStrFile = Files.readAllLines(path);
-                                    } catch (IOException e) {
-                                        e.getMessage();
-                                    }
-                                    List<String[]> listArrFile = new ArrayList<>();
-                                    for (String s : listStrFile) {
-                                        String[] tmp = s.split(",");
-                                        listArrFile.add(tmp);
-                                    }
-                                    Order order = new Order();
-                                    order.datetime = date;
-                                    order.customerId = file[2];
-                                    order.orderId = file[1];
-                                    order.shopId = file[0];
-
-                                    for (String[] f : listArrFile) {
-                                        OrderItem item = new OrderItem();
-                                        item.googsName = f[0];
-                                        item.count = Integer.parseInt(f[1]);
-                                        item.price = Double.parseDouble(f[2]);
-                                        order.sum += item.price;
-                                        order.items.add(item);
-                                    }
-                                    listSale.add(order);
-                                }
-                            } else {
-                                List<String> listStrFile = null;
-                                try {
-                                    listStrFile = Files.readAllLines(path);
-                                } catch (IOException e) {
-                                    e.getMessage();
-                                }
-                                List<String[]> listArrFile = new ArrayList<>();
-                                for (String s : listStrFile) {
-                                    String[] tmp = s.split(",");
-                                    listArrFile.add(tmp);
-                                }
-                                Order order = new Order();
-                                order.datetime = date;
-                                order.customerId = file[2];
-                                order.orderId = file[1];
-                                order.shopId = file[0];
-
-                                for (String[] f : listArrFile) {
-                                    OrderItem item = new OrderItem();
-                                    item.googsName = f[0];
-                                    item.count = Integer.parseInt(f[1]);
-                                    item.price = Double.parseDouble(f[2]);
-                                    order.sum += item.price;
-                                    order.items.add(item);
-                                }
-                                listSale.add(order);
-                            }
+                            operation(date,path,shopId);
                         }
                     }
                     else{
@@ -334,18 +199,18 @@ public class OrderProcessor {
         List<Order> shops = new ArrayList<>();
         if(shopId != null) {
             for (Order or : listSale) {
-                if (or.shopId == shopId) {
+                if (or.shopId.compareTo(shopId)==0) {
                     shops.add(or);
                 }
             }
-            if (shops.isEmpty()) {
+            /*if (shops.isEmpty()) {
                 int a = loadOrders(null, null, shopId);
             }
             for (Order or : listSale) {
-                if (or.shopId == shopId) {
+                if (or.shopId.compareTo(shopId)==0) {
                     shops.add(or);
                 }
-            }
+            }*/
             shops.sort(new Comparator<Order>() {
                 @Override
                 public int compare(Order o1, Order o2) {
@@ -355,7 +220,7 @@ public class OrderProcessor {
             return shops;
         }
         else{
-            int a = loadOrders(null, null, null);
+            //int a = loadOrders(null, null, null);
             for (Order or : listSale) {
                 shops.add(or);
             }

@@ -24,9 +24,10 @@ class Test{
 
 public class FindDuplicates {
     public static String[] atribName = {"lastModifiedTime",
-            /*"lastAccessTime","creationTime",*/"size","isRegularFile",
-            "isDirectory","isSymbolicLink","isOther"};
-    public List<List<String>> findDuplicates(String startPath)  {
+            /*"lastAccessTime","creationTime",*/"size"/*,"isRegularFile",
+            "isDirectory","isSymbolicLink","isOther"*/};
+
+    private List<String> getPathArrey(String startPath){
         Path dir = Paths.get(startPath);
         List<String> allPath = new ArrayList<String>();
         try {
@@ -47,8 +48,13 @@ public class FindDuplicates {
         } catch (IOException e) {
             e.getMessage();
         }
-        /*for(String s: allPath)
-            System.out.println(s);*/
+        return allPath;
+    }
+
+    public List<List<String>> findDuplicates(String startPath)  {
+        //загружаем список путей к файлам в виде строк
+        List<String> allPath = getPathArrey(startPath);
+
         List<List<String>> duplex = new ArrayList<List<String>>();
 
         for(int i = 0; i < allPath.size(); i++){
@@ -63,7 +69,6 @@ public class FindDuplicates {
                 } catch (IOException e) {
                     e.getMessage();
                 }
-                //System.out.println(atr.name+" "+atr.atrib.get(h));
             }
             for(int j = i + 1; j < allPath.size(); j++){
                 Path slavePath = Paths.get(allPath.get(j));
@@ -75,7 +80,6 @@ public class FindDuplicates {
                     } catch (IOException e) {
                         e.getMessage();
                     }
-                    //System.out.println(atr.name+" "+atr.atrib.get(h));
                 }
                 if(atr.equals(atrSl)){
                     if(!dupl.contains(masterPath.toString()))
@@ -88,7 +92,6 @@ public class FindDuplicates {
             }
             if(!dupl.isEmpty())
                 duplex.add(dupl);
-            //allPath.remove(i);
         }
         for(List<String> s: duplex){
             String [] strArr = new String [s.size()];
