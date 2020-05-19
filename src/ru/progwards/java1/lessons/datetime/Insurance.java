@@ -5,39 +5,10 @@ import java.time.format.DateTimeFormatter;
 
 class Proverca{
     public static void main(String[] args) {
-        //ZonedDateTime a = ZonedDateTime.now() ;
-        /*Insurance doc = new Insurance(LocalDateTime.of(2020,5,
-                9,19,12,13,
-                320495).atZone(ZoneId.of("Europe/Moscow")));*/
+
         Insurance doc = new Insurance("2020-01-01T00:00:00", Insurance.FormatStyle.LONG);
         doc.setDuration("0000-15-00T00:00:00", Insurance.FormatStyle.LONG);
-        /*String pattern = "yyyy-MM-dd";
-        DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
-        DateTimeFormatter df1 = DateTimeFormatter.ISO_LOCAL_DATE;
-        LocalDate ff = LocalDate.parse("2020-05-05",df1);
-        System.out.println(ff);*/
-        /*DateTimeFormatter f_SHORT = DateTimeFormatter.ISO_LOCAL_DATE;
-        LocalDate tmp = LocalDate.parse("2020-05-05",f_SHORT);
-        LocalDateTime tmp2 = tmp.atTime(00,00,00);
-        ZonedDateTime start = tmp2.atZone(ZoneId.systemDefault());
-        ZonedDateTime endDefault = start.plusYears(1);
-        Duration d = Duration.between(start,endDefault);
-        System.out.println(start +"\n"+endDefault);
-        System.out.println(d.toDays());*/
 
-        /*DateTimeFormatter f_LONG = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        LocalDateTime tmp = LocalDateTime.parse("2020-05-05T23:59:59",f_LONG);
-        ZonedDateTime start = tmp.atZone(ZoneId.systemDefault());
-        ZonedDateTime endDefault = start.plusYears(1);
-        Duration d = Duration.between(start,endDefault);*/
-
-        /*DateTimeFormatter f_FULL = DateTimeFormatter.ISO_ZONED_DATE_TIME;
-        ZonedDateTime start = ZonedDateTime.parse("2020-04-07T12:32:13.306112+03:00[Europe/Moscow]", f_FULL);
-        System.out.println(start);
-        ZonedDateTime endDefault = start.plusYears(1);
-        //Duration d = Duration.between(start,endDefault);*/
-
-        //Insurance a = new Insurance(LocalDateTime.of(2017,8,11,12,32,3,337399).atZone(ZoneId.of("Europe/Moscow")));
         System.out.println(doc);
 
     }
@@ -137,8 +108,13 @@ public class Insurance {
         this.duration = Duration.between(this.start,expiration);
     }
     public void setDuration(int months, int days, int hours){
-        ZonedDateTime end = this.start.withMonth(months).
-                withDayOfMonth(days).withHour(hours);
+        ZonedDateTime end = ZonedDateTime.now();
+        if(months <= 0 || months > 12){
+            end = this.start.withDayOfMonth(days).withHour(hours);
+        }
+        else if((months >= 1 || months <=12)) {
+            end = this.start.withMonth(months).withDayOfMonth(days).withHour(hours);
+        }
         this.duration = Duration.between(this.start,end);
         //System.out.println(end);
     }
