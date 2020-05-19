@@ -8,9 +8,9 @@ import java.util.List;
 
 class Proverca{
     public static void main(String[] args) {
-        String in = "C:\\Users\\51256\\IdeaProjects\\Ekkel\\tmp_dir";//"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir";
-        String out = "C:\\Users\\51256\\IdeaProjects\\Ekkel\\tmp_dir\\tmp_dir2";
-        List<String>kes = List.of("file","list","clone");
+        String in = "C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir11"; //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir"; C:\Users\51256\IdeaProjects\Ekkel\tmp_dir
+        String out = "C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir\\tmp_dir2";
+        List<String>kes = List.of("111","123","222","333");
         FilesSelect a = new FilesSelect();
         a.selectFiles(in,out,kes);
     }
@@ -21,6 +21,13 @@ public class FilesSelect {
         List<String>fileList = new ArrayList<>();
         Path dirIn = Paths.get(inFolder);
         Path dirOut = Paths.get(outFolder);
+        if(!Files.exists(dirOut)){
+            try {
+                Files.createDirectory(dirOut);
+            } catch (IOException e) {
+                e.getMessage();
+            }
+        }
         PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher(pattern);
 
         try {

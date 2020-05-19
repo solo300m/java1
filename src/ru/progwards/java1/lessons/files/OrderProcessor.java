@@ -62,6 +62,26 @@ public class OrderProcessor {
                     return false;
             }
         }
+        try {
+            List<String> contentTmp = Files.readAllLines(path);
+            for(String s: contentTmp){
+                String[] controlContent = s.split(",");
+                if(controlContent.length==3) {
+                    char[] count = controlContent[1].trim().toCharArray();
+                    for (char ch : count) {
+                        if (!Character.isDigit(ch))
+                            return false;
+                    }
+                    char[] price = controlContent[2].trim().toCharArray();
+                    for (char ch : price) {
+                        if (!Character.isDigit(ch))
+                            return false;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.getMessage();
+        }
         return true;
     }
     private void operation(LocalDateTime date, Path path, String shopId){

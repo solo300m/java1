@@ -14,9 +14,7 @@ class Test{
         List<List<String>> find;
         find = f.findDuplicates(dir);
         for(List<String> s: find){
-            for(String str: s){
-                System.out.println(str);
-            }
+            System.out.println(s);
         }
 
     }
@@ -86,7 +84,7 @@ public class FindDuplicates {
                         dupl.add(masterPath.toString());
                     if(!dupl.contains(slavePath.toString())) {
                         dupl.add(slavePath.toString());
-                        allPath.remove(j);
+                        //allPath.remove(j);
                     }
                 }
             }
@@ -106,7 +104,7 @@ public class FindDuplicates {
 
             for(int i = 1; i < strArr.length; i++){
                 if(!strArr[0].equals(strArr[i])){
-                    s.remove(i);
+                    //s.remove(i);
                 }
             }
             if(s.size()<=1)
