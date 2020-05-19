@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 class Proverca{
     public static void main(String[] args) {
 
-        Insurance doc = new Insurance("2020-01-01T00:00:00", Insurance.FormatStyle.LONG);
-        doc.setDuration("0000-15-00T00:00:00", Insurance.FormatStyle.LONG);
+        Insurance doc = new Insurance("2020-05-18T18:50:38", Insurance.FormatStyle.LONG);
+        doc.setDuration(0,2,0);
 
         System.out.println(doc);
 
@@ -110,10 +110,10 @@ public class Insurance {
     public void setDuration(int months, int days, int hours){
         ZonedDateTime end = ZonedDateTime.now();
         if(months <= 0 || months > 12){
-            end = this.start.withDayOfMonth(days).withHour(hours);
+            end = this.start.plusDays(days).plusHours(hours);
         }
         else if((months >= 1 || months <=12)) {
-            end = this.start.withMonth(months).withDayOfMonth(days).withHour(hours);
+            end = this.start.plusMonths(months).plusDays(days).plusHours(hours);
         }
         this.duration = Duration.between(this.start,end);
         //System.out.println(end);
