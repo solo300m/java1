@@ -49,6 +49,7 @@ public class OrderProcessor {
         }
 
     }
+    //функция проверяющая ошибки формата и данных
     private boolean borderFunc(Path path){
         String []parsArr = path.getFileName().toString().split("[-,\\.]");
         if(parsArr.length != 4)
@@ -84,6 +85,7 @@ public class OrderProcessor {
         }
         return true;
     }
+    //функция, формирующая исходный массив
     private void operation(LocalDateTime date, Path path, String shopId){
         String[] file = path.getFileName().toString().split("[-,\\.]");
         if (shopId != null) {

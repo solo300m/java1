@@ -8,7 +8,7 @@ import java.util.List;
 
 class Proverca{
     public static void main(String[] args) {
-        String in = "C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir11"; //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir"; C:\Users\51256\IdeaProjects\Ekkel\tmp_dir
+        String in = "C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir11"; //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir11"; C:\Users\51256\IdeaProjects\Ekkel\tmp_dir
         String out = "C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir\\tmp_dir2";
         List<String>kes = List.of("111","123","222","333");
         FilesSelect a = new FilesSelect();

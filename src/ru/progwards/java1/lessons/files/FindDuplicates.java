@@ -9,7 +9,7 @@ import java.util.Objects;
 
 class Test{
     public static void main(String[] args)  {
-        String dir = "C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir"; //C:\Users\Сергей\IdeaProjects\Ekkel_Home_1\tmp_dir
+        String dir = "C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir"; //C:\Users\Сергей\IdeaProjects\Ekkel_Home_1\tmp_dir проблема
         FindDuplicates f = new FindDuplicates();
         List<List<String>> find;
         find = f.findDuplicates(dir);
