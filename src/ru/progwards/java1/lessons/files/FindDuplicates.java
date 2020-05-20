@@ -71,7 +71,7 @@ public class FindDuplicates {
             for(int j = i + 1; j < allPath.size(); j++){
                 Path slavePath = Paths.get(allPath.get(j));
                 fileAtributs atrSl = new fileAtributs();
-                atrSl.name = masterPath.getFileName();
+                atrSl.name = slavePath.getFileName();
                 for(int h = 0; h < atribName.length; h++) {
                     try {
                         atrSl.atrib.add(Files.getAttribute(slavePath, atribName[h]));
@@ -84,7 +84,7 @@ public class FindDuplicates {
                         dupl.add(masterPath.toString());
                     if(!dupl.contains(slavePath.toString())) {
                         dupl.add(slavePath.toString());
-                        //allPath.remove(j);
+                        allPath.remove(j);
                     }
                 }
             }
@@ -104,7 +104,7 @@ public class FindDuplicates {
 
             for(int i = 1; i < strArr.length; i++){
                 if(!strArr[0].equals(strArr[i])){
-                    //s.remove(i);
+                    s.remove(i);
                 }
             }
             if(s.size()<=1)
