@@ -23,9 +23,10 @@ public class FilesSelect {
         List<String>fileList = new ArrayList<>();
         File sTmp = new File(inFolder);
         Path dirIn = Paths.get(sTmp.getAbsolutePath());//Path dirIn = Paths.get(inFolder);
-        String dirOutTmp =  dirIn.getParent().toString()+"\\"+outFolder;
-        Path dirOut = Paths.get(dirOutTmp);
+        File dirOutTmp =  new File(outFolder);
+        Path dirOut = Paths.get(dirOutTmp.getAbsolutePath());
         if(!Files.exists(dirOut)){
+
             try {
                 Files.createDirectory(dirOut);
             } catch (IOException e) {
