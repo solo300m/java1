@@ -1,5 +1,6 @@
 package ru.progwards.java1.lessons.files;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -8,21 +9,22 @@ import java.util.List;
 
 class Proverca{
     public static void main(String[] args) {
-        String in = "C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir11"; //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir11"; C:\Users\51256\IdeaProjects\Ekkel\tmp_dir
-        String out = "tmp_dir2";
-        List<String>kes = List.of("111","123","222","333");
+        String in = "tmp_dir11"; //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir11"; C:\Users\51256\IdeaProjects\Ekkel\tmp_dir
+        String out = "tmp_dir2"; //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir\\tmp_dir2"
+        List<String>keys = List.of("111","123","222","333");
         FilesSelect a = new FilesSelect();
-        a.selectFiles(in,out,kes);
+        a.selectFiles(in,out,keys);
     }
 }
 public class FilesSelect {
-    public void selectFiles(String inFolder, String outFolder, List<String> keys)  {
+    public void selectFiles(String inFolder, String outFolder,List<String> keys)  {
+
         final String pattern = "glob:**/*.txt";
         List<String>fileList = new ArrayList<>();
-
-        Path dirIn = Paths.get(inFolder);
-        String outPath = dirIn.toString()+"\\"+outFolder;
-        Path dirOut = Paths.get(outPath);
+        File sTmp = new File(inFolder);
+        Path dirIn = Paths.get(sTmp.getAbsolutePath());//Path dirIn = Paths.get(inFolder);
+        String dirOutTmp =  dirIn.getParent().toString()+"\\"+outFolder;
+        Path dirOut = Paths.get(dirOutTmp);
         if(!Files.exists(dirOut)){
             try {
                 Files.createDirectory(dirOut);
