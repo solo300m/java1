@@ -53,7 +53,7 @@ public class OrderProcessor {
     }
     //функция проверяющая ошибки формата и данных
     private boolean borderFunc(Path path){
-        System.out.println("#traceout 1н");
+        System.out.println("#traceout B1н");
         String []parsArr = path.getFileName().toString().split("[-,\\.]");
         if(parsArr.length != 4)
             return false;
@@ -88,14 +88,14 @@ public class OrderProcessor {
         } catch (IOException e) {
             e.getMessage();
         }
-        System.out.println("#traceout 1к");
+        System.out.println("#traceout B1к");
         return true;
     }
     //функция, формирующая исходный массив
     private void operation(LocalDateTime date, Path path, String shopId){
-        System.out.println("#traceout 2н");
+        //System.out.println("#traceout 2н");
         String[] file = path.getFileName().toString().split("[-,\\.]");
-        System.out.println("#traceout 2к");
+        //System.out.println("#traceout 2к");
         if (shopId != null) {
             if (file[0].compareTo(shopId)==0) {
                 List<String> listStrFile = null;
@@ -195,19 +195,27 @@ public class OrderProcessor {
                             e.getMessage();
                         }
                         if (start != null && finish != null) {
+                            System.out.println("#traceout 2_1n");
                             if (date.compareTo(start.atTime(00, 00, 00)) >= 0 && date.compareTo(finish.atTime(23, 59, 59)) <= 0) {
                                 operation(date,path,shopId);
                             }
+                            System.out.println("#traceout 2_1k");
                         } else if (start == null && finish != null) {
+                            System.out.println("#traceout 2_2n");
                             if (date.compareTo(finish.atTime(23, 59, 59)) <= 0) {
                                 operation(date,path,shopId);
                             }
+                            System.out.println("#traceout 2_2k");
                         } else if (start != null && finish == null) {
+                            System.out.println("#traceout 2_3n");
                             if (date.compareTo(start.atTime(00, 00, 00)) >= 0) {
                                 operation(date,path,shopId);
                             }
+                            System.out.println("#traceout 2_3k");
                         } else if (start == null && finish == null) {
+                            System.out.println("#traceout 2_4n");
                             operation(date,path,shopId);
+                            System.out.println("#traceout 2_4k");
                         }
                         System.out.println("#traceout 2k");
                     }
