@@ -21,12 +21,15 @@ public class FilesSelect {
 
     public void selectFiles(String inFolder, String outFolder,List<String> keys)  {
         //проверим с #traceout
+
+        System.out.println("#traceout");
         final String pattern = "glob:**/*.txt";
         List<String>fileList = new ArrayList<>();
         File sTmp = new File(inFolder);
         Path dirIn = Paths.get(sTmp.getAbsolutePath());//Path dirIn = Paths.get(inFolder);
         File dirOutTmp =  new File(outFolder);
         Path dirOut = Paths.get(dirOutTmp.getAbsolutePath());
+        System.out.println("#traceout");
         if(!Files.exists(dirOut)){
 
             try {
