@@ -95,6 +95,7 @@ public class OrderProcessor {
     private void operation(LocalDateTime date, Path path, String shopId){
         System.out.println("#traceout 2н");
         String[] file = path.getFileName().toString().split("[-,\\.]");
+        System.out.println("#traceout 2к");
         if (shopId != null) {
             if (file[0].compareTo(shopId)==0) {
                 List<String> listStrFile = null;
@@ -156,7 +157,7 @@ public class OrderProcessor {
             }
             listSale.add(order);
         }
-        System.out.println("#traceout 2к");
+
     }
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
 
