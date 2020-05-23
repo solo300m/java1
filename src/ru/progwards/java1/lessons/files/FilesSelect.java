@@ -20,7 +20,6 @@ class Proverca{
 public class FilesSelect {
 
     public void selectFiles(String inFolder, String outFolder,List<String> keys)  {
-        //проверим с #traceout
 
         System.out.println("#traceout");
         final String pattern = "glob:**/*.txt";
@@ -29,7 +28,8 @@ public class FilesSelect {
         Path dirIn = Paths.get(sTmp.getAbsolutePath());//Path dirIn = Paths.get(inFolder);
         File dirOutTmp =  new File(outFolder);
         Path dirOut = Paths.get(dirOutTmp.getAbsolutePath());
-        System.out.println("#traceout");
+
+
         if(!Files.exists(dirOut)){
 
             try {
@@ -90,6 +90,7 @@ public class FilesSelect {
                 }
             }
         }
+        System.out.println("#traceout");
     }
 
 }
