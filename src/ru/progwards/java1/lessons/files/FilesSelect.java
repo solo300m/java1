@@ -29,7 +29,7 @@ public class FilesSelect {
         File dirOutTmp =  new File(outFolder);
         Path dirOut = Paths.get(dirOutTmp.getAbsolutePath());
 
-
+        System.out.println("#traceout 4n");
         if(!Files.exists(dirOut)){
 
             try {
@@ -61,9 +61,9 @@ public class FilesSelect {
         } catch (IOException e) {
             e.getMessage();
         }
-
+        System.out.println("#traceout 4k");
         for(String s:fileList){
-            System.out.println("#traceout 4n");
+            System.out.println("#traceout 2n");
             Path tmp_path = Paths.get(s);
             String str_tmp = null;
             try {
@@ -72,6 +72,7 @@ public class FilesSelect {
                 e.getMessage();
             }
             for(String key: keys){
+                System.out.println("#traceout 3n");
                 if(str_tmp.contains(key)){
                     String out_dir = dirOut.toString()+"\\"+key;
                     Path k = Paths.get(out_dir);
@@ -90,8 +91,9 @@ public class FilesSelect {
                         e.getMessage();
                     }
                 }
+                System.out.println("#traceout 3k");
             }
-            System.out.println("#traceout 4k");
+            System.out.println("#traceout 2k");
         }
         System.out.println("#traceout Конец");
     }
