@@ -61,7 +61,9 @@ public class FilesSelect {
         } catch (IOException e) {
             e.getMessage();
         }
+
         for(String s:fileList){
+            System.out.println("#traceout 4n");
             Path tmp_path = Paths.get(s);
             String str_tmp = null;
             try {
@@ -89,8 +91,9 @@ public class FilesSelect {
                     }
                 }
             }
+            System.out.println("#traceout 4k");
         }
-        System.out.println(" #traceout Конец");
+        System.out.println("#traceout Конец");
     }
 
 }
