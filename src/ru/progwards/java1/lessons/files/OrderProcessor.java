@@ -201,8 +201,9 @@ public class OrderProcessor {
                     else{
                         countBad.setRez(1);
                     }
-
+                    System.out.println("#traceout Конец");
                     return FileVisitResult.CONTINUE;
+
                 }
 
                 @Override
@@ -211,7 +212,7 @@ public class OrderProcessor {
                 }
 
             });
-            System.out.println("#traceout Конец");
+
         } catch (IOException e) {
 
             e.getMessage();
