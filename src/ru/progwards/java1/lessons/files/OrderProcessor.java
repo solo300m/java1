@@ -181,7 +181,9 @@ public class OrderProcessor {
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs)  {
                     System.out.println("#traceout Начало");
                     boolean border = borderFunc(path);
+                    System.out.println("#traceout 1n");
                     if(border) {
+                        System.out.println("#traceout 2n");
                         LocalDateTime date = null;
                         try {
                             String[] date1 = Files.getAttribute(path, "lastModifiedTime").toString().split("[-,T,:,\\.]");
@@ -207,11 +209,14 @@ public class OrderProcessor {
                         } else if (start == null && finish == null) {
                             operation(date,path,shopId);
                         }
+                        System.out.println("#traceout 2k");
                     }
                     else{
+                        System.out.println("#traceout 3n");
                         countBad.setRez(1);
+                        System.out.println("#traceout 3k");
                     }
-                    System.out.println("#traceout Конец");
+                    System.out.println("#traceout 1k");
                     return FileVisitResult.CONTINUE;
 
                 }
@@ -222,7 +227,7 @@ public class OrderProcessor {
                 }
 
             });
-
+            System.out.println("#traceout Конец");
         } catch (IOException e) {
 
             e.getMessage();
