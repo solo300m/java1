@@ -16,7 +16,9 @@ class Proverca{
         a.selectFiles(in,out,keys);
     }
 }
+#traceout
 public class FilesSelect {
+
     public void selectFiles(String inFolder, String outFolder,List<String> keys)  {
         //проверим с #traceout
         final String pattern = "glob:**/*.txt";
@@ -87,3 +89,4 @@ public class FilesSelect {
         }
     }
 }
+#traceout
