@@ -211,8 +211,9 @@ public class OrderProcessor {
                 }
 
             });
-        } catch (IOException e) {
             System.out.println("#traceout Конец");
+        } catch (IOException e) {
+
             e.getMessage();
         }
         int r = countBad.getRez();
