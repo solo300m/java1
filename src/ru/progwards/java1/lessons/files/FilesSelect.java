@@ -7,8 +7,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-import static sun.java2d.loops.GraphicsPrimitive.traceout;
-
 class Proverca{
     public static void main(String[] args) {
         String in = "tmp_dir11"; //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\tmp_dir11"; C:\Users\51256\IdeaProjects\Ekkel\tmp_dir
@@ -23,7 +21,8 @@ public class FilesSelect {
 
     public void selectFiles(String inFolder, String outFolder,List<String> keys)  {
 
-        System.out.println(traceout);
+        #traceout
+    System.out.println("Начало");
         final String pattern = "glob:**/*.txt";
         List<String>fileList = new ArrayList<>();
         File sTmp = new File(inFolder);
@@ -92,7 +91,8 @@ public class FilesSelect {
                 }
             }
         }
-        System.out.println(traceout);
+        #traceout
+        System.out.println("Конец");
     }
 
 }
