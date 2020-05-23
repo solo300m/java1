@@ -51,6 +51,7 @@ public class OrderProcessor {
     }
     //функция проверяющая ошибки формата и данных
     private boolean borderFunc(Path path){
+        System.out.println("#traceout 1н");
         String []parsArr = path.getFileName().toString().split("[-,\\.]");
         if(parsArr.length != 4)
             return false;
@@ -83,6 +84,7 @@ public class OrderProcessor {
         } catch (IOException e) {
             e.getMessage();
         }
+        System.out.println("#traceout 1к");
         return true;
     }
     //функция, формирующая исходный массив
