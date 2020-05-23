@@ -89,6 +89,7 @@ public class OrderProcessor {
     }
     //функция, формирующая исходный массив
     private void operation(LocalDateTime date, Path path, String shopId){
+        System.out.println("#traceout 2н");
         String[] file = path.getFileName().toString().split("[-,\\.]");
         if (shopId != null) {
             if (file[0].compareTo(shopId)==0) {
@@ -151,9 +152,10 @@ public class OrderProcessor {
             }
             listSale.add(order);
         }
+        System.out.println("#traceout 2к");
     }
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
-        System.out.println("#traceout Начало");
+
         class rezClass {
             private int rez;
             rezClass(){
@@ -169,9 +171,10 @@ public class OrderProcessor {
         rezClass countBad = new rezClass();
         try {
             Files.walkFileTree(baza,new SimpleFileVisitor<Path>(){
+
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs)  {
-
+                    System.out.println("#traceout Начало");
                     boolean border = borderFunc(path);
                     if(border) {
                         LocalDateTime date = null;
