@@ -151,6 +151,7 @@ public class OrderProcessor {
         }
     }
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
+        System.out.println("#traceout Начало");
         class rezClass {
             private int rez;
             rezClass(){
@@ -214,7 +215,9 @@ public class OrderProcessor {
             e.getMessage();
         }
         int r = countBad.getRez();
+        System.out.println("#traceout Конец");
         return r;
+
     }
 
     public List<Order> process(String shopId) {
