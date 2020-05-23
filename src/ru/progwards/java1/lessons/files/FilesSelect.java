@@ -21,8 +21,7 @@ public class FilesSelect {
 
     public void selectFiles(String inFolder, String outFolder,List<String> keys)  {
 
-        #traceout
-    System.out.println("Начало");
+    System.out.println("#traceout Начало");
         final String pattern = "glob:**/*.txt";
         List<String>fileList = new ArrayList<>();
         File sTmp = new File(inFolder);
@@ -91,8 +90,7 @@ public class FilesSelect {
                 }
             }
         }
-        #traceout
-        System.out.println("Конец");
+        System.out.println(" #traceout Конец");
     }
 
 }
