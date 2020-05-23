@@ -183,7 +183,7 @@ public class OrderProcessor {
                     boolean border = borderFunc(path);
                     System.out.println("#traceout 1n");
                     if(border) {
-                        System.out.println("#traceout 2n");
+
                         LocalDateTime date = null;
                         try {
                             String[] date1 = Files.getAttribute(path, "lastModifiedTime").toString().split("[-,T,:,\\.]");
@@ -191,6 +191,7 @@ public class OrderProcessor {
                                     Integer.parseInt(date1[2]),Integer.parseInt(date1[3]),Integer.parseInt(date1[4]),
                                     Integer.parseInt(date1[5]));
                             //date = (LocalDateTime) Files.getAttribute(path, "lastModifiedTime");
+                            System.out.println("#traceout 2n");
                         } catch (IOException e) {
                             e.getMessage();
                         }
