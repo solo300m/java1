@@ -1,5 +1,6 @@
 package ru.progwards.java1.lessons.files;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -39,7 +40,8 @@ public class OrderProcessor {
     public OrderProcessor(String startPath)  {
         //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza"
         listSale = new ArrayList<>();
-        baza = Paths.get(startPath);
+        File fileTmp = new File(startPath);
+        baza = Paths.get(fileTmp.getAbsolutePath());
         if(!Files.exists(baza)) {
             try {
                 Files.createDirectory(baza);
