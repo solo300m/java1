@@ -74,8 +74,9 @@ public class FilesSelect {
             for(String key: keys){
                 System.out.println("#traceout 3n");
                 if(str_tmp.contains(key)){
-                    String out_dir = dirOut.toString()+"\\"+key;
-                    Path k = Paths.get(out_dir);
+                    //String out_dir = dirOut.toString()+"\\"+key;
+                    Path k = dirOut.resolve(key);
+                    //Path d = k.resolve(key);
                     if(!Files.exists(k)) {
                         try {
                             Files.createDirectory(k);
