@@ -23,7 +23,7 @@ class Test{
 public class FindDuplicates {
     public static String[] atribName = {"lastModifiedTime",
             /*"lastAccessTime","creationTime",*/"size"/*,"isRegularFile",
-            "isDirectory","isSymbolicLink","isOther"*/};
+            "isDirectory","isSymbolicLink",  "isOther"*/};
 
     private List<String> getPathArrey(String startPath){
         Path dir = Paths.get(startPath);
