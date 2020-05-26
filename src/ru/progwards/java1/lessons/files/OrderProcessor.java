@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 class Baza{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza"  "C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza"
         OrderProcessor cool = new OrderProcessor("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza");
 
@@ -53,7 +53,7 @@ public class OrderProcessor {
     }
     //функция проверяющая ошибки формата и данных
     private boolean borderFunc(Path path){
-        System.out.println("#traceout B1н");
+
         String []parsArr = path.getFileName().toString().split("[-,\\.]");
         if(parsArr.length != 4)
             return false;
@@ -66,6 +66,21 @@ public class OrderProcessor {
                     return false;
             }
         }
+
+        String[] date1 = new String[0];
+        try {
+            date1 = Files.getAttribute(path, "lastModifiedTime").toString().split("[-,T,Z,:,\\.]");
+            for(String s: date1){
+                char[]tmpDate = s.toCharArray();
+                for(char ch: tmpDate){
+                    if(!Character.isDigit(ch))
+                        return false;
+                }
+            }
+        } catch (IOException e) {
+            e.getMessage();
+        }
+
         try {
             List<String> contentTmp = Files.readAllLines(path);
             for(String s: contentTmp){
@@ -88,14 +103,14 @@ public class OrderProcessor {
         } catch (IOException e) {
             e.getMessage();
         }
-        System.out.println("#traceout B1к");
+
         return true;
     }
     //функция, формирующая исходный массив
     private void operation(LocalDateTime date, Path path, String shopId){
-        //System.out.println("#traceout 2н");
+
         String[] file = path.getFileName().toString().split("[-,\\.]");
-        //System.out.println("#traceout 2к");
+
         if (shopId != null) {
             if (file[0].compareTo(shopId)==0) {
                 List<String> listStrFile = null;
@@ -179,53 +194,53 @@ public class OrderProcessor {
 
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs)  {
-                    System.out.println("#traceout Начало");
+
                     boolean border = borderFunc(path);
-                    System.out.println("#traceout 1n");
+
                     if(border) {
 
                         LocalDateTime date = null;
                         try {
-                            String[] date1 = Files.getAttribute(path, "lastModifiedTime").toString().split("[-,T,:,\\.]");
+                            String[] date1 = Files.getAttribute(path, "lastModifiedTime").toString().split("[-,T,Z,:,\\.]");
                             date = LocalDateTime.of(Integer.parseInt(date1[0]),Integer.parseInt(date1[1]),
                                     Integer.parseInt(date1[2]),Integer.parseInt(date1[3]),Integer.parseInt(date1[4]),
                                     Integer.parseInt(date1[5]));
                             //date = (LocalDateTime) Files.getAttribute(path, "lastModifiedTime");
-                            System.out.println("#traceout 2n");
+
                         } catch (IOException e) {
                             e.getMessage();
                         }
                         if (start != null && finish != null) {
-                            System.out.println("#traceout 2_1n");
+
                             if (date.compareTo(start.atTime(00, 00, 00)) >= 0 && date.compareTo(finish.atTime(23, 59, 59)) <= 0) {
                                 operation(date,path,shopId);
                             }
-                            System.out.println("#traceout 2_1k");
+
                         } else if (start == null && finish != null) {
-                            System.out.println("#traceout 2_2n");
+
                             if (date.compareTo(finish.atTime(23, 59, 59)) <= 0) {
                                 operation(date,path,shopId);
                             }
-                            System.out.println("#traceout 2_2k");
+
                         } else if (start != null && finish == null) {
-                            System.out.println("#traceout 2_3n");
+
                             if (date.compareTo(start.atTime(00, 00, 00)) >= 0) {
                                 operation(date,path,shopId);
                             }
-                            System.out.println("#traceout 2_3k");
+
                         } else if (start == null && finish == null) {
-                            System.out.println("#traceout 2_4n");
+
                             operation(date,path,shopId);
-                            System.out.println("#traceout 2_4k");
+
                         }
-                        System.out.println("#traceout 2k");
+
                     }
                     else{
-                        System.out.println("#traceout 3n");
+
                         countBad.setRez(1);
-                        System.out.println("#traceout 3k");
+
                     }
-                    System.out.println("#traceout 1k");
+
                     return FileVisitResult.CONTINUE;
 
                 }
@@ -236,7 +251,7 @@ public class OrderProcessor {
                 }
 
             });
-            System.out.println("#traceout Конец");
+            
         } catch (IOException e) {
 
             e.getMessage();
