@@ -11,7 +11,7 @@ import java.util.*;
 class Baza{
     public static void main(String[] args) throws IOException {
         //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza"  "C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza"
-        OrderProcessor cool = new OrderProcessor("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza");
+        OrderProcessor cool = new OrderProcessor("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza");
 
         int badFiles = cool.loadOrders(null ,null,null);
         System.out.println(badFiles);
@@ -57,7 +57,7 @@ public class OrderProcessor {
         String []parsArr = path.getFileName().toString().split("[-,\\.]");
         if(parsArr.length != 4)
             return false;
-        if(parsArr[0].length()!=3 && parsArr[1].length()!=6 && parsArr[2].length()!=4 && parsArr[3]!="csv")
+        if(parsArr[0].length()!=3 && parsArr[1].length()!=6 && parsArr[2].length()<=4 && parsArr[3]!="csv")
             return false;
         for(String s:parsArr){
             char[]tmp = s.toCharArray();
@@ -251,7 +251,7 @@ public class OrderProcessor {
                 }
 
             });
-            
+
         } catch (IOException e) {
 
             e.getMessage();
