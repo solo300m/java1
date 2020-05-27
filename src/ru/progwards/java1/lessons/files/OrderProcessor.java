@@ -4,16 +4,42 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.*;
 
 class Baza{
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
         //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza"  "C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza"
-        OrderProcessor cool = new OrderProcessor("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza");
+        OrderProcessor cool = new OrderProcessor("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza");
+        File d = new File("S01-P01X01-0001.csv");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String newLastMod = "2020-01-01 13:00:00";
+        Date newDate = sdf.parse(newLastMod);
+        d.setLastModified(newDate.getTime());
+        File d1 = new File("S02-P01X01-0001.csv");
+        String newLastMod1 = "2020-01-01 16:00:00";
+        Date newDate1 = sdf.parse(newLastMod);
+        d1.setLastModified(newDate1.getTime());
+        File d2 = new File("S02-P01X02-0003.csv");
+        String newLastMod2 = "2020-01-05 13:12:12";
+        Date newDate2 = sdf.parse(newLastMod);
+        d2.setLastModified(newDate2.getTime());
+        File d3 = new File("S02-P01X03-000.csv");
+        String newLastMod3 = "2020-01-10 16:15:15";
+        Date newDate3 = sdf.parse(newLastMod);
+        d3.setLastModified(newDate3.getTime());
+        File d4 = new File("S02-P01X03-0003.csv");
+        String newLastMod4 = "2020-01-10 16:15:15";
+        Date newDate4 = sdf.parse(newLastMod);
+        d4.setLastModified(newDate4.getTime());
 
-        int badFiles = cool.loadOrders(null ,null,null);
+        int badFiles = cool.loadOrders(LocalDate.of(2020, Month.JANUARY, 1),
+                LocalDate.of(2020, Month.JANUARY, 10),
+                null);
         System.out.println(badFiles);
         for(Order s: cool.listSale){
             System.out.println(s.shopId+" "+s.customerId+" "+s.orderId+" "+s.datetime+" "+s.sum);
@@ -96,6 +122,12 @@ public class OrderProcessor {
                         if (!Character.isDigit(ch))
                             return false;
                     }
+                }
+                else if(controlContent.length==1){
+                    if(controlContent[0].isEmpty())
+                        continue;
+                    else
+                        return false;
                 }
                 else
                     return false;
