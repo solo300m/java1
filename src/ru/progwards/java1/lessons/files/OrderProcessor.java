@@ -4,50 +4,95 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
+import java.time.*;
 import java.util.*;
 
 class Baza{
     public static void main(String[] args) throws IOException, ParseException {
         //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza"  "C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza"
-        OrderProcessor cool = new OrderProcessor("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza");
-        File d = new File("S01-P01X01-0001.csv");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String newLastMod = "2020-01-01 13:00:00";
-        Date newDate = sdf.parse(newLastMod);
-        d.setLastModified(newDate.getTime());
-        File d1 = new File("S02-P01X01-0001.csv");
-        String newLastMod1 = "2020-01-01 16:00:00";
-        Date newDate1 = sdf.parse(newLastMod);
-        d1.setLastModified(newDate1.getTime());
-        File d2 = new File("S02-P01X02-0003.csv");
-        String newLastMod2 = "2020-01-05 13:12:12";
-        Date newDate2 = sdf.parse(newLastMod);
-        d2.setLastModified(newDate2.getTime());
-        File d3 = new File("S02-P01X03-000.csv");
-        String newLastMod3 = "2020-01-10 16:15:15";
-        Date newDate3 = sdf.parse(newLastMod);
-        d3.setLastModified(newDate3.getTime());
-        File d4 = new File("S02-P01X03-0003.csv");
-        String newLastMod4 = "2020-01-10 16:15:15";
-        Date newDate4 = sdf.parse(newLastMod);
-        d4.setLastModified(newDate4.getTime());
+        OrderProcessor cool = new OrderProcessor("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza");
+        String root = Paths.get("C:/Users/51256/IdeaProjects/Ekkel/baza").toString();
+
+        Path d = Paths.get(root+"/"+"S01-P01X01-0001.csv");
+        String newLastMod = "2020-01-01T13:00:00";
+        LocalDateTime fff = LocalDateTime.parse(newLastMod);
+        Instant gg = fff.toInstant(ZoneOffset.UTC);
+        FileTime ft = FileTime.from(gg);
+        Path dd = Files.setLastModifiedTime(d,ft);
+
+        Path d1 = Paths.get(root+"/"+"S02-P01X01-0001.csv");
+        String newLastMod1 = "2020-01-01T16:00:00";
+        fff = LocalDateTime.parse(newLastMod1);
+        gg = fff.toInstant(ZoneOffset.UTC);
+        ft = FileTime.from(gg);
+        Path dd1 = Files.setLastModifiedTime(d1,ft);
+
+        Path d2 = Paths.get(root+"/"+"S02-P01X02-0003.csv");
+        String newLastMod2 = "2020-01-05T13:12:12";
+        fff = LocalDateTime.parse(newLastMod2);
+        gg = fff.toInstant(ZoneOffset.UTC);
+        ft = FileTime.from(gg);
+        Path dd2 = Files.setLastModifiedTime(d2,ft);
+
+        Path d3 = Paths.get(root+"/"+"S02-P01X03-000.csv");
+        String newLastMod3 = "2020-01-10T16:15:15";
+        fff = LocalDateTime.parse(newLastMod3);
+        gg = fff.toInstant(ZoneOffset.UTC);
+        ft = FileTime.from(gg);
+        Path dd3 = Files.setLastModifiedTime(d3,ft);
+
+        Path d4 = Paths.get(root+"/"+"S02-P01X03-0003.csv");
+        String newLastMod4 = "2020-01-10T16:15:15";
+        fff = LocalDateTime.parse(newLastMod4);
+        gg = fff.toInstant(ZoneOffset.UTC);
+        ft = FileTime.from(gg);
+        Path dd4 = Files.setLastModifiedTime(d4,ft);
+
+        Path d5 = Paths.get(root+"/"+"S02-P01X05-0002.csv");
+        String newLastMod5 = "2020-01-16T17:16:16";
+        fff = LocalDateTime.parse(newLastMod5);
+        gg = fff.toInstant(ZoneOffset.UTC);
+        ft = FileTime.from(gg);
+        Path dd5 = Files.setLastModifiedTime(d5,ft);
+
+        Path d6 = Paths.get(root+"/"+"S01-P01X02-0002.csv");
+        String newLastMod6 = "2020-01-14T15:14:14";
+        fff = LocalDateTime.parse(newLastMod6);
+        gg = fff.toInstant(ZoneOffset.UTC);
+        ft = FileTime.from(gg);
+        Path dd6 = Files.setLastModifiedTime(d6,ft);
+
+        Path d7 = Paths.get(root+"/"+"S02-P01X04-0002.csv");
+        String newLastMod7 = "2020-01-16T17:16:16";
+        fff = LocalDateTime.parse(newLastMod7);
+        gg = fff.toInstant(ZoneOffset.UTC);
+        ft = FileTime.from(gg);
+        Path dd7 = Files.setLastModifiedTime(d7,ft);
 
         int badFiles = cool.loadOrders(LocalDate.of(2020, Month.JANUARY, 1),
                 LocalDate.of(2020, Month.JANUARY, 10),
                 null);
         System.out.println(badFiles);
-        for(Order s: cool.listSale){
-            System.out.println(s.shopId+" "+s.customerId+" "+s.orderId+" "+s.datetime+" "+s.sum);
-            for(int i = 0; i < s.items.size(); i++){
-                System.out.println(s.items.get(i).googsName+" "+s.items.get(i).count+" "+s.items.get(i).price);
+        for(int i = 0; i < cool.listSale.size(); i++){
+            System.out.println(cool.listSale.get(i).shopId+" "+cool.listSale.get(i).customerId+" "+cool.listSale.get(i).orderId+" "
+                    +cool.listSale.get(i).datetime+" "+cool.listSale.get(i).sum);
+            for(int j = 0; j < cool.listSale.get(i).items.size(); j++){
+                System.out.println(cool.listSale.get(i).items.get(j).googsName+" "+cool.listSale.get(i).items.get(j).count+" "
+                        +cool.listSale.get(i).items.get(j).price);
             }
         }
-        List<Order> shops = cool.process("S03");
+        /*cool = new OrderProcessor("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza");
+        badFiles = cool.loadOrders(null,
+                null, null);
+        System.out.println(badFiles);*/
+        cool = new OrderProcessor("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza");
+        badFiles = cool.loadOrders(null, LocalDate.of(2020, Month.JANUARY, 16),
+                "S01");
+        System.out.println(badFiles);
+
+        List<Order> shops = cool.process(null);
         for(int i = 0; i < shops.size(); i++){
             System.out.println(shops.get(i).orderId+" "+shops.get(i).sum);
         }
@@ -83,7 +128,8 @@ public class OrderProcessor {
         String []parsArr = path.getFileName().toString().split("[-,\\.]");
         if(parsArr.length != 4)
             return false;
-        if(parsArr[0].length()!=3 && parsArr[1].length()!=6 && parsArr[2].length()<=4 && parsArr[3]!="csv")
+
+        if(parsArr[0].length()!=3 || parsArr[1].length()!=6 || parsArr[2].length()!=4 || !parsArr[3].equals("csv"))
             return false;
         for(String s:parsArr){
             char[]tmp = s.toCharArray();
@@ -123,6 +169,7 @@ public class OrderProcessor {
                             return false;
                     }
                 }
+
                 else if(controlContent.length==1){
                     if(controlContent[0].isEmpty())
                         continue;
@@ -168,7 +215,8 @@ public class OrderProcessor {
                         item.googsName = f[0];
                         item.count = Integer.parseInt(f[1].trim());
                         item.price = Double.parseDouble(f[2].trim());
-                        order.sum += item.price;
+                        double tmpSum = item.count * item.price;
+                        order.sum += tmpSum;
                         order.items.add(item);
                     }
                 }
@@ -198,7 +246,8 @@ public class OrderProcessor {
                     item.googsName = f[0];
                     item.count = Integer.parseInt(f[1].trim());
                     item.price = Double.parseDouble(f[2].trim());
-                    order.sum += item.price;
+                    double tmpSum = item.count * item.price;
+                    order.sum += tmpSum;
                     order.items.add(item);
                 }
             }
