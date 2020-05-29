@@ -12,8 +12,8 @@ import java.util.*;
 class Baza{
     public static void main(String[] args) throws IOException, ParseException {
         //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza"  "C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza"
-        OrderProcessor cool = new OrderProcessor("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza");
-        String root = Paths.get("C:/Users/51256/IdeaProjects/Ekkel/baza").toString();
+        OrderProcessor cool = new OrderProcessor("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza");
+        String root = Paths.get("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza").toString();
 
         Path d = Paths.get(root+"/"+"S01-P01X01-0001.csv");
         String newLastMod = "2020-01-01T13:00:00";
@@ -71,16 +71,16 @@ class Baza{
         ft = FileTime.from(gg);
         Path dd7 = Files.setLastModifiedTime(d7,ft);
 
-        Path d8 = Paths.get(root+"/"+"S01-P01X0-0001.csv");
+        /*Path d8 = Paths.get(root+"/"+"S01-P01X0-0001.csv");
         String newLastMod8 = "2020-01-01T17:16:16";
         fff = LocalDateTime.parse(newLastMod8);
         gg = fff.toInstant(ZoneOffset.UTC);
         ft = FileTime.from(gg);
-        Path dd8 = Files.setLastModifiedTime(d8,ft);
+        Path dd8 = Files.setLastModifiedTime(d8,ft);*/
 
 
         int badFiles = cool.loadOrders(LocalDate.of(2020, Month.JANUARY, 1),
-                LocalDate.of(2020, Month.JANUARY, 30),
+                LocalDate.of(2020, Month.JANUARY, 10),
                 null);
         System.out.println(badFiles);
         for(int i = 0; i < cool.listSale.size(); i++){
@@ -95,7 +95,7 @@ class Baza{
         badFiles = cool.loadOrders(null,
                 null, null);
         System.out.println(badFiles);*/
-        cool = new OrderProcessor("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza");
+        cool = new OrderProcessor("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza");
         badFiles = cool.loadOrders(null, null,
                 null);
         System.out.println(badFiles);
@@ -103,6 +103,11 @@ class Baza{
         List<Order> shops = cool.process(null);
         for(int i = 0; i < shops.size(); i++){
             System.out.println(shops.get(i).orderId+" "+shops.get(i).sum);
+            for(int j = 0; j<shops.get(i).items.size(); j++){
+                System.out.println(shops.get(i).items.get(j).googsName+" "+
+                        shops.get(i).items.get(j).count+" "+
+                        shops.get(i).items.get(j).price);
+            }
         }
         Map<String,Double>shopsStat = cool.statisticsByShop();
         System.out.println(shopsStat);
@@ -228,6 +233,12 @@ public class OrderProcessor {
                         order.items.add(item);
                     }
                 }
+                order.items.sort(new Comparator<OrderItem>() {
+                    @Override
+                    public int compare(OrderItem o1, OrderItem o2) {
+                        return o1.googsName.compareTo(o2.googsName);
+                    }
+                });
                 listSale.add(order);
             }
         } else {
@@ -259,6 +270,12 @@ public class OrderProcessor {
                     order.items.add(item);
                 }
             }
+            order.items.sort(new Comparator<OrderItem>() {
+                @Override
+                public int compare(OrderItem o1, OrderItem o2) {
+                    return o1.googsName.compareTo(o2.googsName);
+                }
+            });
             listSale.add(order);
         }
 
@@ -280,7 +297,9 @@ public class OrderProcessor {
         rezClass countBad = new rezClass();
         try {
             Files.walkFileTree(baza,new SimpleFileVisitor<Path>(){
-                final String pattern = "glob:**[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-][0-9][0-9][0-9][0-9].csv";
+                final String pattern = "glob:**[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
+                        "[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
+                        "[0-9][0-9][0-9][0-9].csv";
                 PathMatcher pathMatcher = FileSystems. getDefault().getPathMatcher(pattern);
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs)  {
