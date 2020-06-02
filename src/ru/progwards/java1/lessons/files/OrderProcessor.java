@@ -102,7 +102,8 @@ class Baza{
 
         List<Order> shops = cool.process(null);
         for(int i = 0; i < shops.size(); i++){
-            System.out.println(shops.get(i).orderId+" "+shops.get(i).sum);
+            System.out.println(shops.get(i).orderId+" "+shops.get(i).sum+" "+
+                    shops.get(i).datetime);
             for(int j = 0; j<shops.get(i).items.size(); j++){
                 System.out.println(shops.get(i).items.get(j).googsName+" "+
                         shops.get(i).items.get(j).count+" "+
@@ -299,7 +300,7 @@ public class OrderProcessor {
             Files.walkFileTree(baza,new SimpleFileVisitor<Path>(){
                 final String pattern = "glob:**[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
                         "[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
-                        "[0-9][0-9][0-9][0-9].csv";
+                        "[0-9][0-9][0-9][0-9]\\.csv";
                 PathMatcher pathMatcher = FileSystems. getDefault().getPathMatcher(pattern);
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs)  {
