@@ -326,9 +326,9 @@ public class OrderProcessor {
         rezClass countBad = new rezClass();
         try {
             Files.walkFileTree(baza,new SimpleFileVisitor<Path>(){
-                final String pattern = "glob:**[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
+                final String pattern = "glob:**";/*"glob:**[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
                         "[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
-                        "[0-9][0-9][0-9][0-9]{.csv}";
+                        "[0-9][0-9][0-9][0-9]{.csv}";*/
                 /*[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
                         "[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
                         "[0-9][0-9][0-9][0-9]\\.csv"*/
