@@ -12,8 +12,8 @@ import java.util.*;
 class Baza{
     public static void main(String[] args) throws IOException, ParseException {
         //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza"  "C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza"
-        OrderProcessor cool = new OrderProcessor("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza");
-        String root = Paths.get("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza").toString();
+        OrderProcessor cool = new OrderProcessor("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza");
+        String root = Paths.get("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza").toString();
 
         Path d = Paths.get(root+"/"+"S01-P01X01-0001.csv");
         String newLastMod = "2020-01-01T13:00:00";
@@ -95,7 +95,7 @@ class Baza{
         badFiles = cool.loadOrders(null,
                 null, null);
         System.out.println(badFiles);*/
-        cool = new OrderProcessor("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza");
+        cool = new OrderProcessor("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza");
         badFiles = cool.loadOrders(null, null,
                 null);
         System.out.println(badFiles);
@@ -300,52 +300,59 @@ public class OrderProcessor {
             Files.walkFileTree(baza,new SimpleFileVisitor<Path>(){
                 final String pattern = "glob:**[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
                         "[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
-                        "[0-9][0-9][0-9][0-9]\\.csv";
+                        "[0-9][0-9][0-9][0-9]{.csv}";
+                /*[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
+                        "[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
+                        "[0-9][0-9][0-9][0-9]\\.csv"*/
                 PathMatcher pathMatcher = FileSystems. getDefault().getPathMatcher(pattern);
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs)  {
                     if (pathMatcher.matches(path)) {
                         boolean border = borderFunc(path);
 
-                        if (border) {
 
-                            LocalDateTime date = null;
+                        if (border) {
+                            //System.out.println(path.getFileName());
+                            ZonedDateTime date = null;
+                            LocalDateTime dateFull = null;
                             try {
                                 String[] date1 = Files.getAttribute(path, "lastModifiedTime").toString().split("[-,T,Z,:,\\.]");
                                 date = LocalDateTime.of(Integer.parseInt(date1[0]), Integer.parseInt(date1[1]),
                                         Integer.parseInt(date1[2]), Integer.parseInt(date1[3]), Integer.parseInt(date1[4]),
-                                        Integer.parseInt(date1[5]));
+                                        Integer.parseInt(date1[5])).atZone(ZoneId.systemDefault());
                                 //date = (LocalDateTime) Files.getAttribute(path, "lastModifiedTime");
+                                dateFull = date.toLocalDateTime();
 
                             } catch (IOException e) {
                                 e.getMessage();
                             }
                             if (start != null && finish != null) {
 
-                                if (date.compareTo(start.atTime(00, 00, 00)) >= 0 && date.compareTo(finish.atTime(23, 59, 59)) <= 0) {
-                                    operation(date, path, shopId);
+                                if (date.compareTo(start.atTime(00, 00, 00).atZone(ZoneId.systemDefault())) >= 0 &&
+                                        date.compareTo(finish.atTime(23, 59, 59).atZone(ZoneId.systemDefault())) <= 0) {
+                                    operation(dateFull, path, shopId);
                                 }
 
                             } else if (start == null && finish != null) {
 
-                                if (date.compareTo(finish.atTime(23, 59, 59)) <= 0) {
-                                    operation(date, path, shopId);
+                                if (date.compareTo(finish.atTime(23, 59, 59).atZone(ZoneId.systemDefault())) <= 0) {
+                                    operation(dateFull, path, shopId);
                                 }
 
                             } else if (start != null && finish == null) {
 
-                                if (date.compareTo(start.atTime(00, 00, 00)) >= 0) {
-                                    operation(date, path, shopId);
+                                if (date.compareTo(start.atTime(00, 00, 00).atZone(ZoneId.systemDefault())) >= 0) {
+                                    operation(dateFull, path, shopId);
                                 }
 
                             } else if (start == null && finish == null) {
 
-                                operation(date, path, shopId);
+                                operation(dateFull, path, shopId);
 
                             }
 
                         } else {
-
+                            System.out.println(path.getFileName());
                             countBad.setRez(1);
 
                         }
