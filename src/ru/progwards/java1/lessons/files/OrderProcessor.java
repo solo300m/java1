@@ -79,9 +79,9 @@ class Baza{
         Path dd8 = Files.setLastModifiedTime(d8,ft);*/
 
 
-        int badFiles = cool.loadOrders(LocalDate.of(2020, Month.JANUARY, 1),
-                LocalDate.of(2020, Month.JANUARY, 10),
-                null);
+        int badFiles = cool.loadOrders(null,
+                LocalDate.of(2020, Month.JANUARY, 16),
+                "S01");
         System.out.println(badFiles);
         for(int i = 0; i < cool.listSale.size(); i++){
             System.out.println(cool.listSale.get(i).shopId+" "+cool.listSale.get(i).customerId+" "+cool.listSale.get(i).orderId+" "
@@ -323,18 +323,33 @@ public class OrderProcessor {
             }
         }
         rezClass countBad = new rezClass();
-        try {
-            Files.walkFileTree(baza,new SimpleFileVisitor<Path>(){
-                final String pattern = "glob:**[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
+        class GetMatcher{
+            String shopId = "";
+            PathMatcher pathMatcher;
+            GetMatcher(String shopId){
+                this.shopId = shopId;
+                String pattern = "glob:**[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
                         "[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
                         "[0-9][0-9][0-9][0-9]{.csv}";
-                /*[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
+                String pattern2 = "glob:**{"+shopId+"}[-]" +
+                        "[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]" +
+                        "[-][0-9][0-9][0-9][0-9]{.csv}";
+                if (shopId != null) {
+                    this.pathMatcher = FileSystems.getDefault().getPathMatcher(pattern2);
+                } else {
+                    this.pathMatcher = FileSystems.getDefault().getPathMatcher(pattern);
+                } /*[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
                         "[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][-]" +
                         "[0-9][0-9][0-9][0-9]\\.csv"*/
-                PathMatcher pathMatcher = FileSystems. getDefault().getPathMatcher(pattern);
+            }
+        }
+        GetMatcher matcher = new GetMatcher(shopId);
+        try {
+            Files.walkFileTree(baza,new SimpleFileVisitor<Path>(){
+
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs)  {
-                    if (pathMatcher.matches(path)) {
+                    if (matcher.pathMatcher.matches(path)) {
                         boolean border[] = borderFunc(path);
                         ZonedDateTime date = null;
                         LocalDateTime dateFull = null;
