@@ -12,8 +12,8 @@ import java.util.*;
 class Baza{
     public static void main(String[] args) throws IOException, ParseException {
         //"C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza"  "C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza"
-        OrderProcessor cool = new OrderProcessor("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza");
-        String root = Paths.get("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza").toString();
+        OrderProcessor cool = new OrderProcessor("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza");
+        String root = Paths.get("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza").toString();
 
         Path d = Paths.get(root+"/"+"S01-P01X01-0001.csv");
         String newLastMod = "2020-01-01T13:00:00";
@@ -95,7 +95,7 @@ class Baza{
         badFiles = cool.loadOrders(null,
                 null, null);
         System.out.println(badFiles);*/
-        cool = new OrderProcessor("C:\\Users\\51256\\IdeaProjects\\Ekkel\\baza");
+        cool = new OrderProcessor("C:\\Users\\Сергей\\IdeaProjects\\Ekkel_Home_1\\baza");
         badFiles = cool.loadOrders(null, null,
                 null);
         System.out.println(badFiles);
@@ -137,19 +137,28 @@ public class OrderProcessor {
 
     }
     //функция проверяющая ошибки формата и данных
-    private boolean borderFunc(Path path){
-
+    private boolean[] borderFunc(Path path){
+        boolean[] bool = new boolean[2];
         String []parsArr = path.getFileName().toString().split("[-,\\.]");
-        if(parsArr.length != 4)
-            return false;
+        if(parsArr.length != 4){
+            bool[0]=false;
+            bool[1]=true;
+            return bool;
+        }
 
-        if(parsArr[0].length()!=3 || parsArr[1].length()!=6 || parsArr[2].length()!=4 || !parsArr[3].equals("csv"))
-            return false;
+        if(parsArr[0].length()!=3 || parsArr[1].length()!=6 || parsArr[2].length()!=4 || !parsArr[3].equals("csv")) {
+            bool[0]=false;
+            bool[1]=true;
+            return bool;
+        }
         for(String s:parsArr){
             char[]tmp = s.toCharArray();
             for(char ch:tmp){
-                if(!Character.isLetterOrDigit(ch))
-                    return false;
+                if(!Character.isLetterOrDigit(ch)) {
+                    bool[0]=false;
+                    bool[1]=false;
+                    return bool;
+                }
             }
         }
 
@@ -159,8 +168,11 @@ public class OrderProcessor {
             for(String s: date1){
                 char[]tmpDate = s.toCharArray();
                 for(char ch: tmpDate){
-                    if(!Character.isDigit(ch))
-                        return false;
+                    if(!Character.isDigit(ch)) {
+                        bool[0]=false;
+                        bool[1]=false;
+                        return bool;
+                    }
                 }
             }
         } catch (IOException e) {
@@ -174,13 +186,19 @@ public class OrderProcessor {
                 if(controlContent.length==3) {
                     char[] count = controlContent[1].trim().toCharArray();
                     for (char ch : count) {
-                        if (!Character.isDigit(ch))
-                            return false;
+                        if (!Character.isDigit(ch)){
+                            bool[0]=false;
+                            bool[1]=false;
+                            return bool;
+                        }
                     }
                     char[] price = controlContent[2].trim().toCharArray();
                     for (char ch : price) {
-                        if (!Character.isDigit(ch))
-                            return false;
+                        if (!Character.isDigit(ch)){
+                            bool[0]=false;
+                            bool[1]=false;
+                            return bool;
+                        }
                     }
                 }
 
@@ -188,16 +206,26 @@ public class OrderProcessor {
                     if(controlContent[0].isEmpty())
                         continue;
                     else
-                        return false;
+                    {
+                        bool[0]=false;
+                        bool[1]=false;
+                        return bool;
+                    }
                 }
                 else
-                    return false;
+                {
+                    bool[0]=false;
+                    bool[1]=false;
+                    return bool;
+                }
             }
         } catch (IOException e) {
             e.getMessage();
         }
 
-        return true;
+        bool[0]=true;
+        bool[1]=true;
+        return bool;
     }
     //функция, формирующая исходный массив
     private void operation(LocalDateTime date, Path path, String shopId){
@@ -218,7 +246,7 @@ public class OrderProcessor {
                     listArrFile.add(tmp);
                 }
                 Order order = new Order();
-                order.datetime = date;
+                order.datetime = date.plusHours(3);
                 order.customerId = file[2];
                 order.orderId = file[1];
                 order.shopId = file[0];
@@ -255,7 +283,7 @@ public class OrderProcessor {
                 listArrFile.add(tmp);
             }
             Order order = new Order();
-            order.datetime = date;
+            order.datetime = date.plusHours(3);
             order.customerId = file[2];
             order.orderId = file[1];
             order.shopId = file[0];
@@ -308,10 +336,10 @@ public class OrderProcessor {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs)  {
                     if (pathMatcher.matches(path)) {
-                        boolean border = borderFunc(path);
+                        boolean border[] = borderFunc(path);
 
 
-                        if (border) {
+                        if (border[0] == true && border[1] == true) {
                             //System.out.println(path.getFileName());
                             ZonedDateTime date = null;
                             LocalDateTime dateFull = null;
@@ -350,16 +378,16 @@ public class OrderProcessor {
                                 operation(dateFull, path, shopId);
 
                             }
-
-                        } else {
+                        } else if (border[0] == false && border[1] == true) {
+                            System.out.print("Файлы не обрабатываемые и не являющиеся badFiles");
+                            System.out.println(path.getFileName());
+                        } else if (border[0] == false && border[1] == false) {
+                            System.out.print("BadFiles");
                             System.out.println(path.getFileName());
                             countBad.setRez(1);
-
                         }
                     }
-
                     return FileVisitResult.CONTINUE;
-
                 }
 
                 @Override
