@@ -127,7 +127,7 @@ public class DoubleHashTable<K,T> implements Iterable<T>{
         if(table[index + sumStep] == null)
             System.out.println("Нет элемента с ключем = " + key1);
         else {
-            //((TableItem<K,T>)(table[index + sumStep])).setKey(key2);
+
             T tmpItem = ((TableItem<K,T>)(table[index + sumStep])).getItem();
             table[index + sumStep] = null;
             add(key2,tmpItem);
@@ -180,6 +180,6 @@ class T1{
             if(s!=null)
                 System.out.println(s);
         }
-        //for()
+
     }
 }

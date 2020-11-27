@@ -47,14 +47,26 @@ public class BiDirList <T> implements Iterable<T>{
         return iterator;
     }
 
+    /**
+     * Встроенный класс обобщенный ListItem
+     * @param <T> может принимать любые типы, в том числе созданные программистом
+     */
     public static class ListItem<T>{
         private T item;
         private ListItem<T> next;
         private ListItem<T> prev;
 
+        /**
+         * Конструктор по умолчанию
+         */
         public ListItem(){
             this.item = null;
         }
+
+        /**
+         * Конструктор с параметром полем item
+         * @param item поле произвольного типа T
+         */
         public ListItem(T item){
             this.item = item;
         }
